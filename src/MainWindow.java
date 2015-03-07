@@ -9,6 +9,8 @@ import java.awt.Container;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -195,6 +197,14 @@ class ScheduleButtonActionListener implements ActionListener {
 			showErrorDialog("Please specify a spreadsheet with student data.");
 		} else if (teacherDataTextField.getText().length() == 0) {
 			showErrorDialog("Please specify a spreadsheet with teacher data.");
+		}
+		
+		try {
+			ExcelReader.parseRoomData(roomDataTextField.getText());
+		} catch (FileNotFoundException fnfe) {
+			System.out.println("Couldn't find the file");
+		} catch (IOException ioe) {
+			System.out.println("Could not I/O");
 		}
 	}
 	
