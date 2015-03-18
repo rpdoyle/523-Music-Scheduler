@@ -131,6 +131,10 @@ public class MainWindow {
 			System.err.println("Error: Could not set system look and feel");
 		}
 		
+		roomDataTextField.setText("C:\\Users\\Ryan\\workspace\\523-Music-Scheduler\\test-files\\Room Information (Responses).xlsx");
+		studentDataTextField.setText("C:\\Users\\Ryan\\workspace\\523-Music-Scheduler\\test-files\\Room Information (Responses).xlsx");
+		teacherDataTextField.setText("C:\\Users\\Ryan\\workspace\\523-Music-Scheduler\\test-files\\Room Information (Responses).xlsx");
+		
 		// Display the frame on the screen
 		frame.setVisible(true);
 	}
@@ -202,9 +206,14 @@ class ScheduleButtonActionListener implements ActionListener {
 		try {
 			ExcelReader.parseRoomData(roomDataTextField.getText());
 		} catch (FileNotFoundException fnfe) {
-			System.out.println("Couldn't find the file");
+			System.err.println("FileNotFoundException");
+			showErrorDialog(fnfe.getMessage());
 		} catch (IOException ioe) {
-			System.out.println("Could not I/O");
+			System.err.println("IOException");
+			showErrorDialog(ioe.getMessage());
+		} catch (InvalidInputFormatException iife) {
+			System.err.println("InvalidInputException");
+			showErrorDialog(iife.getMessage());
 		}
 	}
 	
