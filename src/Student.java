@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /*
  * File: Student.java
  * Description: This class stores data for a Student.
@@ -14,6 +16,7 @@ public class Student {
 	private String[] instrumentYears;
 	private String language;
 	private int[] availableTimes;
+	private ArrayList<Student> siblings;
 	
 	//TODO: incorporate siblings somehow
 	
@@ -29,7 +32,10 @@ public class Student {
 		this.instrumentYears = instrumentYears;
 		this.language = language;
 		this.availableTimes= availableTimes;
+		siblings = new ArrayList<Student>();
 	}
+	
+	
 	
 	public int getID(){
 		return id;
@@ -69,5 +75,9 @@ public class Student {
 	
 	public int[] getAvailableTimes(){
 		return availableTimes;
+	}
+	
+	public ArrayList<Student> getSiblings(){
+		return siblings;
 	}
 }
