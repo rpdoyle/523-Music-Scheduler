@@ -91,59 +91,50 @@ public class ExcelReader {
 		while(rowsIterator.hasNext()){
 			
 			XSSFRow currentRow = (XSSFRow)rowsIterator.next();
+						
+			//calls the createStudent method to create a new student from the information that we want
 			
-			String name = getStringFromCell(currentRow, 1) + " " + getStringFromCell(currentRow,2);
-			
-			String age = getStringFromCell(currentRow,3);
-			
-			String gender = getStringFromCell(currentRow,6);
-			
-			//check to see if this student is returning and wants to have the same teacher
-			String checker = getStringFromCell (currentRow, 13);
-			String returningTeacher;
-			if (checker.equalsIgnoreCase("yes")){
-				returningTeacher = getStringFromCell (currentRow, 12);	
-			}
-			else{
-				returningTeacher = "none";
-			}
-			
-			String instrumentOfReturningStudent = getStringFromCell(currentRow, 15);
-			
-			//stores the instrument preferences in increasing order i.e. index 0 = choice 1, index 1 = choice 2, etc. 
-			String[] instruments = {getStringFromCell(currentRow, 16),getStringFromCell(currentRow, 18), getStringFromCell(currentRow, 20)}; 
-			
-			//stores the years of experience with each instrument, in increasing order
-			
-			String[] instrumentYears = { getStringFromCell(currentRow, 17), getStringFromCell(currentRow, 19), getStringFromCell(currentRow, 21)};
-			
-			String language = getStringFromCell(currentRow, 69);
-			
-			//calls the helper method that captures the available times from the spreadsheet and returns an array with the times in minutes from
-			// 12 a.m Monday
-			int[] availableTimes = getAvailableTimes(72, 73, 74, 75, 76, currentRow);
-			
-			
-			//Create a new student object with the data we just parsed out of the spreadsheet
-			
-			Student student = new Student(id, name, age, gender, returningTeacher, instrumentOfReturningStudent, instruments, instrumentYears, language, availableTimes);
+			Student student = createStudent(id,1,2,3,6,13,12,15,16,18,20,17,19,21,69,72,73,74,75,76,currentRow);
 			students.add(student);
 			
 			// TODO: remove these print statements after showing Dr. Stotts it works
-			System.out.println("Found another student");
-			System.out.println(student.getID());
-			System.out.println(student.getName());
-			System.out.println(student.getAge());
-			System.out.println(student.getGender());
-			System.out.println(student.getReturningTeacher());
-			System.out.println(student.getInstrumentOfReturningStudent());
-			System.out.println(Arrays.toString(student.getInstruments()));
-			System.out.println(Arrays.toString(student.getInstrumentYears()));
-			System.out.println(student.getLanguage());
-			System.out.println(Arrays.toString(student.getAvailableTimes()));
+			printOutput(student);
 			
 			//increase the id so the next student has a new id
 			id++;
+			
+			//check to see if this person has a sibling
+			if (getStringFromCell(currentRow,22).equalsIgnoreCase("yes")){
+				
+				//currently the sibling has no field of returning instrument, so I will capture their first choice instrument as their returning instrument
+				Student sibling = createStudent(id, 23, 24, 25, 28, 30, 29, 31,31, 33, 35, 32, 34, 36, 69, 72, 73, 74, 75, 76, currentRow);
+				students.add(sibling);
+				//print output to console to check field values
+				printOutput(sibling);
+				id++;
+			}
+			
+			if (getStringFromCell(currentRow, 37).equalsIgnoreCase("yes")){
+				
+				//currently the sibling has no field of returning instrument, so I will capture their first choice instrument as their returning instrument
+				Student sibling = createStudent(id, 38, 39, 40, 43, 44, 45, 46, 46, 48, 50, 47, 49, 51, 69, 72, 73, 74, 75, 76, currentRow);
+				students.add(sibling);
+				//print output to console to check field values
+				printOutput(sibling);
+				id++;
+			}
+			
+			if (getStringFromCell(currentRow, 52).equalsIgnoreCase("yes")){
+				
+				//currently the sibling has no field of returning instrument, so I will capture their first choice instrument as their returning instrument
+				Student sibling = createStudent(id, 53, 54, 55, 58, 60,59,61,61,63,65,62,64,66,69,72,73,74,75,76,currentRow);
+				students.add(sibling);
+				//print output to console to check field values
+
+				printOutput(sibling);
+				
+				id++;
+			}
 		}
 		
 		workbook.close();
@@ -155,6 +146,21 @@ public class ExcelReader {
 	public static void parseTeacherData(String filepath) {
 		
 	}
+	
+	//helper function to print output to the console
+	private static void printOutput(Student student){
+		System.out.println("Found another student");
+		System.out.println(student.getID());
+		System.out.println(student.getName());
+		System.out.println(student.getAge());
+		System.out.println(student.getGender());
+		System.out.println(student.getReturningTeacher());
+		System.out.println(student.getInstrumentOfReturningStudent());
+		System.out.println(Arrays.toString(student.getInstruments()));
+		System.out.println(Arrays.toString(student.getInstrumentYears()));
+		System.out.println(student.getLanguage());
+		System.out.println(Arrays.toString(student.getAvailableTimes()));
+		}
 	
 	// If possible, get the string representation of the value of a cell at a given row and cell index
 	private static String getStringFromCell(Row row, int index) throws InvalidInputFormatException {
@@ -177,7 +183,7 @@ public class ExcelReader {
 	}
 	
 	// If possible, read the value of a cell at a given row and cell index as a comma separated array of strings
-	public static String[] getStringArrayFromCell(Row row, int index) throws InvalidInputFormatException {
+	private static String[] getStringArrayFromCell(Row row, int index) throws InvalidInputFormatException {
 		// Get the value of the requested cell, or create a blank cell if the requested cell is null (no value)
 		currentCell = row.getCell(index, Row.CREATE_NULL_AS_BLANK);
 		
@@ -305,5 +311,45 @@ public class ExcelReader {
 			System.arraycopy(fridayIntTimes, 0, availableTimes, startIndex, fridayIntTimes.length);
 		}
 		return availableTimes;
+	}
+	
+	//create a Student object with the necessary data
+	private static Student createStudent(int id, int fName, int lName, int a, int g, int check, int rTeacher, int iORStudent, int i1, int i2, int i3, int y1,
+			int y2, int y3, int l, int t1, int t2, int t3, int t4, int t5, XSSFRow currentRow) throws InvalidInputFormatException{
+		
+		String name = getStringFromCell(currentRow, fName) + " " + getStringFromCell(currentRow,lName);
+		
+		String age = getStringFromCell(currentRow,a);
+		
+		String gender = getStringFromCell(currentRow,g);
+		
+		//check to see if this student is returning and wants to have the same teacher
+		String checker = getStringFromCell (currentRow, check);
+		String returningTeacher;
+		if (checker.equalsIgnoreCase("yes")){
+			returningTeacher = getStringFromCell (currentRow, rTeacher);	
+		}
+		else{
+			returningTeacher = "none";
+		}
+		
+		String instrumentOfReturningStudent = getStringFromCell(currentRow, iORStudent);
+		
+		//stores the instrument preferences in increasing order i.e. index 0 = choice 1, index 1 = choice 2, etc. 
+		String[] instruments = {getStringFromCell(currentRow, i1),getStringFromCell(currentRow, i2), getStringFromCell(currentRow, i3)}; 
+		
+		//stores the years of experience with each instrument, in increasing order
+		
+		String[] instrumentYears = { getStringFromCell(currentRow, y1), getStringFromCell(currentRow, y2), getStringFromCell(currentRow, y3)};
+		
+		String language = getStringFromCell(currentRow, l);
+		
+		//calls the helper method that captures the available times from the spreadsheet and returns an array with the times in minutes from
+		// 12 a.m Monday
+		int[] availableTimes = getAvailableTimes(t1, t2, t3, t4, t5, currentRow);
+		
+		Student student = new Student(id, name, age, gender, returningTeacher, instrumentOfReturningStudent, instruments, instrumentYears, language, availableTimes);
+
+		return student;
 	}
 }
