@@ -89,6 +89,8 @@ public class ExcelReader {
 		int id = 0;
 		
 		while(rowsIterator.hasNext()){
+				
+			int s1, s2, s3;
 			
 			XSSFRow currentRow = (XSSFRow)rowsIterator.next();
 						
@@ -104,37 +106,72 @@ public class ExcelReader {
 			id++;
 			
 			//check to see if this person has a sibling
-			if (getStringFromCell(currentRow,22).equalsIgnoreCase("yes")){
+			s1= 22;
+			
+			//if (getStringFromCell(currentRow,s1).equalsIgnoreCase("no")){
+			//	break;
+			//}
+			
+			if (getStringFromCell(currentRow,s1).equalsIgnoreCase("yes")){
 				
 				//currently the sibling has no field of returning instrument, so I will capture their first choice instrument as their returning instrument
-				Student sibling = createStudent(id, 23, 24, 25, 28, 30, 29, 31,31, 33, 35, 32, 34, 36, 69, 72, 73, 74, 75, 76, currentRow);
-				students.add(sibling);
+				Siblings.sibling1 = createStudent(id, 23, 24, 25, 28, 30, 29, 31,31, 33, 35, 32, 34, 36, 69, 72, 73, 74, 75, 76, currentRow);
+				students.add(Siblings.sibling1);
+				
+				//add the new sibling to the student's sibling ArrayList
+				student.getSiblings().add(Siblings.sibling1);
+				Siblings.sibling1.getSiblings().add(student);
+				
 				//print output to console to check field values
-				printOutput(sibling);
+				printOutput(Siblings.sibling1);
+				id++;
+			}
+			s2 = 37;
+			if (getStringFromCell(currentRow, s2).equalsIgnoreCase("yes")){
+				
+				//currently the sibling has no field of returning instrument, so I will capture their first choice instrument as their returning instrument
+				Siblings.sibling2 = createStudent(id, 38, 39, 40, 43, 44, 45, 46, 46, 48, 50, 47, 49, 51, 69, 72, 73, 74, 75, 76, currentRow);
+				students.add(Siblings.sibling2);
+				
+				student.getSiblings().add(Siblings.sibling2);
+				Siblings.sibling1.getSiblings().add(Siblings.sibling2);
+				Siblings.sibling2.getSiblings().add(student);
+				Siblings.sibling2.getSiblings().add(Siblings.sibling1);
+				
+				//print output to console to check field values
+				printOutput(Siblings.sibling2);
 				id++;
 			}
 			
-			if (getStringFromCell(currentRow, 37).equalsIgnoreCase("yes")){
-				
-				//currently the sibling has no field of returning instrument, so I will capture their first choice instrument as their returning instrument
-				Student sibling = createStudent(id, 38, 39, 40, 43, 44, 45, 46, 46, 48, 50, 47, 49, 51, 69, 72, 73, 74, 75, 76, currentRow);
-				students.add(sibling);
-				//print output to console to check field values
-				printOutput(sibling);
-				id++;
-			}
 			
-			if (getStringFromCell(currentRow, 52).equalsIgnoreCase("yes")){
+			s3 = 52;
+			if (getStringFromCell(currentRow, s3).equalsIgnoreCase("yes")){
 				
 				//currently the sibling has no field of returning instrument, so I will capture their first choice instrument as their returning instrument
-				Student sibling = createStudent(id, 53, 54, 55, 58, 60,59,61,61,63,65,62,64,66,69,72,73,74,75,76,currentRow);
-				students.add(sibling);
+				Siblings.sibling3 = createStudent(id, 53, 54, 55, 58, 60,59,61,61,63,65,62,64,66,69,72,73,74,75,76,currentRow);
+				students.add(Siblings.sibling3);
+				//adding the siblings to each other's Siblings ArrayLists
+				student.getSiblings().add(Siblings.sibling3);
+				Siblings.sibling1.getSiblings().add(Siblings.sibling3);
+				Siblings.sibling2.getSiblings().add(Siblings.sibling3);
+				Siblings.sibling3.getSiblings().add(student);
+				Siblings.sibling3.getSiblings().add(Siblings.sibling1);
+				Siblings.sibling3.getSiblings().add(Siblings.sibling2);
+				
+			
+				
+				
 				//print output to console to check field values
 
-				printOutput(sibling);
+				printOutput(Siblings.sibling3);
 				
 				id++;
 			}
+		}
+		
+		//students.toString()
+		for (int i = 0; i< students.get(3).getSiblings().size();i++){
+			System.out.println(students.get(3).getSiblings().get(i).getName());
 		}
 		
 		workbook.close();
@@ -264,13 +301,13 @@ public class ExcelReader {
 		return startTimes;
 	}
 	
-	private static int[] getAvailableTimes(int a, int b, int c, int d, int e, XSSFRow current) throws InvalidInputFormatException{
+	private static int[] getAvailableTimes(int t1, int t2, int t3, int t4, int t5, XSSFRow current) throws InvalidInputFormatException{
 		// Get arrays of strings representing meetings times throughout the week
-		String[] mondayTimesArr = getStringArrayFromCell(current, 72);
-		String[] tuesdayTimesArr = getStringArrayFromCell(current, 73);
-		String[] wednesdayTimesArr = getStringArrayFromCell(current, 74);
-		String[] thursdayTimesArr = getStringArrayFromCell(current, 75);
-		String[] fridayTimesArr = getStringArrayFromCell(current, 76);
+		String[] mondayTimesArr = getStringArrayFromCell(current, t1);
+		String[] tuesdayTimesArr = getStringArrayFromCell(current, t2);
+		String[] wednesdayTimesArr = getStringArrayFromCell(current, t3);
+		String[] thursdayTimesArr = getStringArrayFromCell(current, t4);
+		String[] fridayTimesArr = getStringArrayFromCell(current, t5);
 
 		// Convert the arrays of strings to arrays of integers representing
 		// the meeting start times as the number of minutes since 12:00 AM Monday
@@ -313,7 +350,7 @@ public class ExcelReader {
 		return availableTimes;
 	}
 	
-	//create a Student object with the necessary data
+	//creates a Student object with the necessary data
 	private static Student createStudent(int id, int fName, int lName, int a, int g, int check, int rTeacher, int iORStudent, int i1, int i2, int i3, int y1,
 			int y2, int y3, int l, int t1, int t2, int t3, int t4, int t5, XSSFRow currentRow) throws InvalidInputFormatException{
 		
@@ -352,4 +389,10 @@ public class ExcelReader {
 
 		return student;
 	}
+}
+
+class Siblings{
+	public static Student sibling1;
+	public static Student sibling2;
+	public static Student sibling3;
 }
