@@ -71,8 +71,7 @@ public class ExcelReader {
 		workbook.close();
 	}
 	
-	// Open an excel document with Student data, parse the data, and return an ArrayList of Student objects
-	// TODO: implement
+	// TODO: return the ArrayList, i.e. change from void to ArrayList<Student>
 	public static void parseStudentData(String filepath) throws FileNotFoundException, IOException, InvalidInputFormatException {
 		
 		FileInputStream inputStream = new FileInputStream(filepath);
@@ -87,20 +86,54 @@ public class ExcelReader {
 		
 		//an id number to keep track of the student
 		int id = 0;
+		//declaring the variables that will hold the column values to check if the student has (a) sibling(s)
+		int s1, s2, s3;
+		//declaring variables that are passed to the student method to create a new student. These variables hold the
+		//column name of their corresponding pieces of information
+		int fName;
+		int lName;
+		int age;
+		int gender;
+		int check;
+		int returningTeacher;
+		int iORStudent;
+		int fInstrument, sInstrument, tInstrument;
+		int fILevel, sILevel, tILevel;
+		int language;
+		int t1, t2, t3, t4, t5;
+		
 		
 		while(rowsIterator.hasNext()){
-				
-			int s1, s2, s3;
+			//assigning the information variables values
+			fName = 1;
+			lName = 2;
+			age = 3;
+			gender = 6;
+			check = 13;
+			returningTeacher = 12;
+			iORStudent = 14;
+			fInstrument = 16;
+			sInstrument = 18;
+			tInstrument = 20;
+			fILevel = 17;
+			sILevel = 19;
+			tILevel = 21;
+			language = 75;
+			t1 = 78;
+			t2 = 79;
+			t3 = 80;
+			t4 = 81;
+			t5 = 82;
+			
 			
 			XSSFRow currentRow = (XSSFRow)rowsIterator.next();
 						
 			//calls the createStudent method to create a new student from the information that we want
-			
-			Student student = createStudent(id,1,2,3,6,13,12,15,16,18,20,17,19,21,69,72,73,74,75,76,currentRow);
+			Student student = createStudent(id,fName,lName,age,gender,check,returningTeacher,iORStudent,fInstrument,sInstrument, tInstrument,fILevel,sILevel,tILevel, language,t1,t2,t3,t4,t5,currentRow);
 			students.add(student);
 			
 			// TODO: remove these print statements after showing Dr. Stotts it works
-			printOutput(student);
+			//printOutput(student);
 			
 			//increase the id so the next student has a new id
 			id++;
@@ -108,47 +141,109 @@ public class ExcelReader {
 			//check to see if this person has a sibling
 			s1= 22;
 			
-			//if (getStringFromCell(currentRow,s1).equalsIgnoreCase("no")){
-			//	break;
-			//}
-			
 			if (getStringFromCell(currentRow,s1).equalsIgnoreCase("yes")){
 				
+				fName = 23;
+				lName = 24;
+				age = 25;
+				gender = 28;
+				check = 30;
+				returningTeacher = 29;
+				iORStudent = 31;
+				fInstrument = 33;
+				sInstrument = 35;
+				tInstrument = 37;
+				fILevel = 34;
+				sILevel = 36;
+				tILevel = 38;
+				language = 75;
+				t1 = 78;
+				t2 = 79;
+				t3 = 80;
+				t4 = 81;
+				t5 = 82;
+				
 				//currently the sibling has no field of returning instrument, so I will capture their first choice instrument as their returning instrument
-				Siblings.sibling1 = createStudent(id, 23, 24, 25, 28, 30, 29, 31,31, 33, 35, 32, 34, 36, 69, 72, 73, 74, 75, 76, currentRow);
+				Siblings.sibling1 = createStudent(id,fName,lName,age,gender,check,returningTeacher,iORStudent,fInstrument,sInstrument, tInstrument,fILevel,sILevel,tILevel, language,t1,t2,t3,t4,t5,currentRow);
+
+				//add the sibling to the overall students ArrayList
 				students.add(Siblings.sibling1);
 				
 				//add the new sibling to the student's sibling ArrayList
 				student.getSiblings().add(Siblings.sibling1);
 				Siblings.sibling1.getSiblings().add(student);
 				
-				//print output to console to check field values
-				printOutput(Siblings.sibling1);
+				//printOutput(Siblings.sibling1);
 				id++;
 			}
-			s2 = 37;
+			s2 = 39;
+			//check to see if they have a second sibling
 			if (getStringFromCell(currentRow, s2).equalsIgnoreCase("yes")){
 				
+				fName = 40;
+				lName = 41;
+				age = 42;
+				gender = 45;
+				check = 47;
+				returningTeacher = 46;
+				iORStudent = 48;
+				fInstrument = 50;
+				sInstrument = 52;
+				tInstrument = 54;
+				fILevel = 51;
+				sILevel = 53;
+				tILevel = 55;
+				language = 75;
+				t1 = 78;
+				t2 = 79;
+				t3 = 80;
+				t4 = 81;
+				t5 = 82;
+				
 				//currently the sibling has no field of returning instrument, so I will capture their first choice instrument as their returning instrument
-				Siblings.sibling2 = createStudent(id, 38, 39, 40, 43, 44, 45, 46, 46, 48, 50, 47, 49, 51, 69, 72, 73, 74, 75, 76, currentRow);
+				Siblings.sibling2= createStudent(id,fName,lName,age,gender,check,returningTeacher,iORStudent,fInstrument,sInstrument, tInstrument,fILevel,sILevel,tILevel, language,t1,t2,t3,t4,t5,currentRow);
+
 				students.add(Siblings.sibling2);
 				
+				//update the Sibling ArrayList of all existing students
 				student.getSiblings().add(Siblings.sibling2);
 				Siblings.sibling1.getSiblings().add(Siblings.sibling2);
 				Siblings.sibling2.getSiblings().add(student);
 				Siblings.sibling2.getSiblings().add(Siblings.sibling1);
 				
-				//print output to console to check field values
-				printOutput(Siblings.sibling2);
+				
+				//printOutput(Siblings.sibling2);
 				id++;
 			}
 			
 			
-			s3 = 52;
+			s3 = 56;
+			//check to see if this student has more siblings. 
 			if (getStringFromCell(currentRow, s3).equalsIgnoreCase("yes")){
 				
+				fName = 57;
+				lName = 58;
+				age = 59;
+				gender = 62;
+				check = 64;
+				returningTeacher = 63;
+				iORStudent = 65;
+				fInstrument = 67;
+				sInstrument = 69;
+				tInstrument = 71;
+				fILevel = 68;
+				sILevel = 70;
+				tILevel = 72;
+				language = 75;
+				t1 = 78;
+				t2 = 79;
+				t3 = 80;
+				t4 = 81;
+				t5 = 82;
+				
 				//currently the sibling has no field of returning instrument, so I will capture their first choice instrument as their returning instrument
-				Siblings.sibling3 = createStudent(id, 53, 54, 55, 58, 60,59,61,61,63,65,62,64,66,69,72,73,74,75,76,currentRow);
+				Siblings.sibling3= createStudent(id,fName,lName,age,gender,check,returningTeacher,iORStudent,fInstrument,sInstrument, tInstrument,fILevel,sILevel,tILevel, language,t1,t2,t3,t4,t5,currentRow);
+
 				students.add(Siblings.sibling3);
 				//adding the siblings to each other's Siblings ArrayLists
 				student.getSiblings().add(Siblings.sibling3);
@@ -157,25 +252,29 @@ public class ExcelReader {
 				Siblings.sibling3.getSiblings().add(student);
 				Siblings.sibling3.getSiblings().add(Siblings.sibling1);
 				Siblings.sibling3.getSiblings().add(Siblings.sibling2);
-				
-			
-				
-				
-				//print output to console to check field values
+								
 
-				printOutput(Siblings.sibling3);
+				//printOutput(Siblings.sibling3);
 				
 				id++;
 			}
 		}
 		
 		//students.toString()
-		for (int i = 0; i< students.get(3).getSiblings().size();i++){
-			System.out.println(students.get(3).getSiblings().get(i).getName());
+		//for (int i = 0; i< students.get(3).getSiblings().size();i++){
+			//System.out.println(students.get(3).getSiblings().get(i).getName());
+		//}
+		for (int i = 0; i<students.size();i++){
+			System.out.println("The siblings of " + students.get(i).getName() + " are the following:");
+			for (int j = 0; j < students.get(i).getSiblings().size();j++){
+			System.out.print(students.get(i).getSiblings().get(j).getName() + " ");
+			}
+			System.out.println(" ");
 		}
 		
 		workbook.close();
-		
+		//TODO: return the students ArrayList
+		//return students;
 	}
 	
 	// Open an excel document with Teacher data, parse the data, and return an ArrayList of Teacher objects
@@ -391,6 +490,7 @@ public class ExcelReader {
 	}
 }
 
+// class to declare Student sibling objects so that they can be used globally
 class Siblings{
 	public static Student sibling1;
 	public static Student sibling2;
