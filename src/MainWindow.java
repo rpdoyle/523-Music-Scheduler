@@ -215,6 +215,19 @@ class ScheduleButtonActionListener implements ActionListener {
 			System.err.println("InvalidInputException");
 			showErrorDialog(iife.getMessage());
 		}
+		
+		try {
+			ExcelReader.parseTeacherData(teacherDataTextField.getText());
+		} catch (FileNotFoundException fnfe) {
+			System.err.println("FileNotFoundException");
+			showErrorDialog(fnfe.getMessage());
+		} catch (IOException ioe) {
+			System.err.println("IOException");
+			showErrorDialog(ioe.getMessage());
+		} catch (InvalidInputFormatException iife) {
+			System.err.println("InvalidInputException");
+			showErrorDialog(iife.getMessage());
+		}
 	}
 	
 	// Play an error sound and display an error dialog with a given message
