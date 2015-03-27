@@ -55,7 +55,7 @@ public class ExcelReader {
 			
 			String[] specialInstrumentsArr = getStringArrayFromCell(currentRow, 2);
 			
-			int[] availableTimes = getAvailableTimes(3,4, 5, 6,7, currentRow);
+			int[] availableTimes = getAvailableTimes(3, 4, 5, 6, 7, currentRow);
 			
 			// Create a new room object with the data we just parsed out of the spreadsheet
 			Room room = new Room(roomName, specialInstrumentsArr, availableTimes);
@@ -89,7 +89,7 @@ public class ExcelReader {
 		//declaring the variables that will hold the column values to check if the student has (a) sibling(s)
 		int s1, s2, s3;
 		//declaring variables that are passed to the student method to create a new student. These variables hold the
-		//column name of their corresponding pieces of information
+		//column number of their corresponding pieces of information
 		int fName;
 		int lName;
 		int age;
@@ -141,6 +141,10 @@ public class ExcelReader {
 			//check to see if this person has a sibling
 			s1= 22;
 			
+			Student sibling1 = null;
+			Student sibling2 = null;
+			Student sibling3 = null;
+			
 			if (getStringFromCell(currentRow,s1).equalsIgnoreCase("yes")){
 				
 				fName = 23;
@@ -164,14 +168,14 @@ public class ExcelReader {
 				t5 = 82;
 				
 				//currently the sibling has no field of returning instrument, so I will capture their first choice instrument as their returning instrument
-				Siblings.sibling1 = createStudent(id,fName,lName,age,gender,check,returningTeacher,iORStudent,fInstrument,sInstrument, tInstrument,fILevel,sILevel,tILevel, language,t1,t2,t3,t4,t5,currentRow);
+				sibling1 = createStudent(id,fName,lName,age,gender,check,returningTeacher,iORStudent,fInstrument,sInstrument, tInstrument,fILevel,sILevel,tILevel, language,t1,t2,t3,t4,t5,currentRow);
 
 				//add the sibling to the overall students ArrayList
-				students.add(Siblings.sibling1);
+				students.add(sibling1);
 				
 				//add the new sibling to the student's sibling ArrayList
-				student.getSiblings().add(Siblings.sibling1);
-				Siblings.sibling1.getSiblings().add(student);
+				student.getSiblings().add(sibling1);
+				sibling1.getSiblings().add(student);
 				
 				//printOutput(Siblings.sibling1);
 				id++;
@@ -201,15 +205,15 @@ public class ExcelReader {
 				t5 = 82;
 				
 				//currently the sibling has no field of returning instrument, so I will capture their first choice instrument as their returning instrument
-				Siblings.sibling2= createStudent(id,fName,lName,age,gender,check,returningTeacher,iORStudent,fInstrument,sInstrument, tInstrument,fILevel,sILevel,tILevel, language,t1,t2,t3,t4,t5,currentRow);
+				sibling2= createStudent(id,fName,lName,age,gender,check,returningTeacher,iORStudent,fInstrument,sInstrument, tInstrument,fILevel,sILevel,tILevel, language,t1,t2,t3,t4,t5,currentRow);
 
-				students.add(Siblings.sibling2);
+				students.add(sibling2);
 				
 				//update the Sibling ArrayList of all existing students
-				student.getSiblings().add(Siblings.sibling2);
-				Siblings.sibling1.getSiblings().add(Siblings.sibling2);
-				Siblings.sibling2.getSiblings().add(student);
-				Siblings.sibling2.getSiblings().add(Siblings.sibling1);
+				student.getSiblings().add(sibling2);
+				sibling1.getSiblings().add(sibling2);
+				sibling2.getSiblings().add(student);
+				sibling2.getSiblings().add(sibling1);
 				
 				
 				//printOutput(Siblings.sibling2);
@@ -242,16 +246,16 @@ public class ExcelReader {
 				t5 = 82;
 				
 				//currently the sibling has no field of returning instrument, so I will capture their first choice instrument as their returning instrument
-				Siblings.sibling3= createStudent(id,fName,lName,age,gender,check,returningTeacher,iORStudent,fInstrument,sInstrument, tInstrument,fILevel,sILevel,tILevel, language,t1,t2,t3,t4,t5,currentRow);
+				sibling3= createStudent(id,fName,lName,age,gender,check,returningTeacher,iORStudent,fInstrument,sInstrument, tInstrument,fILevel,sILevel,tILevel, language,t1,t2,t3,t4,t5,currentRow);
 
-				students.add(Siblings.sibling3);
+				students.add(sibling3);
 				//adding the siblings to each other's Siblings ArrayLists
-				student.getSiblings().add(Siblings.sibling3);
-				Siblings.sibling1.getSiblings().add(Siblings.sibling3);
-				Siblings.sibling2.getSiblings().add(Siblings.sibling3);
-				Siblings.sibling3.getSiblings().add(student);
-				Siblings.sibling3.getSiblings().add(Siblings.sibling1);
-				Siblings.sibling3.getSiblings().add(Siblings.sibling2);
+				student.getSiblings().add(sibling3);
+				sibling1.getSiblings().add(sibling3);
+				sibling2.getSiblings().add(sibling3);
+				sibling3.getSiblings().add(student);
+				sibling3.getSiblings().add(sibling1);
+				sibling3.getSiblings().add(sibling2);
 								
 
 				//printOutput(Siblings.sibling3);
@@ -299,7 +303,7 @@ public class ExcelReader {
 		}
 	
 	// If possible, get the string representation of the value of a cell at a given row and cell index
-	private static String getStringFromCell(Row row, int index) throws InvalidInputFormatException {
+	private static String getStringFromCell(Row row, int index/*, boolean required*/) throws InvalidInputFormatException {
 		// Get the value of the requested cell, or create a blank cell if the requested cell is null (no value)
 		currentCell = row.getCell(index, Row.CREATE_NULL_AS_BLANK);
 		
@@ -309,7 +313,7 @@ public class ExcelReader {
 			// TODO: this has a known limitation of not allowing decimals in numerical cells.
 			// This is very minor for our use cases.
 			return String.valueOf((int)currentCell.getNumericCellValue());
-		} else if (currentCell.getCellType() == Cell.CELL_TYPE_BLANK) {
+		} else if (currentCell.getCellType() == Cell.CELL_TYPE_BLANK /*&& (!required)*/) {
 			return "";
 		} else {
 			// If we could not get a string from the cell, show an error with the human-readable cell reference (e.g. A4)
@@ -319,7 +323,7 @@ public class ExcelReader {
 	}
 	
 	// If possible, read the value of a cell at a given row and cell index as a comma separated array of strings
-	private static String[] getStringArrayFromCell(Row row, int index) throws InvalidInputFormatException {
+	private static String[] getStringArrayFromCell(Row row, int index/*, boolean required*/) throws InvalidInputFormatException {
 		// Get the value of the requested cell, or create a blank cell if the requested cell is null (no value)
 		currentCell = row.getCell(index, Row.CREATE_NULL_AS_BLANK);
 		
@@ -330,7 +334,7 @@ public class ExcelReader {
 			// This is very minor for our use cases.
 			String[] result = {String.valueOf((int)currentCell.getNumericCellValue())};
 			return result;
-		} else if (currentCell.getCellType() == Cell.CELL_TYPE_BLANK) {
+		} else if (currentCell.getCellType() == Cell.CELL_TYPE_BLANK/* && (!required)*/) {
 			return new String[0];
 		} else {
 			// If we could not get a string array from the cell, show an error with the human-readable cell reference (e.g. A4)
@@ -400,13 +404,14 @@ public class ExcelReader {
 		return startTimes;
 	}
 	
-	private static int[] getAvailableTimes(int t1, int t2, int t3, int t4, int t5, XSSFRow current) throws InvalidInputFormatException{
+	//c1-c5 correspond to the column values corresponding to Monday through Friday
+	private static int[] getAvailableTimes(int c1, int c2, int c3, int c4, int c5, XSSFRow current) throws InvalidInputFormatException{
 		// Get arrays of strings representing meetings times throughout the week
-		String[] mondayTimesArr = getStringArrayFromCell(current, t1);
-		String[] tuesdayTimesArr = getStringArrayFromCell(current, t2);
-		String[] wednesdayTimesArr = getStringArrayFromCell(current, t3);
-		String[] thursdayTimesArr = getStringArrayFromCell(current, t4);
-		String[] fridayTimesArr = getStringArrayFromCell(current, t5);
+		String[] mondayTimesArr = getStringArrayFromCell(current, c1);
+		String[] tuesdayTimesArr = getStringArrayFromCell(current, c2);
+		String[] wednesdayTimesArr = getStringArrayFromCell(current, c3);
+		String[] thursdayTimesArr = getStringArrayFromCell(current, c4);
+		String[] fridayTimesArr = getStringArrayFromCell(current, c5);
 
 		// Convert the arrays of strings to arrays of integers representing
 		// the meeting start times as the number of minutes since 12:00 AM Monday
@@ -491,8 +496,8 @@ public class ExcelReader {
 }
 
 // class to declare Student sibling objects so that they can be used globally
-class Siblings{
-	public static Student sibling1;
-	public static Student sibling2;
-	public static Student sibling3;
-}
+//class Siblings{
+//	public static Student sibling1;
+//	public static Student sibling2;
+//	public static Student sibling3;
+//}
