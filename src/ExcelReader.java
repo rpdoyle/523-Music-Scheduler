@@ -111,37 +111,50 @@ public class ExcelReader {
 			String firstName = getStringFromCell(currentRow, 1, true);
 			String lastName = getStringFromCell(currentRow, 2, true);
 
-			// Get information about the returning student
-			String returningStudent = getStringFromCell(currentRow, 9, true);
-			String returningInstrument = getStringFromCell(currentRow, 10, true);
-			String keepReturningStudent = getStringFromCell(currentRow, 11, true);
+			// Check to see if the teacher is returning
+			String returningTeacher = getStringFromCell(currentRow, 8, true);
 
+			String returningStudent = "";
+			String returningInstrument = "";
+			String keepReturningStudent = "";
+
+			if (returningTeacher.equalsIgnoreCase("yes")) {
+				// Get information about the returning student if the teacher is
+				// returning
+				returningStudent = getStringFromCell(currentRow, 9, true);
+				returningInstrument = getStringFromCell(currentRow, 10, true);
+				keepReturningStudent = getStringFromCell(currentRow, 11, true);
+			}
 			// Get information about the teacher's instruments
-			String[] instrumentArr = getStringArrayFromCell(currentRow, 12, true);
-			String[] instrumentExperienceArr = getStringArrayFromCell(currentRow, 13, true);
+			String[] instrumentArr = getStringArrayFromCell(currentRow, 12,
+					true);
+			String[] instrumentExperienceArr = getStringArrayFromCell(
+					currentRow, 13, true);
 
 			// Get teacher's preferences for student gender, age, and level
 			String genderPreference = getStringFromCell(currentRow, 14, true);
 			String agePreference = getStringFromCell(currentRow, 15, true);
 			String levelPreference = getStringFromCell(currentRow, 16, true);
-			
+
 			// Get teacher's language
-			String[] languageArr = getStringArrayFromCell(currentRow, 17, true);
+			String[] languageArr = getStringArrayFromCell(currentRow, 17, false);
 
 			// Get information about teacher's crime record
 			String crimeRecord = getStringFromCell(currentRow, 19, true);
 
 			// Get teacher's available times
-			int[] availableTimes = getAvailableTimes(24, 25, 26, 27, 28, currentRow);
+			int[] availableTimes = getAvailableTimes(24, 25, 26, 27, 28,
+					currentRow);
 
-			// Create a new teacher object with the data we just parsed out of the
+			// Create a new teacher object with the data we just parsed out of
+			// the
 			// spreadsheet
 			Teacher teacher = new Teacher(id, firstName, lastName,
 					returningStudent, returningInstrument,
 					keepReturningStudent, instrumentArr,
 					instrumentExperienceArr, genderPreference, agePreference,
 					levelPreference, languageArr, crimeRecord, availableTimes);
-			
+
 			teachers.add(teacher);
 
 			// TODO: remove these print statements after showing Dr. Stotts it
@@ -154,7 +167,8 @@ public class ExcelReader {
 			System.out.println(teacher.getReturningInstrument());
 			System.out.println(teacher.getKeepReturningStudent());
 			System.out.println(Arrays.toString(teacher.getInstruments()));
-			System.out.println(Arrays.toString(teacher.getInstrumentExperience()));
+			System.out.println(Arrays.toString(teacher
+					.getInstrumentExperience()));
 			System.out.println(teacher.getGenderPreference());
 			System.out.println(teacher.getAgePreference());
 			System.out.println(teacher.getLevelPreference());
@@ -183,7 +197,8 @@ public class ExcelReader {
 			// numerical cells.
 			// This is very minor for our use cases.
 			return String.valueOf((int) currentCell.getNumericCellValue());
-		} else if (currentCell.getCellType() == Cell.CELL_TYPE_BLANK && (!required)) {
+		} else if (currentCell.getCellType() == Cell.CELL_TYPE_BLANK
+				&& (!required)) {
 			return "";
 		} else {
 			// If we could not get a string from the cell, show an error with
@@ -198,8 +213,8 @@ public class ExcelReader {
 
 	// If possible, read the value of a cell at a given row and cell index as a
 	// comma separated array of strings
-	private static String[] getStringArrayFromCell(Row row, int index, boolean required)
-			throws InvalidInputFormatException {
+	private static String[] getStringArrayFromCell(Row row, int index,
+			boolean required) throws InvalidInputFormatException {
 		// Get the value of the requested cell, or create a blank cell if the
 		// requested cell is null (no value)
 		currentCell = row.getCell(index, Row.CREATE_NULL_AS_BLANK);
@@ -213,7 +228,8 @@ public class ExcelReader {
 			String[] result = { String.valueOf((int) currentCell
 					.getNumericCellValue()) };
 			return result;
-		} else if (currentCell.getCellType() == Cell.CELL_TYPE_BLANK && (!required)) {
+		} else if (currentCell.getCellType() == Cell.CELL_TYPE_BLANK
+				&& (!required)) {
 			return new String[0];
 		} else {
 			// If we could not get a string array from the cell, show an error
@@ -304,14 +320,15 @@ public class ExcelReader {
 
 		return startTimes;
 	}
-	
-	private static int[] getAvailableTimes(int c1, int c2,
-			int c3, int c4, int c5, XSSFRow currentRow) throws InvalidInputFormatException {
+
+	private static int[] getAvailableTimes(int c1, int c2, int c3, int c4,
+			int c5, XSSFRow currentRow) throws InvalidInputFormatException {
 		// Get arrays of strings representing meetings times throughout the
 		// week
 		String[] mondayTimesArr = getStringArrayFromCell(currentRow, c1, true);
 		String[] tuesdayTimesArr = getStringArrayFromCell(currentRow, c2, true);
-		String[] wednesdayTimesArr = getStringArrayFromCell(currentRow, c3, true);
+		String[] wednesdayTimesArr = getStringArrayFromCell(currentRow, c3,
+				true);
 		String[] thursdayTimesArr = getStringArrayFromCell(currentRow, c4, true);
 		String[] fridayTimesArr = getStringArrayFromCell(currentRow, c5, true);
 
