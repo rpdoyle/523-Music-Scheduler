@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -203,8 +204,12 @@ class ScheduleButtonActionListener implements ActionListener {
 			showErrorDialog("Please specify a spreadsheet with teacher data.");
 		}
 		
+		ArrayList<Room> rooms = null;
+		ArrayList<Student> students = null;
+		ArrayList<Teacher> teachers = null;
+		
 		try {
-			ExcelReader.parseRoomData(roomDataTextField.getText());
+			rooms = ExcelReader.parseRoomData(roomDataTextField.getText());
 		} catch (FileNotFoundException fnfe) {
 			System.err.println("FileNotFoundException");
 			showErrorDialog(fnfe.getMessage());
@@ -217,7 +222,7 @@ class ScheduleButtonActionListener implements ActionListener {
 		}
 
 		try {
-			ArrayList<Student> students = ExcelReader.parseStudentData(studentDataTextField.getText());
+			students = ExcelReader.parseStudentData(studentDataTextField.getText());
 		} catch (FileNotFoundException fnfe) {
 			System.err.println("FileNotFoundException");
 			showErrorDialog(fnfe.getMessage());
@@ -230,7 +235,7 @@ class ScheduleButtonActionListener implements ActionListener {
 		}
 
 		try {
-			ExcelReader.parseTeacherData(teacherDataTextField.getText());
+			teachers = ExcelReader.parseTeacherData(teacherDataTextField.getText());
 		} catch (FileNotFoundException fnfe) {
 			System.err.println("FileNotFoundException");
 			showErrorDialog(fnfe.getMessage());
@@ -241,6 +246,12 @@ class ScheduleButtonActionListener implements ActionListener {
 			System.err.println("InvalidInputException");
 			showErrorDialog(iife.getMessage());
 		}
+		
+		// TODO: eventually, errors in the parsing should stop the program, but not right now for the sake of demoing to Stotts
+		
+		// TODO: scoring
+		
+		// TODO: scheduling
 	}
 	
 	// Play an error sound and display an error dialog with a given message

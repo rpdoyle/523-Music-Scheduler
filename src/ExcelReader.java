@@ -33,7 +33,7 @@ public class ExcelReader {
 	private static Cell currentCell = null;
 	
 	// Open an excel document with Room data, parse the data, and return an ArrayList of Room objects
-	public static void parseRoomData(String filepath) throws FileNotFoundException, IOException, InvalidInputFormatException {
+	public static ArrayList<Room> parseRoomData(String filepath) throws FileNotFoundException, IOException, InvalidInputFormatException {
 		// Open the excel document, select the first sheet, and create an iterator to iterate over the rows
 		FileInputStream inputStream = new FileInputStream(filepath);
 		XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
@@ -68,6 +68,8 @@ public class ExcelReader {
 		}
 		
 		workbook.close();
+		
+		return rooms;
 	}
 	
 	// TODO: return the ArrayList, i.e. change from void to ArrayList<Student>
@@ -270,7 +272,7 @@ public class ExcelReader {
 	
 	// Open an excel document with Teacher data, parse the data, and return an
 	// ArrayList of Teacher objects
-	public static ArrayList<Teachers> parseTeacherData(String filepath)
+	public static ArrayList<Teacher> parseTeacherData(String filepath)
 			throws FileNotFoundException, IOException,
 			InvalidInputFormatException {
 		// Open the excel document, select the first sheet, and create an
@@ -455,7 +457,7 @@ public class ExcelReader {
 			
 			if (!timePattern.matcher(times[i]).matches()) {
 				// If we encounter an invalid date format, show an error with the invalid format and examples of proper format
-				throw new InvalidInputFormatException("Room Data Error\n\nThe following time is not formatted properly: " + times[i] + ".\n\nExamples of acceptable time formats:\n"
+				throw new InvalidInputFormatException("Data Error\n\nThe following time is not formatted properly: " + times[i] + ".\n\nExamples of acceptable time formats:\n"
 						+ "9:00-10:00 PM\n9:00-10:00 pm\n9:00-10:00 AM\n9:00-10:00 am\n\nMultiple times must be separated by commas.");
 			}
 
@@ -485,7 +487,7 @@ public class ExcelReader {
 				startTimes[i] = time;
 			} catch (Exception e) {
 				// If we encounter an invalid date format, show an error with the invalid format and examples of proper format
-				throw new InvalidInputFormatException("Room Data Error\n\nThe following time is not formatted properly: " + times[i] + ".\n\nExamples of acceptable time formats:\n"
+				throw new InvalidInputFormatException("Data Error\n\nThe following time is not formatted properly: " + times[i] + ".\n\nExamples of acceptable time formats:\n"
 						+ "9:00-10:00 PM\n9:00-10:00 pm\n9:00-10:00 AM\n9:00-10:00 am\n\nMultiple times must be separated by commas.");
 			}
 		}
@@ -540,6 +542,7 @@ public class ExcelReader {
 			startIndex += thursdayIntTimes.length;
 			System.arraycopy(fridayIntTimes, 0, availableTimes, startIndex, fridayIntTimes.length);
 		}
+		
 		return availableTimes;
 	}
 	
@@ -549,9 +552,9 @@ public class ExcelReader {
 		
 		String name = getStringFromCell(currentRow, fName, true) + " " + getStringFromCell(currentRow,lName, true);
 		
-		String age = getStringFromCell(currentRow,a, true);
+		String age = getStringFromCell(currentRow, a, true);
 		
-		String gender = getStringFromCell(currentRow,g, true);
+		String gender = getStringFromCell(currentRow, g, true);
 		
 		//check to see if this student is returning and wants to have the same teacher
 		String checker = getStringFromCell (currentRow, check, false);
@@ -566,7 +569,7 @@ public class ExcelReader {
 		String instrumentOfReturningStudent = getStringFromCell(currentRow, iORStudent, false);
 		
 		//stores the instrument preferences in increasing order i.e. index 0 = choice 1, index 1 = choice 2, etc. 
-		String[] instruments = {getStringFromCell(currentRow, i1,true),getStringFromCell(currentRow, i2, true), getStringFromCell(currentRow, i3, true)}; 
+		String[] instruments = {getStringFromCell(currentRow, i1, true),getStringFromCell(currentRow, i2, true), getStringFromCell(currentRow, i3, true)}; 
 		
 		//stores the years of experience with each instrument, in increasing order
 		
