@@ -294,10 +294,20 @@ public class ExcelReader {
 			String firstName = getStringFromCell(currentRow, 1, true);
 			String lastName = getStringFromCell(currentRow, 2, true);
 
-			// Get information about the returning student
-			String returningStudent = getStringFromCell(currentRow, 9, true);
-			String returningInstrument = getStringFromCell(currentRow, 10, true);
-			String keepReturningStudent = getStringFromCell(currentRow, 11, true);
+			// Check to see if the teacher is returning
+			String returningTeacher = getStringFromCell(currentRow, 8, true);
+
+			String returningStudent = "";
+			String returningInstrument = "";
+			String keepReturningStudent = "";
+
+			if (returningTeacher.equalsIgnoreCase("yes")) {
+				// Get information about the returning student if the teacher is
+				// returning
+				returningStudent = getStringFromCell(currentRow, 9, true);
+				returningInstrument = getStringFromCell(currentRow, 10, true);
+				keepReturningStudent = getStringFromCell(currentRow, 11, true);
+			}
 
 			// Get information about the teacher's instruments
 			String[] instrumentArr = getStringArrayFromCell(currentRow, 12, true);
@@ -309,7 +319,7 @@ public class ExcelReader {
 			String levelPreference = getStringFromCell(currentRow, 16, true);
 			
 			// Get teacher's language
-			String[] languageArr = getStringArrayFromCell(currentRow, 17, true);
+			String[] languageArr = getStringArrayFromCell(currentRow, 17, false);
 
 			// Get information about teacher's crime record
 			String crimeRecord = getStringFromCell(currentRow, 19, true);
@@ -429,10 +439,10 @@ public class ExcelReader {
 	// Wednesday a 2, etc.
 	//
 	// Date are expected to follow the following format guidelines:
-	//		- Dates must be in AM/PM format, not military time
-	// 		- Leading 0s before single digit hours are optional, but accepted
-	//		- There may be any number of spaces, or none, between the minutes and AM or PM
-	//		- AM and PM may be written as am, AM, pm, or PM, but mixed capitalization is not allowed
+	// - Dates must be in AM/PM format, not military time
+	// - Leading 0s before single digit hours are optional, but accepted
+	// - There may be any number of spaces, or none, between the minutes and AM or PM
+	// - AM and PM may be written as am, AM, pm, or PM, but mixed capitalization is not allowed
 	private static int[] getStartTimeArr(String[] times, int dayOffset) throws InvalidInputFormatException {
 		int[] startTimes = new int[times.length];
 		boolean isPM = false;
