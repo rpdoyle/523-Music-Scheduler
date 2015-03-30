@@ -11,7 +11,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -132,10 +131,10 @@ public class MainWindow {
 			System.err.println("Error: Could not set system look and feel");
 		}
 		
-		roomDataTextField.setText("/Users/fcollins/desktop/COMP523/Copy of Room Information (Responses).xlsx");
-		studentDataTextField.setText("/Users/fcollins/desktop/COMP523/Student Application (Responses)_2.xlsx");
-		teacherDataTextField.setText("/Users/fcollins/desktop/COMP523/Room Information (Responses).xlsx");
-		//"C:\\Users\\Ryan\\workspace\\523-Music-Scheduler\\test-files\\Room Information (Responses).xlsx"
+		roomDataTextField.setText("C:\\Users\\Ryan\\workspace\\523-Music-Scheduler\\test-files\\Room Information (Responses).xlsx");
+		studentDataTextField.setText("C:\\Users\\Ryan\\workspace\\523-Music-Scheduler\\test-files\\Room Information (Responses).xlsx");
+		teacherDataTextField.setText("C:\\Users\\Ryan\\workspace\\523-Music-Scheduler\\test-files\\Room Information (Responses).xlsx");
+		
 		// Display the frame on the screen
 		frame.setVisible(true);
 	}
@@ -217,9 +216,21 @@ class ScheduleButtonActionListener implements ActionListener {
 			showErrorDialog(iife.getMessage());
 		}
 
-		
 		try {
 			ArrayList<Student> students = ExcelReader.parseStudentData(studentDataTextField.getText());
+		} catch (FileNotFoundException fnfe) {
+			System.err.println("FileNotFoundException");
+			showErrorDialog(fnfe.getMessage());
+		} catch (IOException ioe) {
+			System.err.println("IOException");
+			showErrorDialog(ioe.getMessage());
+		} catch (InvalidInputFormatException iife) {
+			System.err.println("InvalidInputException");
+			showErrorDialog(iife.getMessage());
+		}
+
+		try {
+			ExcelReader.parseTeacherData(teacherDataTextField.getText());
 		} catch (FileNotFoundException fnfe) {
 			System.err.println("FileNotFoundException");
 			showErrorDialog(fnfe.getMessage());
