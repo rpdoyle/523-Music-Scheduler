@@ -51,9 +51,9 @@ public class ExcelReader {
 		while (rowsIterator.hasNext()) { 
 			XSSFRow currentRow = (XSSFRow)rowsIterator.next();
 			
-			String roomName = getStringFromCell(currentRow, 1);
+			String roomName = getStringFromCell(currentRow, 1, true);
 			
-			String[] specialInstrumentsArr = getStringArrayFromCell(currentRow, 2);
+			String[] specialInstrumentsArr = getStringArrayFromCell(currentRow, 2, false);
 			
 			int[] availableTimes = getAvailableTimes(3, 4, 5, 6, 7, currentRow);
 			
@@ -64,15 +64,15 @@ public class ExcelReader {
 			// TODO: remove these print statements after showing Dr. Stotts it works
 			System.out.println("Found another room");
 			System.out.println(room.getName());
-			//System.out.println(Arrays.toString(room.getSpecialInstruments()));
-			//System.out.println(Arrays.toString(room.getAvailableTimes()));
+			System.out.println(Arrays.toString(room.getSpecialInstruments()));
+			System.out.println(Arrays.toString(room.getAvailableTimes()));
 		}
 		
 		workbook.close();
 	}
 	
 	// TODO: return the ArrayList, i.e. change from void to ArrayList<Student>
-	public static void parseStudentData(String filepath) throws FileNotFoundException, IOException, InvalidInputFormatException {
+	public static ArrayList<Student> parseStudentData(String filepath) throws FileNotFoundException, IOException, InvalidInputFormatException {
 		
 		FileInputStream inputStream = new FileInputStream(filepath);
 		XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
@@ -133,7 +133,7 @@ public class ExcelReader {
 			students.add(student);
 			
 			// TODO: remove these print statements after showing Dr. Stotts it works
-			//printOutput(student);
+			printOutput(student);
 			
 			//increase the id so the next student has a new id
 			id++;
@@ -145,7 +145,7 @@ public class ExcelReader {
 			Student sibling2 = null;
 			Student sibling3 = null;
 			
-			if (getStringFromCell(currentRow,s1).equalsIgnoreCase("yes")){
+			if (getStringFromCell(currentRow,s1, true).equalsIgnoreCase("yes")){
 				
 				fName = 23;
 				lName = 24;
@@ -177,12 +177,13 @@ public class ExcelReader {
 				student.getSiblings().add(sibling1);
 				sibling1.getSiblings().add(student);
 				
-				//printOutput(Siblings.sibling1);
+				//TODO: remove these print statements after Dr. Stotts sees the output
+				printOutput(sibling1);
 				id++;
 			}
 			s2 = 39;
 			//check to see if they have a second sibling
-			if (getStringFromCell(currentRow, s2).equalsIgnoreCase("yes")){
+			if (getStringFromCell(currentRow, s2, false).equalsIgnoreCase("yes")){
 				
 				fName = 40;
 				lName = 41;
@@ -204,7 +205,6 @@ public class ExcelReader {
 				t4 = 81;
 				t5 = 82;
 				
-				//currently the sibling has no field of returning instrument, so I will capture their first choice instrument as their returning instrument
 				sibling2= createStudent(id,fName,lName,age,gender,check,returningTeacher,iORStudent,fInstrument,sInstrument, tInstrument,fILevel,sILevel,tILevel, language,t1,t2,t3,t4,t5,currentRow);
 
 				students.add(sibling2);
@@ -216,14 +216,14 @@ public class ExcelReader {
 				sibling2.getSiblings().add(sibling1);
 				
 				
-				//printOutput(Siblings.sibling2);
+				printOutput(sibling2);
 				id++;
 			}
 			
 			
 			s3 = 56;
 			//check to see if this student has more siblings. 
-			if (getStringFromCell(currentRow, s3).equalsIgnoreCase("yes")){
+			if (getStringFromCell(currentRow, s3, false).equalsIgnoreCase("yes")){
 				
 				fName = 57;
 				lName = 58;
@@ -245,10 +245,10 @@ public class ExcelReader {
 				t4 = 81;
 				t5 = 82;
 				
-				//currently the sibling has no field of returning instrument, so I will capture their first choice instrument as their returning instrument
 				sibling3= createStudent(id,fName,lName,age,gender,check,returningTeacher,iORStudent,fInstrument,sInstrument, tInstrument,fILevel,sILevel,tILevel, language,t1,t2,t3,t4,t5,currentRow);
 
 				students.add(sibling3);
+				
 				//adding the siblings to each other's Siblings ArrayLists
 				student.getSiblings().add(sibling3);
 				sibling1.getSiblings().add(sibling3);
@@ -257,28 +257,16 @@ public class ExcelReader {
 				sibling3.getSiblings().add(sibling1);
 				sibling3.getSiblings().add(sibling2);
 								
-
-				//printOutput(Siblings.sibling3);
+				//TODO: remove these print statements once Dr. Stott's sees the output
+				printOutput(sibling3);
 				
 				id++;
 			}
 		}
 		
-		//students.toString()
-		//for (int i = 0; i< students.get(3).getSiblings().size();i++){
-			//System.out.println(students.get(3).getSiblings().get(i).getName());
-		//}
-		for (int i = 0; i<students.size();i++){
-			System.out.println("The siblings of " + students.get(i).getName() + " are the following:");
-			for (int j = 0; j < students.get(i).getSiblings().size();j++){
-			System.out.print(students.get(i).getSiblings().get(j).getName() + " ");
-			}
-			System.out.println(" ");
-		}
-		
 		workbook.close();
-		//TODO: return the students ArrayList
-		//return students;
+		
+		return students;
 	}
 	
 	// Open an excel document with Teacher data, parse the data, and return an ArrayList of Teacher objects
@@ -303,7 +291,7 @@ public class ExcelReader {
 		}
 	
 	// If possible, get the string representation of the value of a cell at a given row and cell index
-	private static String getStringFromCell(Row row, int index/*, boolean required*/) throws InvalidInputFormatException {
+	private static String getStringFromCell(Row row, int index, boolean required) throws InvalidInputFormatException {
 		// Get the value of the requested cell, or create a blank cell if the requested cell is null (no value)
 		currentCell = row.getCell(index, Row.CREATE_NULL_AS_BLANK);
 		
@@ -313,9 +301,15 @@ public class ExcelReader {
 			// TODO: this has a known limitation of not allowing decimals in numerical cells.
 			// This is very minor for our use cases.
 			return String.valueOf((int)currentCell.getNumericCellValue());
-		} else if (currentCell.getCellType() == Cell.CELL_TYPE_BLANK /*&& (!required)*/) {
+		//if the cell is blank and not required, this is okay and we can save a blank screen. if not, through the exception.
+		} else if (currentCell.getCellType() == Cell.CELL_TYPE_BLANK && (!required)) {
 			return "";
-		} else {
+		} else if (currentCell.getCellType() == Cell.CELL_TYPE_BLANK && (required)){
+			// If we could not get a string from the required cell, show an error with the human-readable cell reference (e.g. A4)
+			CellReference cellRef = new CellReference(row.getRowNum(), index);
+			System.out.println("cell is blank for a required cell");
+			throw new InvalidInputFormatException("Room Data Error\n\nCould not read value from the required cell " + cellRef.formatAsString() + ".\nPlease make sure the cell contains the required data.");
+		}else {
 			// If we could not get a string from the cell, show an error with the human-readable cell reference (e.g. A4)
 			CellReference cellRef = new CellReference(row.getRowNum(), index);
 			throw new InvalidInputFormatException("Room Data Error\n\nCould not read value from cell " + cellRef.formatAsString() + ".\nPlease make sure the cell is formatted properly.");
@@ -323,7 +317,7 @@ public class ExcelReader {
 	}
 	
 	// If possible, read the value of a cell at a given row and cell index as a comma separated array of strings
-	private static String[] getStringArrayFromCell(Row row, int index/*, boolean required*/) throws InvalidInputFormatException {
+	private static String[] getStringArrayFromCell(Row row, int index, boolean required) throws InvalidInputFormatException {
 		// Get the value of the requested cell, or create a blank cell if the requested cell is null (no value)
 		currentCell = row.getCell(index, Row.CREATE_NULL_AS_BLANK);
 		
@@ -334,9 +328,15 @@ public class ExcelReader {
 			// This is very minor for our use cases.
 			String[] result = {String.valueOf((int)currentCell.getNumericCellValue())};
 			return result;
-		} else if (currentCell.getCellType() == Cell.CELL_TYPE_BLANK/* && (!required)*/) {
+			//if the cell is blank and it is not required, that is okay. if not, it will through the exception.
+		} else if (currentCell.getCellType() == Cell.CELL_TYPE_BLANK && (!required)) {
 			return new String[0];
-		} else {
+		} else if (currentCell.getCellType() == Cell.CELL_TYPE_BLANK && (required)){
+			// If we could not get a string array from the required cell, show an error with the human-readable cell reference (e.g. A4)
+			CellReference cellRef = new CellReference(row.getRowNum(), index);
+			System.out.println("cell is blank for a required cell");
+			throw new InvalidInputFormatException("Student Data Error\n\nCould not read value from the required cell " + cellRef.formatAsString() + ".\nPlease make sure the cell contains the required data.");
+		}else {
 			// If we could not get a string array from the cell, show an error with the human-readable cell reference (e.g. A4)
 			CellReference cellRef = new CellReference(row.getRowNum(), index);
 			throw new InvalidInputFormatException("Room Data Error\n\nCould not read value from cell " + cellRef.formatAsString() + ".\nPlease check that it is formatted properly.");
@@ -354,6 +354,7 @@ public class ExcelReader {
 	// 		- Leading 0s before single digit hours are optional, but accepted
 	//		- There may be any number of spaces, or none, between the minutes and AM or PM
 	//		- AM and PM may be written as am, AM, pm, or PM, but mixed capitalization is not allowed
+	
 	private static int[] getStartTimeArr(String[] times, int dayOffset) throws InvalidInputFormatException {
 		int[] startTimes = new int[times.length];
 		boolean isPM = false;
@@ -407,11 +408,11 @@ public class ExcelReader {
 	//c1-c5 correspond to the column values corresponding to Monday through Friday
 	private static int[] getAvailableTimes(int c1, int c2, int c3, int c4, int c5, XSSFRow current) throws InvalidInputFormatException{
 		// Get arrays of strings representing meetings times throughout the week
-		String[] mondayTimesArr = getStringArrayFromCell(current, c1);
-		String[] tuesdayTimesArr = getStringArrayFromCell(current, c2);
-		String[] wednesdayTimesArr = getStringArrayFromCell(current, c3);
-		String[] thursdayTimesArr = getStringArrayFromCell(current, c4);
-		String[] fridayTimesArr = getStringArrayFromCell(current, c5);
+		String[] mondayTimesArr = getStringArrayFromCell(current, c1, false);
+		String[] tuesdayTimesArr = getStringArrayFromCell(current, c2, false);
+		String[] wednesdayTimesArr = getStringArrayFromCell(current, c3, false);
+		String[] thursdayTimesArr = getStringArrayFromCell(current, c4, false);
+		String[] fridayTimesArr = getStringArrayFromCell(current, c5, false);
 
 		// Convert the arrays of strings to arrays of integers representing
 		// the meeting start times as the number of minutes since 12:00 AM Monday
@@ -458,33 +459,37 @@ public class ExcelReader {
 	private static Student createStudent(int id, int fName, int lName, int a, int g, int check, int rTeacher, int iORStudent, int i1, int i2, int i3, int y1,
 			int y2, int y3, int l, int t1, int t2, int t3, int t4, int t5, XSSFRow currentRow) throws InvalidInputFormatException{
 		
-		String name = getStringFromCell(currentRow, fName) + " " + getStringFromCell(currentRow,lName);
+		String name = getStringFromCell(currentRow, fName, true) + " " + getStringFromCell(currentRow,lName, true);
 		
-		String age = getStringFromCell(currentRow,a);
+		String age = getStringFromCell(currentRow,a, true);
 		
-		String gender = getStringFromCell(currentRow,g);
+		String gender = getStringFromCell(currentRow,g, true);
 		
 		//check to see if this student is returning and wants to have the same teacher
-		String checker = getStringFromCell (currentRow, check);
+		String checker = getStringFromCell (currentRow, check, false);
 		String returningTeacher;
 		if (checker.equalsIgnoreCase("yes")){
-			returningTeacher = getStringFromCell (currentRow, rTeacher);	
+			returningTeacher = getStringFromCell (currentRow, rTeacher, false);	
 		}
 		else{
 			returningTeacher = "none";
 		}
 		
-		String instrumentOfReturningStudent = getStringFromCell(currentRow, iORStudent);
+		String instrumentOfReturningStudent = getStringFromCell(currentRow, iORStudent, false);
 		
 		//stores the instrument preferences in increasing order i.e. index 0 = choice 1, index 1 = choice 2, etc. 
-		String[] instruments = {getStringFromCell(currentRow, i1),getStringFromCell(currentRow, i2), getStringFromCell(currentRow, i3)}; 
+		String[] instruments = {getStringFromCell(currentRow, i1,true),getStringFromCell(currentRow, i2, true), getStringFromCell(currentRow, i3, true)}; 
 		
 		//stores the years of experience with each instrument, in increasing order
 		
-		String[] instrumentYears = { getStringFromCell(currentRow, y1), getStringFromCell(currentRow, y2), getStringFromCell(currentRow, y3)};
+		String[] instrumentYears = { getStringFromCell(currentRow, y1, true), getStringFromCell(currentRow, y2, true), getStringFromCell(currentRow, y3, true)};
+		String language;
+		if (getStringFromCell(currentRow, l-1, true).equalsIgnoreCase("no")){
+			language = getStringFromCell(currentRow, l, true);
 		
-		String language = getStringFromCell(currentRow, l);
-		
+		}else{
+			language = "";
+		}
 		//calls the helper method that captures the available times from the spreadsheet and returns an array with the times in minutes from
 		// 12 a.m Monday
 		int[] availableTimes = getAvailableTimes(t1, t2, t3, t4, t5, currentRow);
@@ -495,9 +500,3 @@ public class ExcelReader {
 	}
 }
 
-// class to declare Student sibling objects so that they can be used globally
-//class Siblings{
-//	public static Student sibling1;
-//	public static Student sibling2;
-//	public static Student sibling3;
-//}

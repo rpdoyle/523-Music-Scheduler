@@ -132,7 +132,7 @@ public class MainWindow {
 			System.err.println("Error: Could not set system look and feel");
 		}
 		
-		roomDataTextField.setText("/Users/fcollins/desktop/COMP523/Room Information (Responses).xlsx");
+		roomDataTextField.setText("/Users/fcollins/desktop/COMP523/Copy of Room Information (Responses).xlsx");
 		studentDataTextField.setText("/Users/fcollins/desktop/COMP523/Student Application (Responses)_2.xlsx");
 		teacherDataTextField.setText("/Users/fcollins/desktop/COMP523/Room Information (Responses).xlsx");
 		//"C:\\Users\\Ryan\\workspace\\523-Music-Scheduler\\test-files\\Room Information (Responses).xlsx"
@@ -219,9 +219,7 @@ class ScheduleButtonActionListener implements ActionListener {
 
 		
 		try {
-			ExcelReader.parseStudentData(studentDataTextField.getText());
-			//TODO: once the method is not set to void this will be:
-			//ArrayList<Student> students = ExcelReader.parseStudentData(studentDataTextField.getText());
+			ArrayList<Student> students = ExcelReader.parseStudentData(studentDataTextField.getText());
 		} catch (FileNotFoundException fnfe) {
 			System.err.println("FileNotFoundException");
 			showErrorDialog(fnfe.getMessage());
