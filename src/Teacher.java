@@ -3,6 +3,10 @@
  * Description: This class stores data for a Teacher.
  */
 
+// TODO: Remove keepReturningStudent and just don't store a returning student
+// 		 if the teacher doesn't want to keep them?
+
+// TODO: Change language to languages. It's an array, not a single option.
 public class Teacher {
 
 	private int id;
@@ -20,12 +24,9 @@ public class Teacher {
 	private String crimeRecord;
 	private int[] availableTimes;
 
-	public Teacher(int id, String firstName, String lastName,
-			String returningStudent, String returningInstrument,
-			String keepReturningStudent, String[] instruments,
-			String[] instrumentExperience, String genderPreference,
-			String agePreference, String levelPreference, String[] language,
-			String crimeRecord, int[] availableTimes) {
+	public Teacher(int id, String firstName, String lastName, String returningStudent, String returningInstrument, 
+			String keepReturningStudent, String[] instruments, String[] instrumentExperience, String genderPreference,
+			String agePreference, String levelPreference, String[] language, String crimeRecord, int[] availableTimes) {
 		
 		this.id = id;
 		this.firstName = firstName;

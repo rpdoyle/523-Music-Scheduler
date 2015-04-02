@@ -189,6 +189,7 @@ class ScheduleButtonActionListener implements ActionListener {
 	
 	// Open the files specified in the three text fields and run our scheduling algorithm
 	@Override
+	@SuppressWarnings(value = { "unused" })
 	public void actionPerformed(ActionEvent e) {
 		// TODO open files and create schedule
 		System.out.println("Scheduling would happen now");
@@ -255,7 +256,7 @@ class ScheduleButtonActionListener implements ActionListener {
 	}
 	
 	// Play an error sound and display an error dialog with a given message
-	private void showErrorDialog(String errorMessage) {
+	public void showErrorDialog(String errorMessage) {
 		Toolkit.getDefaultToolkit().beep();
 		JOptionPane.showMessageDialog(parent, errorMessage, "Error", JOptionPane.ERROR_MESSAGE);
 	}
