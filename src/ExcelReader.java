@@ -272,9 +272,7 @@ public class ExcelReader {
 	
 	// Open an excel document with Teacher data, parse the data, and return an
 	// ArrayList of Teacher objects
-	public static ArrayList<Teacher> parseTeacherData(String filepath)
-			throws FileNotFoundException, IOException,
-			InvalidInputFormatException {
+	public static ArrayList<Teacher> parseTeacherData(String filepath) throws FileNotFoundException, IOException, InvalidInputFormatException {
 		// Open the excel document, select the first sheet, and create an
 		// iterator to iterate over the rows
 		FileInputStream inputStream = new FileInputStream(filepath);
@@ -367,7 +365,7 @@ public class ExcelReader {
 	
 	// TODO delete
 	// helper function to print output to the console
-	private static void printOutput(Student student){
+	public static void printOutput(Student student){
 		System.out.println("Found another student");
 		System.out.println(student.getID());
 		System.out.println(student.getName());
@@ -382,7 +380,7 @@ public class ExcelReader {
 		}
 	
 	// If possible, get the string representation of the value of a cell at a given row and cell index
-	private static String getStringFromCell(Row row, int index, boolean required) throws InvalidInputFormatException {
+	public static String getStringFromCell(Row row, int index, boolean required) throws InvalidInputFormatException {
 		// Get the value of the requested cell, or create a blank cell if the requested cell is null (no value)
 		currentCell = row.getCell(index, Row.CREATE_NULL_AS_BLANK);
 		
@@ -408,7 +406,7 @@ public class ExcelReader {
 	}
 	
 	// If possible, read the value of a cell at a given row and cell index as a comma separated array of strings
-	private static String[] getStringArrayFromCell(Row row, int index, boolean required) throws InvalidInputFormatException {
+	public static String[] getStringArrayFromCell(Row row, int index, boolean required) throws InvalidInputFormatException {
 		// Get the value of the requested cell, or create a blank cell if the requested cell is null (no value)
 		currentCell = row.getCell(index, Row.CREATE_NULL_AS_BLANK);
 		
@@ -445,7 +443,7 @@ public class ExcelReader {
 	// - Leading 0s before single digit hours are optional, but accepted
 	// - There may be any number of spaces, or none, between the minutes and AM or PM
 	// - AM and PM may be written as am, AM, pm, or PM, but mixed capitalization is not allowed
-	private static int[] getStartTimeArr(String[] times, int dayOffset) throws InvalidInputFormatException {
+	public static int[] getStartTimeArr(String[] times, int dayOffset) throws InvalidInputFormatException {
 		int[] startTimes = new int[times.length];
 		boolean isPM = false;
 		
@@ -469,6 +467,8 @@ public class ExcelReader {
 
 			if (startEndTimes[1].endsWith("PM") || startEndTimes[1].endsWith("pm")) {
 				isPM = true;
+			} else {
+				isPM = false;
 			}
 			
 			// TODO: verify that this works for all cases
@@ -483,7 +483,7 @@ public class ExcelReader {
 					// Adds 720 minutes to account for 12:00AM - 11:59PM
 					time += 720;
 				}
-				
+
 				startTimes[i] = time;
 			} catch (Exception e) {
 				// If we encounter an invalid date format, show an error with the invalid format and examples of proper format
@@ -496,7 +496,7 @@ public class ExcelReader {
 	}
 	
 	//c1-c5 correspond to the column values corresponding to Monday through Friday
-	private static int[] getAvailableTimes(int c1, int c2, int c3, int c4, int c5, XSSFRow current) throws InvalidInputFormatException{
+	public static int[] getAvailableTimes(int c1, int c2, int c3, int c4, int c5, XSSFRow current) throws InvalidInputFormatException{
 		// Get arrays of strings representing meetings times throughout the week
 		String[] mondayTimesArr = getStringArrayFromCell(current, c1, false);
 		String[] tuesdayTimesArr = getStringArrayFromCell(current, c2, false);
@@ -547,7 +547,7 @@ public class ExcelReader {
 	}
 	
 	//creates a Student object with the necessary data
-	private static Student createStudent(int id, int fName, int lName, int a, int g, int check, int rTeacher, int iORStudent, int i1, int i2, int i3, int y1,
+	public static Student createStudent(int id, int fName, int lName, int a, int g, int check, int rTeacher, int iORStudent, int i1, int i2, int i3, int y1,
 			int y2, int y3, int l, int t1, int t2, int t3, int t4, int t5, XSSFRow currentRow) throws InvalidInputFormatException{
 		
 		String name = getStringFromCell(currentRow, fName, true) + " " + getStringFromCell(currentRow,lName, true);
