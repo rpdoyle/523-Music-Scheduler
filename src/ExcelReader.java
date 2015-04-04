@@ -34,7 +34,6 @@ public class ExcelReader {
 	
 	// Open an excel document with Room data, parse the data, and return an ArrayList of Room objects
 	public static ArrayList<Room> parseRoomData(String filepath) throws FileNotFoundException, IOException, InvalidInputFormatException {
-		// Open the excel document, select the first sheet, and create an iterator to iterate over the rows
 		FileInputStream inputStream = new FileInputStream(filepath);
 		XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
 		XSSFSheet sheet = workbook.getSheetAt(0);
@@ -50,11 +49,12 @@ public class ExcelReader {
 		while (rowsIterator.hasNext()) { 
 			XSSFRow currentRow = (XSSFRow)rowsIterator.next();
 			
-			String roomName = getStringFromCell(currentRow, 1, true);
+			String roomName = getStringFromCell(currentRow, Columns.ROOM_NAME, true);
 			
-			String[] specialInstrumentsArr = getStringArrayFromCell(currentRow, 2, false);
+			String[] specialInstrumentsArr = getStringArrayFromCell(currentRow, Columns.ROOM_INSTRUMENTS, false);
 			
-			int[] availableTimes = getAvailableTimes(3, 4, 5, 6, 7, currentRow);
+			int[] availableTimes = getAvailableTimes(Columns.ROOM_MONDAY_TIMES, Columns.ROOM_TUESDAY_TIMES, Columns.ROOM_WEDNESDAY_TIMES, Columns.ROOM_THURSDAY_TIMES,
+									Columns.ROOM_FRIDAY_TIMES, currentRow);
 			
 			// Create a new room object with the data we just parsed out of the spreadsheet
 			Room room = new Room(roomName, specialInstrumentsArr, availableTimes);
@@ -72,9 +72,8 @@ public class ExcelReader {
 		return rooms;
 	}
 	
-	// TODO: return the ArrayList, i.e. change from void to ArrayList<Student>
+	// Open an excel document with Student data, parse the data, and return an ArrayList of Student objects
 	public static ArrayList<Student> parseStudentData(String filepath) throws FileNotFoundException, IOException, InvalidInputFormatException {
-		
 		FileInputStream inputStream = new FileInputStream(filepath);
 		XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
 		XSSFSheet sheet = workbook.getSheetAt(0);
@@ -85,132 +84,63 @@ public class ExcelReader {
 		// Skip the header row in the spreadsheet
 		rowsIterator.next();
 		
-		//an id number to keep track of the student
+		// An id number to keep track of the student
 		int id = 0;
-		//declaring the variables that will hold the column values to check if the student has (a) sibling(s)
-		int s1, s2, s3;
-		//declaring variables that are passed to the student method to create a new student. These variables hold the
-		//column number of their corresponding pieces of information
-		int fName;
-		int lName;
-		int age;
-		int gender;
-		int check;
-		int returningTeacher;
-		int iORStudent;
-		int fInstrument, sInstrument, tInstrument;
-		int fILevel, sILevel, tILevel;
-		int language;
-		int t1, t2, t3, t4, t5;
 		
-		
-		while(rowsIterator.hasNext()){
-			//assigning the information variables values
-			fName = 1;
-			lName = 2;
-			age = 3;
-			gender = 6;
-			check = 13;
-			returningTeacher = 12;
-			iORStudent = 14;
-			fInstrument = 16;
-			sInstrument = 18;
-			tInstrument = 20;
-			fILevel = 17;
-			sILevel = 19;
-			tILevel = 21;
-			language = 75;
-			t1 = 78;
-			t2 = 79;
-			t3 = 80;
-			t4 = 81;
-			t5 = 82;
-			
-			
+		while(rowsIterator.hasNext()) {		
 			XSSFRow currentRow = (XSSFRow)rowsIterator.next();
 						
-			//calls the createStudent method to create a new student from the information that we want
-			Student student = createStudent(id,fName,lName,age,gender,check,returningTeacher,iORStudent,fInstrument,sInstrument, tInstrument,fILevel,sILevel,tILevel, language,t1,t2,t3,t4,t5,currentRow);
+			// Calls the createStudent method to create a new student from the information that we want
+			Student student = createStudent(id, Columns.STUDENT_FIRST_NAME, Columns.STUDENT_LAST_NAME, Columns.STUDENT_AGE, Columns.STUDENT_GENDER_PREF, 
+											Columns.STUDENT_CHECK, Columns.STUDENT_RETURNING_TEACHER, Columns.STUDENT_RETURNING_INSTRUMENT, Columns.STUDENT_FIRST_INSTRUMENT,
+											Columns.STUDENT_SECOND_INSTRUMENT, Columns.STUDENT_THIRD_INSTRUMENT, Columns.STUDENT_FIRST_INSTRUMENT_LEVEL, 
+											Columns.STUDENT_SECOND_INSTRUMENT_LEVEL, Columns.STUDENT_THIRD_INSTRUMENT_LEVEL, Columns.STUDENT_LANGUAGE,
+											Columns.STUDENT_MONDAY_TIMES, Columns.STUDENT_TUESDAY_TIMES, Columns.STUDENT_WEDNESDAY_TIMES, Columns.STUDENT_THURSDAY_TIMES,
+											Columns.STUDENT_FRIDAY_TIMES, currentRow);
 			students.add(student);
 			
 			// TODO: remove these print statements after showing Dr. Stotts it works
 			printOutput(student);
 			
-			//increase the id so the next student has a new id
+			// Increase the id so the next student has a new id
 			id++;
-			
-			//check to see if this person has a sibling
-			s1= 22;
 			
 			Student sibling1 = null;
 			Student sibling2 = null;
 			Student sibling3 = null;
 			
-			if (getStringFromCell(currentRow,s1, true).equalsIgnoreCase("yes")){
-				
-				fName = 23;
-				lName = 24;
-				age = 25;
-				gender = 28;
-				check = 30;
-				returningTeacher = 29;
-				iORStudent = 31;
-				fInstrument = 33;
-				sInstrument = 35;
-				tInstrument = 37;
-				fILevel = 34;
-				sILevel = 36;
-				tILevel = 38;
-				language = 75;
-				t1 = 78;
-				t2 = 79;
-				t3 = 80;
-				t4 = 81;
-				t5 = 82;
-				
-				//currently the sibling has no field of returning instrument, so I will capture their first choice instrument as their returning instrument
-				sibling1 = createStudent(id,fName,lName,age,gender,check,returningTeacher,iORStudent,fInstrument,sInstrument, tInstrument,fILevel,sILevel,tILevel, language,t1,t2,t3,t4,t5,currentRow);
+			if (getStringFromCell(currentRow, Columns.STUDENT_HAS_SIBLING_1, true).equalsIgnoreCase("yes")) {
+				// Currently the sibling has no field of returning instrument, so I will capture their first choice instrument as their returning instrument
+				sibling1 = createStudent(id, Columns.SIBLING_1_FIRST_NAME, Columns.SIBLING_1_LAST_NAME, Columns.SIBLING_1_AGE, Columns.SIBLING_1_GENDER_PREF, 
+						Columns.SIBLING_1_CHECK, Columns.SIBLING_1_RETURNING_TEACHER, Columns.SIBLING_1_RETURNING_INSTRUMENT, Columns.SIBLING_1_FIRST_INSTRUMENT,
+						Columns.SIBLING_1_SECOND_INSTRUMENT, Columns.SIBLING_1_THIRD_INSTRUMENT, Columns.SIBLING_1_FIRST_INSTRUMENT_LEVEL, 
+						Columns.SIBLING_1_SECOND_INSTRUMENT_LEVEL, Columns.SIBLING_1_THIRD_INSTRUMENT_LEVEL, Columns.SIBLING_1_LANGUAGE,
+						Columns.SIBLING_1_MONDAY_TIMES, Columns.SIBLING_1_TUESDAY_TIMES, Columns.SIBLING_1_WEDNESDAY_TIMES, Columns.SIBLING_1_THURSDAY_TIMES,
+						Columns.SIBLING_1_FRIDAY_TIMES, currentRow);
 
-				//add the sibling to the overall students ArrayList
 				students.add(sibling1);
 				
-				//add the new sibling to the student's sibling ArrayList
+				// Add the new sibling to the student's sibling ArrayList
 				student.getSiblings().add(sibling1);
 				sibling1.getSiblings().add(student);
 				
-				//TODO: remove these print statements after Dr. Stotts sees the output
+				// TODO: remove these print statements after Dr. Stotts sees the output
 				printOutput(sibling1);
 				id++;
 			}
-			s2 = 39;
-			//check to see if they have a second sibling
-			if (getStringFromCell(currentRow, s2, false).equalsIgnoreCase("yes")){
-				
-				fName = 40;
-				lName = 41;
-				age = 42;
-				gender = 45;
-				check = 47;
-				returningTeacher = 46;
-				iORStudent = 48;
-				fInstrument = 50;
-				sInstrument = 52;
-				tInstrument = 54;
-				fILevel = 51;
-				sILevel = 53;
-				tILevel = 55;
-				language = 75;
-				t1 = 78;
-				t2 = 79;
-				t3 = 80;
-				t4 = 81;
-				t5 = 82;
-				
-				sibling2= createStudent(id,fName,lName,age,gender,check,returningTeacher,iORStudent,fInstrument,sInstrument, tInstrument,fILevel,sILevel,tILevel, language,t1,t2,t3,t4,t5,currentRow);
+
+			// Check to see if they have a second sibling
+			if (getStringFromCell(currentRow, Columns.STUDENT_HAS_SIBLING_2, false).equalsIgnoreCase("yes")){
+				sibling2 = createStudent(id, Columns.SIBLING_2_FIRST_NAME, Columns.SIBLING_2_LAST_NAME, Columns.SIBLING_2_AGE, Columns.SIBLING_2_GENDER_PREF, 
+						Columns.SIBLING_2_CHECK, Columns.SIBLING_2_RETURNING_TEACHER, Columns.SIBLING_2_RETURNING_INSTRUMENT, Columns.SIBLING_2_FIRST_INSTRUMENT,
+						Columns.SIBLING_2_SECOND_INSTRUMENT, Columns.SIBLING_2_THIRD_INSTRUMENT, Columns.SIBLING_2_FIRST_INSTRUMENT_LEVEL, 
+						Columns.SIBLING_2_SECOND_INSTRUMENT_LEVEL, Columns.SIBLING_2_THIRD_INSTRUMENT_LEVEL, Columns.SIBLING_2_LANGUAGE,
+						Columns.SIBLING_2_MONDAY_TIMES, Columns.SIBLING_2_TUESDAY_TIMES, Columns.SIBLING_2_WEDNESDAY_TIMES, Columns.SIBLING_2_THURSDAY_TIMES,
+						Columns.SIBLING_2_FRIDAY_TIMES, currentRow);
 
 				students.add(sibling2);
 				
-				//update the Sibling ArrayList of all existing students
+				// Update sibling ArrayLists
 				student.getSiblings().add(sibling2);
 				sibling1.getSiblings().add(sibling2);
 				sibling2.getSiblings().add(student);
@@ -221,36 +151,18 @@ public class ExcelReader {
 				id++;
 			}
 			
-			
-			s3 = 56;
-			//check to see if this student has more siblings. 
-			if (getStringFromCell(currentRow, s3, false).equalsIgnoreCase("yes")){
-				
-				fName = 57;
-				lName = 58;
-				age = 59;
-				gender = 62;
-				check = 64;
-				returningTeacher = 63;
-				iORStudent = 65;
-				fInstrument = 67;
-				sInstrument = 69;
-				tInstrument = 71;
-				fILevel = 68;
-				sILevel = 70;
-				tILevel = 72;
-				language = 75;
-				t1 = 78;
-				t2 = 79;
-				t3 = 80;
-				t4 = 81;
-				t5 = 82;
-				
-				sibling3= createStudent(id,fName,lName,age,gender,check,returningTeacher,iORStudent,fInstrument,sInstrument, tInstrument,fILevel,sILevel,tILevel, language,t1,t2,t3,t4,t5,currentRow);
+			// Check to see if this student has more siblings. 
+			if (getStringFromCell(currentRow, Columns.STUDENT_HAS_SIBLING_3, false).equalsIgnoreCase("yes")){
+				sibling3 = createStudent(id, Columns.SIBLING_3_FIRST_NAME, Columns.SIBLING_3_LAST_NAME, Columns.SIBLING_3_AGE, Columns.SIBLING_3_GENDER_PREF, 
+						Columns.SIBLING_3_CHECK, Columns.SIBLING_3_RETURNING_TEACHER, Columns.SIBLING_3_RETURNING_INSTRUMENT, Columns.SIBLING_3_FIRST_INSTRUMENT,
+						Columns.SIBLING_3_SECOND_INSTRUMENT, Columns.SIBLING_3_THIRD_INSTRUMENT, Columns.SIBLING_3_FIRST_INSTRUMENT_LEVEL, 
+						Columns.SIBLING_3_SECOND_INSTRUMENT_LEVEL, Columns.SIBLING_3_THIRD_INSTRUMENT_LEVEL, Columns.SIBLING_3_LANGUAGE,
+						Columns.SIBLING_3_MONDAY_TIMES, Columns.SIBLING_3_TUESDAY_TIMES, Columns.SIBLING_3_WEDNESDAY_TIMES, Columns.SIBLING_3_THURSDAY_TIMES,
+						Columns.SIBLING_3_FRIDAY_TIMES, currentRow);
 
 				students.add(sibling3);
 				
-				//adding the siblings to each other's Siblings ArrayLists
+				// Adding the siblings to each other's Siblings ArrayLists
 				student.getSiblings().add(sibling3);
 				sibling1.getSiblings().add(sibling3);
 				sibling2.getSiblings().add(sibling3);
@@ -258,7 +170,7 @@ public class ExcelReader {
 				sibling3.getSiblings().add(sibling1);
 				sibling3.getSiblings().add(sibling2);
 								
-				//TODO: remove these print statements once Dr. Stott's sees the output
+				// TODO: remove these print statements once Dr. Stott's sees the output
 				printOutput(sibling3);
 				
 				id++;
@@ -273,8 +185,6 @@ public class ExcelReader {
 	// Open an excel document with Teacher data, parse the data, and return an
 	// ArrayList of Teacher objects
 	public static ArrayList<Teacher> parseTeacherData(String filepath) throws FileNotFoundException, IOException, InvalidInputFormatException {
-		// Open the excel document, select the first sheet, and create an
-		// iterator to iterate over the rows
 		FileInputStream inputStream = new FileInputStream(filepath);
 		XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
 		XSSFSheet sheet = workbook.getSheetAt(0);
@@ -291,11 +201,11 @@ public class ExcelReader {
 			XSSFRow currentRow = (XSSFRow) rowsIterator.next();
 
 			// Get teacher's name
-			String firstName = getStringFromCell(currentRow, 1, true);
-			String lastName = getStringFromCell(currentRow, 2, true);
+			String firstName = getStringFromCell(currentRow, Columns.TEACHER_FIRST_NAME, true);
+			String lastName = getStringFromCell(currentRow, Columns.TEACHER_LAST_NAME, true);
 
 			// Check to see if the teacher is returning
-			String returningTeacher = getStringFromCell(currentRow, 8, true);
+			String returningTeacher = getStringFromCell(currentRow, Columns.TEACHER_IS_RETURNING, true);
 
 			String returningStudent = "";
 			String returningInstrument = "";
@@ -304,35 +214,36 @@ public class ExcelReader {
 			if (returningTeacher.equalsIgnoreCase("yes")) {
 				// Get information about the returning student if the teacher is
 				// returning
-				returningStudent = getStringFromCell(currentRow, 9, true);
-				returningInstrument = getStringFromCell(currentRow, 10, true);
-				keepReturningStudent = getStringFromCell(currentRow, 11, true);
+				returningStudent = getStringFromCell(currentRow, Columns.TEACHER_RETURNING_STUDENT_NAME, true);
+				returningInstrument = getStringFromCell(currentRow, Columns.TEACHER_RETURNING_INSTRUMENT, true);
+				keepReturningStudent = getStringFromCell(currentRow, Columns.TEACHER_KEEP_RETURNING_STUDENT, true);
 			}
 
 			// Get information about the teacher's instruments
-			String[] instrumentArr = getStringArrayFromCell(currentRow, 12, true);
-			String[] instrumentExperienceArr = getStringArrayFromCell(currentRow, 13, true);
+			// TODO: teacher connot teach an instrument they've been playing for less than 4 years
+			String[] instrumentArr = getStringArrayFromCell(currentRow, Columns.TEACHER_INSTRUMENTS, true);
+			String[] instrumentExperienceArr = getStringArrayFromCell(currentRow, Columns.TEACHER_INSTRUMENT_EXPERIENCE, true);
 
 			// Get teacher's preferences for student gender, age, and level
-			String genderPreference = getStringFromCell(currentRow, 14, true);
-			String agePreference = getStringFromCell(currentRow, 15, true);
-			String levelPreference = getStringFromCell(currentRow, 16, true);
+			String genderPreference = getStringFromCell(currentRow, Columns.TEACHER_GENDER_PREF, true);
+			String agePreference = getStringFromCell(currentRow, Columns.TEACHER_AGE_PREF, true);
+			String levelPreference = getStringFromCell(currentRow, Columns.TEACHER_LEVEL_PREF, true);
 			
 			// Get teacher's language
-			String[] languageArr = getStringArrayFromCell(currentRow, 17, false);
+			String[] languageArr = getStringArrayFromCell(currentRow, Columns.TEACHER_LANGUAGES, false);
 
 			// Get information about teacher's crime record
-			String crimeRecord = getStringFromCell(currentRow, 19, true);
+			String crimeRecord = getStringFromCell(currentRow, Columns.TEACHER_CRIME_RECORD, true);
+			// TODO: if convicted, don't add to arraylist
 
 			// Get teacher's available times
-			int[] availableTimes = getAvailableTimes(24, 25, 26, 27, 28, currentRow);
+			int[] availableTimes = getAvailableTimes(Columns.TEACHER_MONDAY_TIMES, Columns.TEACHER_TUESDAY_TIMES, Columns.TEACHER_WEDNESDAY_TIMES,
+									Columns.TEACHER_THURSDAY_TIMES, Columns.TEACHER_FRIDAY_TIMES, currentRow);
 
 			// Create a new teacher object with the data we just parsed out of the
 			// spreadsheet
-			Teacher teacher = new Teacher(id, firstName, lastName,
-					returningStudent, returningInstrument,
-					keepReturningStudent, instrumentArr,
-					instrumentExperienceArr, genderPreference, agePreference,
+			Teacher teacher = new Teacher(id, firstName, lastName, returningStudent, returningInstrument,
+					keepReturningStudent, instrumentArr, instrumentExperienceArr, genderPreference, agePreference,
 					levelPreference, languageArr, crimeRecord, availableTimes);
 			
 			teachers.add(teacher);
@@ -496,7 +407,7 @@ public class ExcelReader {
 	}
 	
 	//c1-c5 correspond to the column values corresponding to Monday through Friday
-	public static int[] getAvailableTimes(int c1, int c2, int c3, int c4, int c5, XSSFRow current) throws InvalidInputFormatException{
+	public static int[] getAvailableTimes(int c1, int c2, int c3, int c4, int c5, XSSFRow current) throws InvalidInputFormatException {
 		// Get arrays of strings representing meetings times throughout the week
 		String[] mondayTimesArr = getStringArrayFromCell(current, c1, false);
 		String[] tuesdayTimesArr = getStringArrayFromCell(current, c2, false);
@@ -546,42 +457,43 @@ public class ExcelReader {
 		return availableTimes;
 	}
 	
-	//creates a Student object with the necessary data
+	// Creates a Student object with the necessary data
 	public static Student createStudent(int id, int fName, int lName, int a, int g, int check, int rTeacher, int iORStudent, int i1, int i2, int i3, int y1,
-			int y2, int y3, int l, int t1, int t2, int t3, int t4, int t5, XSSFRow currentRow) throws InvalidInputFormatException{
+			int y2, int y3, int l, int t1, int t2, int t3, int t4, int t5, XSSFRow currentRow) throws InvalidInputFormatException {
 		
-		String name = getStringFromCell(currentRow, fName, true) + " " + getStringFromCell(currentRow,lName, true);
+		String name = getStringFromCell(currentRow, fName, true) + " " + getStringFromCell(currentRow, lName, true);
 		
 		String age = getStringFromCell(currentRow, a, true);
 		
 		String gender = getStringFromCell(currentRow, g, true);
 		
-		//check to see if this student is returning and wants to have the same teacher
+		// Check to see if this student is returning and wants to have the same teacher
 		String checker = getStringFromCell (currentRow, check, false);
 		String returningTeacher;
 		if (checker.equalsIgnoreCase("yes")){
-			returningTeacher = getStringFromCell (currentRow, rTeacher, false);	
-		}
-		else{
+			returningTeacher = getStringFromCell(currentRow, rTeacher, false);	
+		} else {
+			// TODO: make an empty string to match our other code?
 			returningTeacher = "none";
 		}
 		
 		String instrumentOfReturningStudent = getStringFromCell(currentRow, iORStudent, false);
 		
-		//stores the instrument preferences in increasing order i.e. index 0 = choice 1, index 1 = choice 2, etc. 
-		String[] instruments = {getStringFromCell(currentRow, i1, true),getStringFromCell(currentRow, i2, true), getStringFromCell(currentRow, i3, true)}; 
+		// Stores the instrument preferences in increasing order i.e. index 0 = choice 1, index 1 = choice 2, etc. 
+		String[] instruments = {getStringFromCell(currentRow, i1, true), getStringFromCell(currentRow, i2, true), getStringFromCell(currentRow, i3, true)}; 
 		
-		//stores the years of experience with each instrument, in increasing order
+		// Stores the years of experience with each instrument, in increasing order
+		String[] instrumentYears = {getStringFromCell(currentRow, y1, true), getStringFromCell(currentRow, y2, true), getStringFromCell(currentRow, y3, true)};
 		
-		String[] instrumentYears = { getStringFromCell(currentRow, y1, true), getStringFromCell(currentRow, y2, true), getStringFromCell(currentRow, y3, true)};
 		String language;
-		if (getStringFromCell(currentRow, l-1, true).equalsIgnoreCase("no")){
+		// TODO: this assumes l-1 is a yes or no question
+		if (getStringFromCell(currentRow, l-1, true).equalsIgnoreCase("no")) {
 			language = getStringFromCell(currentRow, l, true);
-		
-		}else{
+		} else {
 			language = "";
 		}
-		//calls the helper method that captures the available times from the spreadsheet and returns an array with the times in minutes from
+		
+		// Calls the helper method that captures the available times from the spreadsheet and returns an array with the times in minutes from
 		// 12 a.m Monday
 		int[] availableTimes = getAvailableTimes(t1, t2, t3, t4, t5, currentRow);
 		
