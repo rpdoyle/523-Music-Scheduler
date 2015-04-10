@@ -5,8 +5,8 @@
 
 // TODO: Remove keepReturningStudent and just don't store a returning student
 // 		 if the teacher doesn't want to keep them?
+// TODO: One name field vs. first and last names
 
-// TODO: Change language to languages. It's an array, not a single option.
 public class Teacher {
 
 	private int id;
@@ -20,13 +20,13 @@ public class Teacher {
 	private String genderPreference;
 	private String agePreference;
 	private String levelPreference;
-	private String[] language;
+	private String[] languages;
 	private String crimeRecord;
 	private int[] availableTimes;
 
 	public Teacher(int id, String firstName, String lastName, String returningStudent, String returningInstrument, 
 			String keepReturningStudent, String[] instruments, String[] instrumentExperience, String genderPreference,
-			String agePreference, String levelPreference, String[] language, String crimeRecord, int[] availableTimes) {
+			String agePreference, String levelPreference, String[] languages, String crimeRecord, int[] availableTimes) {
 		
 		this.id = id;
 		this.firstName = firstName;
@@ -39,7 +39,7 @@ public class Teacher {
 		this.genderPreference = genderPreference;
 		this.agePreference = agePreference;
 		this.levelPreference = levelPreference;
-		this.language = language;
+		this.languages = languages;
 		this.crimeRecord = crimeRecord;
 		this.availableTimes = availableTimes;
 	}
@@ -88,8 +88,8 @@ public class Teacher {
 		return levelPreference;
 	}
 
-	public String[] getLanguage() {
-		return language;
+	public String[] getLanguages() {
+		return languages;
 	}
 
 	public String getCrimeRecord() {

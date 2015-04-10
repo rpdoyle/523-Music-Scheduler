@@ -351,7 +351,7 @@ public class ExcelReader {
 			System.out.println(teacher.getGenderPreference());
 			System.out.println(teacher.getAgePreference());
 			System.out.println(teacher.getLevelPreference());
-			System.out.println(Arrays.toString(teacher.getLanguage()));
+			System.out.println(Arrays.toString(teacher.getLanguages()));
 			System.out.println(teacher.getCrimeRecord());
 			System.out.println(Arrays.toString(teacher.getAvailableTimes()));
 
@@ -563,7 +563,7 @@ public class ExcelReader {
 			returningTeacher = getStringFromCell (currentRow, rTeacher, false);	
 		}
 		else{
-			returningTeacher = "none";
+			returningTeacher = "";
 		}
 		
 		String instrumentOfReturningStudent = getStringFromCell(currentRow, iORStudent, false);

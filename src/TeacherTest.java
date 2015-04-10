@@ -105,7 +105,7 @@ public class TeacherTest {
 	@Test
 	public void testGetLanguage() {
 		Teacher testTeacher = createTestTeacher();
-		assertArrayEquals(new String[] {"Mandarin", "English"}, testTeacher.getLanguage());
+		assertArrayEquals(new String[] {"Mandarin", "English"}, testTeacher.getLanguages());
 	}
 
 	@Test

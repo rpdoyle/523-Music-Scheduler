@@ -251,6 +251,11 @@ class ScheduleButtonActionListener implements ActionListener {
 		// TODO: eventually, errors in the parsing should stop the program, but not right now for the sake of demoing to Stotts
 		
 		// TODO: scoring
+		ScoringEngine scoringEngine = new ScoringEngine(students, teachers);
+		ArrayList<Pair> mandatoryPairs = scoringEngine.getMandatoryPairs();
+		Pair[][] scores = scoringEngine.scoreNonMandatoryPairs();
+		
+		
 		
 		// TODO: scheduling
 	}
