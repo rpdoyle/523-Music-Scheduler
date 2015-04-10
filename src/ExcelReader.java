@@ -291,8 +291,7 @@ public class ExcelReader {
 			XSSFRow currentRow = (XSSFRow) rowsIterator.next();
 
 			// Get teacher's name
-			String firstName = getStringFromCell(currentRow, 1, true);
-			String lastName = getStringFromCell(currentRow, 2, true);
+			String name = getStringFromCell(currentRow, 1, true) + " " + getStringFromCell(currentRow, 2, true);
 
 			// Check to see if the teacher is returning
 			String returningTeacher = getStringFromCell(currentRow, 8, true);
@@ -329,7 +328,7 @@ public class ExcelReader {
 
 			// Create a new teacher object with the data we just parsed out of the
 			// spreadsheet
-			Teacher teacher = new Teacher(id, firstName, lastName,
+			Teacher teacher = new Teacher(id, name,
 					returningStudent, returningInstrument,
 					keepReturningStudent, instrumentArr,
 					instrumentExperienceArr, genderPreference, agePreference,
@@ -341,8 +340,7 @@ public class ExcelReader {
 			// works
 			System.out.println("Found another teacher");
 			System.out.println(teacher.getId());
-			System.out.println(teacher.getFirstName());
-			System.out.println(teacher.getLastName());
+			System.out.println(teacher.getName());
 			System.out.println(teacher.getReturningStudent());
 			System.out.println(teacher.getReturningInstrument());
 			System.out.println(teacher.getKeepReturningStudent());

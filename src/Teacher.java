@@ -10,8 +10,7 @@
 public class Teacher {
 
 	private int id;
-	private String firstName;
-	private String lastName;
+	private String name;
 	private String returningStudent;
 	private String returningInstrument;
 	private String keepReturningStudent;
@@ -24,13 +23,12 @@ public class Teacher {
 	private String crimeRecord;
 	private int[] availableTimes;
 
-	public Teacher(int id, String firstName, String lastName, String returningStudent, String returningInstrument, 
+	public Teacher(int id, String name, String returningStudent, String returningInstrument, 
 			String keepReturningStudent, String[] instruments, String[] instrumentExperience, String genderPreference,
 			String agePreference, String levelPreference, String[] languages, String crimeRecord, int[] availableTimes) {
 		
 		this.id = id;
-		this.firstName = firstName;
-		this.lastName = lastName;
+		this.name = name;
 		this.returningStudent = returningStudent;
 		this.returningInstrument = returningInstrument;
 		this.keepReturningStudent = keepReturningStudent;
@@ -48,12 +46,8 @@ public class Teacher {
 		return id;
 	}
 
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
+	public String getName() {
+		return name;
 	}
 
 	public String getReturningStudent() {

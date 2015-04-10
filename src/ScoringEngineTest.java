@@ -36,7 +36,7 @@ public class ScoringEngineTest {
 
 	private Teacher createTeacher1() {
 		// Should be mandatory paired with Jane (2)
-		Teacher testTeacher1 = new Teacher(123, "Peter", "Thomas", "Jane",
+		Teacher testTeacher1 = new Teacher(123, "Peter Thomas", "Jane",
 				"Guitar", "Yes", new String[] { "Guitar", "Bass", "Viola" },
 				new String[] { "2-4 years", "<1 year", "<1 year" }, "Female",
 				"No preference", "No preference", new String[] { "Mandarin",
@@ -45,7 +45,7 @@ public class ScoringEngineTest {
 	}
 
 	private Teacher createTeacher2() {
-		Teacher testTeacher2 = new Teacher(456, "Kim", "Lewis", "", "", "",
+		Teacher testTeacher2 = new Teacher(456, "Kim Lewis", "", "", "",
 				new String[] { "Guitar", "Trumpet" }, new String[] {
 						"2-4 years", "<1 year", "<1 year" }, "Male",
 				"No preference", "No preference", new String[] { "Mandarin",
@@ -54,7 +54,7 @@ public class ScoringEngineTest {
 	}
 
 	private Teacher createTeacher3() {
-		Teacher testTeacher3 = new Teacher(789, "Alex", "Parker", "Tori",
+		Teacher testTeacher3 = new Teacher(789, "Alex Parker", "Tori",
 				"Piano", "Yes", new String[] { "Piano", "Flute" },
 				new String[] { "2-4 years", "2-4 years" }, "Female",
 				"Younger than 10-years-old", "No preference",
