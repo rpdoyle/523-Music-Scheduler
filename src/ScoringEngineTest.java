@@ -54,9 +54,9 @@ public class ScoringEngineTest {
 	}
 
 	private Teacher createTeacher3() {
-		Teacher testTeacher3 = new Teacher(789, "Alex Parker", "Tori",
-				"Piano", "Yes", new String[] { "Piano", "Flute" },
-				new String[] { "2-4 years", "2-4 years" }, "Female",
+		Teacher testTeacher3 = new Teacher(789, "Alex Parker", "Tori", "Piano",
+				"Yes", new String[] { "Piano", "Flute" }, new String[] {
+						"2-4 years", "2-4 years" }, "Female",
 				"Younger than 10-years-old", "No preference",
 				new String[] { "English" }, "No", new int[] { 150, 1489 });
 		return testTeacher3;
@@ -98,8 +98,8 @@ public class ScoringEngineTest {
 		ArrayList<Integer> mutualTimes = new ArrayList<>();
 		mutualTimes.add(650);
 		mutualTimes.add(1812);
-		mandatoryPairs.add(new Pair(createStudent2(), createTeacher1(), 2000,
-				mutualTimes));
+		mandatoryPairs.add(new Pair(createStudent2(), createTeacher1(),
+				"Guitar", 2000, mutualTimes));
 		PairComparator pc = new PairComparator();
 		assertEquals(pc.compareLists(scoringEngine.getMandatoryPairs(),
 				mandatoryPairs), 0);
@@ -126,15 +126,15 @@ public class ScoringEngineTest {
 		// 11 is 311
 		Pair[][] pairs = {
 				{
-						new Pair(createStudent1(), createTeacher2(), 317,
-								mutualTimes1),
-						new Pair(createStudent3(), createTeacher2(), -1,
+						new Pair(createStudent1(), createTeacher2(), "Guitar",
+								317, mutualTimes1),
+						new Pair(createStudent3(), createTeacher2(), "", -1,
 								mutualTimes2) },
 				{
-						new Pair(createStudent1(), createTeacher3(), -1,
+						new Pair(createStudent1(), createTeacher3(), "", -1,
 								mutualTimes3),
-						new Pair(createStudent3(), createTeacher3(), 311,
-								mutualTimes4) } };
+						new Pair(createStudent3(), createTeacher3(), "Piano",
+								311, mutualTimes4) } };
 		PairComparator pc = new PairComparator();
 		assertEquals(
 				pc.compareArrays(scoringEngine.scoreNonMandatoryPairs(), pairs),

@@ -6,9 +6,9 @@ public class PairComparator implements Comparator<Pair> {
 	@Override
 	public int compare(Pair p1, Pair p2) {
 		if (p1.getStudent().getName().equals(p2.getStudent().getName())
-				&& p1.getTeacher().getName()
-						.equals(p2.getTeacher().getName())
-				&& p1.getScore() == p2.getScore()) {
+				&& p1.getTeacher().getName().equals(p2.getTeacher().getName())
+				&& p1.getScore() == p2.getScore()
+				&& p1.getInstrument().equals(p2.getInstrument())) {
 
 			int p1TimesSize, p2TimesSize;
 			if (p1.getMutualTimes() != null) {
