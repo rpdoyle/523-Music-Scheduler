@@ -51,7 +51,7 @@ public class ExcelReader {
 			
 			String roomName = getStringFromCell(currentRow, Columns.ROOM_NAME, true);
 			
-			String[] specialInstrumentsArr = getStringArrayFromCell(currentRow, Columns.ROOM_INSTRUMENTS, false);
+			ArrayList<String> specialInstrumentsArr = (ArrayList<String>) Arrays.asList(getStringArrayFromCell(currentRow, Columns.ROOM_INSTRUMENTS, false));
 			
 			int[] availableTimes = getAvailableTimes(Columns.ROOM_MONDAY_TIMES, Columns.ROOM_TUESDAY_TIMES, Columns.ROOM_WEDNESDAY_TIMES, Columns.ROOM_THURSDAY_TIMES,
 									Columns.ROOM_FRIDAY_TIMES, currentRow);
@@ -63,7 +63,7 @@ public class ExcelReader {
 			// TODO: remove these print statements after showing Dr. Stotts it works
 			System.out.println("Found another room");
 			System.out.println(room.getName());
-			System.out.println(Arrays.toString(room.getSpecialInstruments()));
+			//System.out.println(Arrays.toString(room.getSpecialInstruments()));
 			System.out.println(Arrays.toString(room.getAvailableTimes()));
 		}
 		

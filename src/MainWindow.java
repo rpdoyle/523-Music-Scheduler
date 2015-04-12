@@ -253,6 +253,8 @@ class ScheduleButtonActionListener implements ActionListener {
 		// TODO: scoring
 
 		// TODO: scheduling
+		ArrayList<String> specialInstruments = HelperMethods.getAllPossibleSpecialInstruments(rooms);
+		ArrayList<RoomDayTime> roomDayTimes = HelperMethods.getRoomDayTimes(rooms);
 	}
 	
 	// Play an error sound and display an error dialog with a given message
