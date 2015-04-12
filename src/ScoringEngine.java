@@ -15,6 +15,14 @@ public class ScoringEngine {
 		this.teachers = teachers;
 	}
 
+	public ArrayList<Student> getStudents() {
+		return students;
+	}
+	
+	public ArrayList<Teacher> getTeachers() {
+		return teachers;
+	}
+	
 	public ArrayList<Pair> getMandatoryPairs() {
 		ArrayList<Pair> mandatoryPairs = new ArrayList<Pair>();
 		ArrayList<Student> returningStudents = new ArrayList<Student>();
