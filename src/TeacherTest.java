@@ -13,8 +13,7 @@ public class TeacherTest {
 
 	private Teacher createTestTeacher() {
 		int id = 829;
-		String firstName = "Test";
-		String lastName = "Teacher";
+		String name = "Test Teacher";
 		String returningStudent = "Fred Cook";
 		String returningInstrument = "Flute";
 		String keepReturningStudent = "Yes";
@@ -27,7 +26,7 @@ public class TeacherTest {
 		String crimeRecord = "No";
 		int[] availableTimes = new int[] {828, 1293, 9932, 8272};
 		
-		return new Teacher(id, firstName, lastName, returningStudent, returningInstrument, keepReturningStudent, instruments, instrumentExperience,
+		return new Teacher(id, name, returningStudent, returningInstrument, keepReturningStudent, instruments, instrumentExperience,
 						genderPreference, agePreference, levelPreference, language, crimeRecord, availableTimes);				
 	}
 	
@@ -43,15 +42,9 @@ public class TeacherTest {
 	}
 
 	@Test
-	public void testGetFirstName() {
+	public void testGetName() {
 		Teacher testTeacher = createTestTeacher();
-		assertEquals("Test", testTeacher.getFirstName());
-	}
-
-	@Test
-	public void testGetLastName() {
-		Teacher testTeacher = createTestTeacher();
-		assertEquals("Teacher", testTeacher.getLastName());
+		assertEquals("Test Teacher", testTeacher.getName());
 	}
 
 	@Test
@@ -105,7 +98,7 @@ public class TeacherTest {
 	@Test
 	public void testGetLanguage() {
 		Teacher testTeacher = createTestTeacher();
-		assertArrayEquals(new String[] {"Mandarin", "English"}, testTeacher.getLanguage());
+		assertArrayEquals(new String[] {"Mandarin", "English"}, testTeacher.getLanguages());
 	}
 
 	@Test

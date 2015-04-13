@@ -251,7 +251,7 @@ class ScheduleButtonActionListener implements ActionListener {
 		// TODO: eventually, errors in the parsing should stop the program, but not right now for the sake of demoing to Stotts
 		
 		// TODO: scoring
-		
+
 		// TODO: scheduling
 	}
 	

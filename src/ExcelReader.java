@@ -201,8 +201,7 @@ public class ExcelReader {
 			XSSFRow currentRow = (XSSFRow) rowsIterator.next();
 
 			// Get teacher's name
-			String firstName = getStringFromCell(currentRow, Columns.TEACHER_FIRST_NAME, true);
-			String lastName = getStringFromCell(currentRow, Columns.TEACHER_LAST_NAME, true);
+			String name = getStringFromCell(currentRow, Columns.TEACHER_FIRST_NAME, true) + " " + getStringFromCell(currentRow, Columns.TEACHER_LAST_NAME, true);
 
 			// Check to see if the teacher is returning
 			String returningTeacher = getStringFromCell(currentRow, Columns.TEACHER_IS_RETURNING, true);
@@ -242,8 +241,10 @@ public class ExcelReader {
 
 			// Create a new teacher object with the data we just parsed out of the
 			// spreadsheet
-			Teacher teacher = new Teacher(id, firstName, lastName, returningStudent, returningInstrument,
-					keepReturningStudent, instrumentArr, instrumentExperienceArr, genderPreference, agePreference,
+			Teacher teacher = new Teacher(id, name,
+					returningStudent, returningInstrument,
+					keepReturningStudent, instrumentArr,
+					instrumentExperienceArr, genderPreference, agePreference,
 					levelPreference, languageArr, crimeRecord, availableTimes);
 			
 			teachers.add(teacher);
@@ -252,8 +253,7 @@ public class ExcelReader {
 			// works
 			System.out.println("Found another teacher");
 			System.out.println(teacher.getId());
-			System.out.println(teacher.getFirstName());
-			System.out.println(teacher.getLastName());
+			System.out.println(teacher.getName());
 			System.out.println(teacher.getReturningStudent());
 			System.out.println(teacher.getReturningInstrument());
 			System.out.println(teacher.getKeepReturningStudent());
@@ -262,7 +262,7 @@ public class ExcelReader {
 			System.out.println(teacher.getGenderPreference());
 			System.out.println(teacher.getAgePreference());
 			System.out.println(teacher.getLevelPreference());
-			System.out.println(Arrays.toString(teacher.getLanguage()));
+			System.out.println(Arrays.toString(teacher.getLanguages()));
 			System.out.println(teacher.getCrimeRecord());
 			System.out.println(Arrays.toString(teacher.getAvailableTimes()));
 
@@ -472,9 +472,9 @@ public class ExcelReader {
 		String returningTeacher;
 		if (checker.equalsIgnoreCase("yes")){
 			returningTeacher = getStringFromCell(currentRow, rTeacher, false);	
-		} else {
-			// TODO: make an empty string to match our other code?
-			returningTeacher = "none";
+		}
+		else{
+			returningTeacher = "";
 		}
 		
 		String instrumentOfReturningStudent = getStringFromCell(currentRow, iORStudent, false);
