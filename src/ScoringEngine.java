@@ -131,9 +131,6 @@ public class ScoringEngine {
 	}
 
 	public Pair[][] scoreNonMandatoryPairs() {
-
-		// TODO: Should we give -1 to S/T pairs that don't have a common
-		// language?
 		Pair[][] scores = new Pair[teachers.size()][students.size()];
 		int score;
 		int numStudents = students.size(), numTeachers = teachers.size();
