@@ -27,13 +27,13 @@ public class Hungarian {
 			return null;
 		}
 	}
-
+	// From the randomly generated pairs and room-day-times, set up the matrix to start the Hungarian algorithm
 	private static int[][] createOriginalMatrix(ArrayList<Pair> pairs, ArrayList<RoomDayTime> roomDayTimes, ArrayList<String> specialInstruments) {
 		int numPairs = pairs.size();
 		int numRDTs = roomDayTimes.size();
 		int[][] originalMatrix;
 		
-		// Generate original matrix of pairs vs room day times
+		// Generate original matrix of pairs vs. room day times
 		if (numPairs > numRDTs) {
 			originalMatrix = new int[numPairs][numPairs];
 			
@@ -162,18 +162,21 @@ public class Hungarian {
 		numLines = 0;
 		
 		int dim = matrix.length;
+		// in each spot, covered will hold integer values that indicate how many lines are covering that spot
 		int[][] covered = new int[dim][dim];
-		
+		// rowZeros and colZeros hold integer values indicating how many uncovered 0s are in each row and column 
+		// to begin with
 		int[] rowZeros = getRowZeros(matrix, covered);
 		int[] colZeros = getColZeros(matrix, covered);
 		boolean uncoveredZeros = true;
+		boolean lineDrawn;
 		
-		// Note: we assume there are uncovered zeros 
+		// Note: we assume there are uncovered zeros to begin with 
 		// TODO: see if this is a problem
 		while (uncoveredZeros) {
 			int maxZeros = Integer.MIN_VALUE;
-			boolean lineDrawn = false;
-			
+			lineDrawn = false;
+			// Determine which row or column has the most 0s
 			for (int i = 0; i < dim; i++) {
 				if (rowZeros[i] > maxZeros) {
 					maxZeros = rowZeros[i];
@@ -183,6 +186,7 @@ public class Hungarian {
 					maxZeros = rowZeros[i];
 				}
 			}
+			// Check: if maxZeros was found in a row, we need to update the elements in covered in the row to be 1, since we are "drawing a line"
 			
 			for (int i = 0; i < dim; i++) {
 				if (rowZeros[i] == maxZeros) {
@@ -194,6 +198,7 @@ public class Hungarian {
 					break;
 				}
 			}
+			// If we did not draw the line across a row, then we need to find the column that has the most 0s and draw the line down the column
 			
 			if (!lineDrawn) {
 				for (int j = 0; j < dim; j++) {
@@ -207,12 +212,12 @@ public class Hungarian {
 					}
 				}
 			}
-			
+			// Recalculate the new number of uncovered 0s in each row and column
 			rowZeros = getRowZeros(matrix, covered);
 			colZeros = getColZeros(matrix, covered);
 			
 			uncoveredZeros = false;
-			
+			// Check to see if we still have any uncovered 0s in the matrix. If so, continue with the while loop
 			for (int i = 0; i < dim; i++) {
 				if (rowZeros[i] > 0) {
 					uncoveredZeros = true;
@@ -229,7 +234,7 @@ public class Hungarian {
 		return covered;
 		
 	}
-	
+	// Calculates how many uncovered zeros are in a row and returns those values in the 1-D array rowZeros
 	private static int[] getRowZeros(int[][] matrix, int[][] covered) {
 		int dim = matrix.length;
 		int[] rowZeros = new int[dim];
@@ -246,7 +251,7 @@ public class Hungarian {
 		
 		return rowZeros;
 	}
-	
+	// Calculates how many uncovered zeros are in a column and returns those values in the 1-D array ColZeros
 	private static int[] getColZeros(int[][] matrix, int[][] covered) {
 		int dim = matrix.length;
 		int[] colZeros = new int[dim];
@@ -263,7 +268,7 @@ public class Hungarian {
 		
 		return colZeros;
 	}
-	
+	// Calculates the the number of 0s in each row in the given matrix
 	private static int[] getRowZeros(int[][] matrix) {
 		int dim = matrix.length;
 		int[] rowZeros = new int[dim];
@@ -280,7 +285,7 @@ public class Hungarian {
 		
 		return rowZeros;
 	}
-	
+	// Calculates the number of 0s in each column in the given matrix
 	private static int[] getColZeros(int[][] matrix) {
 		int dim = matrix.length;
 		int[] colZeros = new int[dim];
@@ -297,7 +302,7 @@ public class Hungarian {
 		
 		return colZeros;
 	}
-	
+	// Performs the augmentation of the "covered" matrix
 	private static void augmentMatrix(int[][] matrix, int[][] lineMatrix) {
 		int dim = matrix.length;
 		
@@ -320,7 +325,7 @@ public class Hungarian {
 				}
 			}
 		}
-		
+		// TODO: check why we are doing these steps below
 		// Find minimum element in matrix
 		min = Integer.MAX_VALUE;
 		for (int i = 0; i < dim; i++) {
@@ -338,12 +343,12 @@ public class Hungarian {
 			}
 		}
 	}
-	
+	// Given a matrix that has been through all of the steps of the Hungarian algorithm, create the PairTime objects
 	private static ArrayList<PairTime> choosePairTimes(int[][] matrix, ArrayList<Pair> pairs, ArrayList<RoomDayTime> roomDayTimes) {
 		int dim = matrix.length;
 		
 		ArrayList<PairTime> pairTimes = new ArrayList<PairTime>();
-		
+		// Calculate how many 0s are in each row that the Hungarian algorithm produces
 		int[] rowZeros = getRowZeros(matrix);
 		int[] colZeros = getColZeros(matrix);
 		
@@ -367,6 +372,7 @@ public class Hungarian {
 				}
 			}
 			
+			// If the minimum value does not change, then we know we have a complete solution
 			if (min == Integer.MAX_VALUE) {
 				break;
 			}
@@ -374,7 +380,7 @@ public class Hungarian {
 			if (minInRow) {
 				for (int j = 0; j < dim; j++) {
 					if (matrix[minIndex][j] == 0) {
-						rowZeros[minIndex] = 0;
+						rowZeros[minIndex] = 0;// TODO: Clarify: we are arbitrarily choosing the first 0 in the row that has the minimum number of 0s right?
 						colZeros[j] = 0;
 						
 						for (int k = 0; k < dim; k++) {
@@ -427,6 +433,7 @@ public class Hungarian {
 		return pairTimes;
 	}
 
+	// Siblings must be scheduled at the same time. siblingCheck verifies that all siblings were scheduled for the same time
 	private static boolean siblingCheck(ArrayList<PairTime> pairTimes) {
 		ArrayList<Student> siblingsToCheck = new ArrayList<Student>();
 		ArrayList<Integer> siblingTimes = new ArrayList<Integer>();
@@ -468,6 +475,7 @@ public class Hungarian {
 		}
 	}
 	
+	// Returns the sum of all of the Student-Teacher pairs that were included in the list pairTimes
 	private static int calculateScore(ArrayList<PairTime> pairTimes) {
 		int score = 0;
 		
@@ -478,6 +486,7 @@ public class Hungarian {
 		return score;
 	}
 	
+	// Verifies that if a pair is assigned to a room that the pair's instrument is supported by that room
 	private static boolean checkCompatible(Pair pair, RoomDayTime roomDayTime, ArrayList<String> specialInstruments) {
 		if (specialInstruments.contains(pair.getInstrument())) {
 			if (!roomDayTime.getRoom().getSpecialInstruments().contains(pair.getInstrument())) {
