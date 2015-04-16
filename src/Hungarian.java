@@ -1,6 +1,4 @@
 import java.util.ArrayList;
-// All credit for this work goes to wikihow.com
-// http://www.wikihow.com/Use-the-Hungarian-Algorithm
 
 public class Hungarian {
 	
@@ -234,6 +232,7 @@ public class Hungarian {
 		return covered;
 		
 	}
+	
 	// Calculates how many uncovered zeros are in a row and returns those values in the 1-D array rowZeros
 	private static int[] getRowZeros(int[][] matrix, int[][] covered) {
 		int dim = matrix.length;
@@ -251,6 +250,7 @@ public class Hungarian {
 		
 		return rowZeros;
 	}
+	
 	// Calculates how many uncovered zeros are in a column and returns those values in the 1-D array ColZeros
 	private static int[] getColZeros(int[][] matrix, int[][] covered) {
 		int dim = matrix.length;
@@ -268,6 +268,7 @@ public class Hungarian {
 		
 		return colZeros;
 	}
+	
 	// Calculates the the number of 0s in each row in the given matrix
 	private static int[] getRowZeros(int[][] matrix) {
 		int dim = matrix.length;
@@ -285,6 +286,7 @@ public class Hungarian {
 		
 		return rowZeros;
 	}
+	
 	// Calculates the number of 0s in each column in the given matrix
 	private static int[] getColZeros(int[][] matrix) {
 		int dim = matrix.length;
@@ -302,6 +304,7 @@ public class Hungarian {
 		
 		return colZeros;
 	}
+	
 	// Performs the augmentation of the "covered" matrix
 	private static void augmentMatrix(int[][] matrix, int[][] lineMatrix) {
 		int dim = matrix.length;
@@ -320,34 +323,22 @@ public class Hungarian {
 		// Add minimum to every covered element, twice to elements covered twice
 		for (int i = 0; i < dim; i++) {
 			for (int j = 0; j < dim; j++) {
-				if (lineMatrix[i][j] > 0) {
-					matrix[i][j] += lineMatrix[i][j]*min;
+				if (lineMatrix[i][j] == 0) {
+					matrix[i][j] -= min;
+				} else if (lineMatrix[i][j] == 2) {
+					matrix[i][j] += min;
+					
 				}
-			}
-		}
-		// TODO: check why we are doing these steps below
-		// Find minimum element in matrix
-		min = Integer.MAX_VALUE;
-		for (int i = 0; i < dim; i++) {
-			for (int j = 0; j < dim; j++) {
-				if (matrix[i][j] < min) {
-					min = matrix[i][j];
-				}
-			}
-		}
-		
-		// Subtract the min from every element in the matrix
-		for (int i = 0; i < dim; i++) {
-			for (int j = 0; j < dim; j++) {
-				matrix[i][j] -= min;
 			}
 		}
 	}
+	
 	// Given a matrix that has been through all of the steps of the Hungarian algorithm, create the PairTime objects
 	private static ArrayList<PairTime> choosePairTimes(int[][] matrix, ArrayList<Pair> pairs, ArrayList<RoomDayTime> roomDayTimes) {
 		int dim = matrix.length;
 		
 		ArrayList<PairTime> pairTimes = new ArrayList<PairTime>();
+		
 		// Calculate how many 0s are in each row that the Hungarian algorithm produces
 		int[] rowZeros = getRowZeros(matrix);
 		int[] colZeros = getColZeros(matrix);
@@ -380,7 +371,7 @@ public class Hungarian {
 			if (minInRow) {
 				for (int j = 0; j < dim; j++) {
 					if (matrix[minIndex][j] == 0) {
-						rowZeros[minIndex] = 0;// TODO: Clarify: we are arbitrarily choosing the first 0 in the row that has the minimum number of 0s right?
+						rowZeros[minIndex] = 0;
 						colZeros[j] = 0;
 						
 						for (int k = 0; k < dim; k++) {

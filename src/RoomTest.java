@@ -17,7 +17,7 @@ public class RoomTest {
 	@Test
 	@SuppressWarnings(value = { "unused" })
 	public void testRoom() {
-		Room testRoom = new Room("Test Name 110",new ArrayList<String>(Arrays.asList("Piano", "Drums")), new int[] {500, 1670, 4309});
+		Room testRoom = new Room("Test Name 110", new ArrayList<String>(Arrays.asList("Piano", "Drums")), new int[] {500, 1670, 4309});
 	}
 
 	@Test
