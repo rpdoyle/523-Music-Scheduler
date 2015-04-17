@@ -29,9 +29,8 @@ public class Randomization {
 		this.teachers = teachers;
 	}
 
-
 	public HungarianResult schedule() {
-		int maxScore = 0, timeSinceImprovement = 0, timeSinceNewPair;
+		int maxScore = 0, timeSinceImprovement = 0, timeSinceNewPair, sumScores = 0, count = 0;
 		// This is used to test whether or not we should call Hungarian
 		boolean siblingFound = false, feasiblePairs = true;
 		HungarianResult currentResult, bestResult = null;
@@ -57,8 +56,7 @@ public class Randomization {
 		// schedule that scores sufficiently, or you haven't improved for a
 		// certain period of time
 
-		// TODO: calculate sufficient score
-		while (maxScore < getSufficientScore()
+		while (maxScore < getSufficientScore(sumScores, count) && count < 100
 				&& timeSinceImprovement < IMPROVEMENTTIMEOUT) {
 			possiblePairs.clear();
 			siblings.clear();
@@ -94,15 +92,16 @@ public class Randomization {
 			while (possiblePairs.size() < (numRoomDayTimes * EXTRAPAIRSMULTIPLIER)
 					&& timeSinceNewPair < NEWPAIRTIMEOUT
 					&& studentIndices.size() > 0 && teacherIndices.size() > 0) {
-				feasiblePairs = true;
-
 				// Get random pointers into the students and teachers arraylists
-				int randStudentIndex = studentIndices.get(randS.nextInt() * studentIndices.size());
-				int randTeacherIndex = teacherIndices.get(randT.nextInt() * teacherIndices.size());
+				int randStudentIndex = studentIndices.get(randS
+						.nextInt(studentIndices.size()));
+				int randTeacherIndex = teacherIndices.get(randT
+						.nextInt(teacherIndices.size()));
 
 				// If their score in greater than zero, add them!
 				if (scores[randTeacherIndex][randStudentIndex].getScore() > 0) {
-					possiblePairs.add(scores[randTeacherIndex][randStudentIndex]);
+					possiblePairs
+							.add(scores[randTeacherIndex][randStudentIndex]);
 					// If the student has siblings, add them to the siblings
 					// arraylist
 					if (students.get(randStudentIndex).getSiblings().size() > 0) {
@@ -119,6 +118,9 @@ public class Randomization {
 					timeSinceNewPair++;
 				}
 			}
+			
+			feasiblePairs = true;
+			siblingFound = false;
 
 			// Check whether the siblings of scheduled students were also
 			// scheduled
@@ -151,6 +153,9 @@ public class Randomization {
 				continue;
 			}
 
+			sumScores += currentResult.getScore();
+			count++;
+
 			// If this latest result beats all our past results, save it
 			if (currentResult.getScore() > maxScore) {
 				maxScore = currentResult.getScore();
@@ -163,7 +168,8 @@ public class Randomization {
 		return bestResult;
 	}
 
-	public int getSufficientScore() {
-		return 0;
+	public int getSufficientScore(int sumScores, int count) {
+		int avgScore = sumScores / count;
+		return 3 * avgScore / 2;
 	}
 }
