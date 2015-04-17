@@ -258,6 +258,9 @@ class ScheduleButtonActionListener implements ActionListener {
 		// TODO: scheduling
 		ArrayList<String> specialInstruments = HelperMethods.getAllPossibleSpecialInstruments(rooms);
 		ArrayList<RoomDayTime> roomDayTimes = HelperMethods.getRoomDayTimes(rooms);
+		Randomization randomizer = new Randomization(mandatoryPairs, scores, rooms, se.getStudents(), se.getTeachers());
+		
+		HungarianResult bestResult = randomizer.schedule();
 	}
 	
 	// Play an error sound and display an error dialog with a given message
