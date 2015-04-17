@@ -17,7 +17,7 @@ public class HelperMethodsTest {
 		Room testRoom2 = new Room("Test Name 210", new ArrayList<String>(Arrays.asList("Piano", "Drums")), new int[] {500, 1670, 4309});
 		Room testRoom3 = new Room("Test Name 310", new ArrayList<String>(Arrays.asList("Piano", "Drums")), new int[] {500, 1670, 4309});
 		ArrayList<Room> rooms = new ArrayList<Room>(Arrays.asList(testRoom, testRoom2, testRoom3));
-		assertEquals(new ArrayList<String>(Arrays.asList("Drums", "Piano")), HelperMethods.getAllPossibleSpecialInstruments(rooms));
+		assertArrayEquals(new ArrayList<String>(Arrays.asList("Piano", "Drums")).toArray(), HelperMethods.getAllPossibleSpecialInstruments(rooms).toArray());
 	}
 	
 	@Test
@@ -26,7 +26,7 @@ public class HelperMethodsTest {
 		Room testRoom2 = new Room("Test Name 210", new ArrayList<String>(Arrays.asList("Piano")), new int[] {500, 1670, 4309});
 		Room testRoom3 = new Room("Test Name 310", new ArrayList<String>(Arrays.asList("Organ")), new int[] {500, 1670, 4309});
 		ArrayList<Room> rooms = new ArrayList<Room>(Arrays.asList(testRoom, testRoom2, testRoom3));
-		assertEquals(new ArrayList<String>(Arrays.asList("Drums", "Piano", "Organ")), HelperMethods.getAllPossibleSpecialInstruments(rooms));
+		assertArrayEquals(new ArrayList<String>(Arrays.asList("Piano", "Drums", "Organ")).toArray(), HelperMethods.getAllPossibleSpecialInstruments(rooms).toArray());
 	}
 		
 	@Test
@@ -34,7 +34,7 @@ public class HelperMethodsTest {
 		Room testRoom = new Room("Test Name 110", new ArrayList<String>(Arrays.asList("Drums", "Piano")), new int[] {500, 1670, 4309});
 		Room testRoom2 = new Room("Test Name 210", new ArrayList<String>(Arrays.asList("Piano", "Saxophone")), new int[] {500, 1670, 4309});
 		ArrayList<Room> rooms = new ArrayList<Room>(Arrays.asList(testRoom, testRoom2));
-		assertEquals(new ArrayList<String>(Arrays.asList("Drums", "Piano", "Saxophone")), HelperMethods.getAllPossibleSpecialInstruments(rooms));
+		assertArrayEquals(new ArrayList<String>(Arrays.asList("Piano", "Saxophone", "Drums")).toArray(), HelperMethods.getAllPossibleSpecialInstruments(rooms).toArray());
 	}
 
 	@Test
