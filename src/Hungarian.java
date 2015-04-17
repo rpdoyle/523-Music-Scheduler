@@ -32,7 +32,7 @@ public class Hungarian {
 	}
 	
 	// From the randomly generated pairs and room-day-times, set up the matrix to start the Hungarian algorithm
-	private static int[][] createOriginalMatrix(ArrayList<Pair> pairs, ArrayList<RoomDayTime> roomDayTimes, ArrayList<String> specialInstruments) {
+	public static int[][] createOriginalMatrix(ArrayList<Pair> pairs, ArrayList<RoomDayTime> roomDayTimes, ArrayList<String> specialInstruments) {
 		int numPairs = pairs.size();
 		int numRDTs = roomDayTimes.size();
 		int[][] originalMatrix;
@@ -55,6 +55,8 @@ public class Hungarian {
 				}
 			}
 			
+		// Note that this case also catches when the number of pairs and room day times
+		// are the same. This is fine because of hte structure of the final loop in this case.
 		} else {
 			originalMatrix = new int[numRDTs][numRDTs];
 			
@@ -79,7 +81,6 @@ public class Hungarian {
 	}
 	
 	// Assumes square matrix
-	// Changed to public for testing's sake
 	public static int[][] createMinMatrix(int[][] originalMatrix) {
 		int dim = originalMatrix.length;
 		
@@ -107,7 +108,6 @@ public class Hungarian {
 	}
 	
 	// Assumes square matrix
-	// This method was made public for testing purposes
 	public static void rowReduce(int[][] matrix) {
 		int dim = matrix.length;
 		
@@ -129,7 +129,6 @@ public class Hungarian {
 	}
 	
 	// Assumes square matrix
-	// This method was made public for testing
 	public static void columnReduce(int[][] matrix) {
 		int dim = matrix.length;
 		
@@ -165,7 +164,7 @@ public class Hungarian {
 	}
 	
 	// Assumes a square matrix
-	private static int[][] calculateLineMatrix(int[][] matrix) {
+	public static int[][] calculateLineMatrix(int[][] matrix) {
 		numLines = 0;
 		
 		int dim = matrix.length;
@@ -192,7 +191,7 @@ public class Hungarian {
 				}
 				
 				if (colZeros[i] > maxZeros) {
-					maxZeros = rowZeros[i];
+					maxZeros = colZeros[i];
 				}
 			}
 			
@@ -202,6 +201,7 @@ public class Hungarian {
 					for (int j = 0; j < dim; j++) {
 						covered[i][j]++;
 					}
+					
 					lineDrawn = true;
 					numLines++;
 					break;
@@ -215,6 +215,7 @@ public class Hungarian {
 						for (int i = 0; i < dim; i++) {
 							covered[i][j]++;
 						}
+						
 						lineDrawn = true;
 						numLines++;
 						break;
@@ -247,7 +248,7 @@ public class Hungarian {
 	}
 	
 	// Calculates how many uncovered zeros are in a row and returns those values in the 1-D array rowZeros
-	private static int[] getRowZeros(int[][] matrix, int[][] covered) {
+	public static int[] getRowZeros(int[][] matrix, int[][] covered) {
 		int dim = matrix.length;
 		int[] rowZeros = new int[dim];
 		
@@ -265,7 +266,7 @@ public class Hungarian {
 	}
 	
 	// Calculates how many uncovered zeros are in a column and returns those values in the 1-D array ColZeros
-	private static int[] getColZeros(int[][] matrix, int[][] covered) {
+	public static int[] getColZeros(int[][] matrix, int[][] covered) {
 		int dim = matrix.length;
 		int[] colZeros = new int[dim];
 		
@@ -283,7 +284,7 @@ public class Hungarian {
 	}
 	
 	// Calculates the the number of 0s in each row in the given matrix
-	private static int[] getRowZeros(int[][] matrix) {
+	public static int[] getRowZeros(int[][] matrix) {
 		int dim = matrix.length;
 		int[] rowZeros = new int[dim];
 		
@@ -301,7 +302,7 @@ public class Hungarian {
 	}
 	
 	// Calculates the number of 0s in each column in the given matrix
-	private static int[] getColZeros(int[][] matrix) {
+	public static int[] getColZeros(int[][] matrix) {
 		int dim = matrix.length;
 		int[] colZeros = new int[dim];
 		
@@ -319,7 +320,6 @@ public class Hungarian {
 	}
 	
 	// Performs the augmentation of the "covered" matrix
-	// This method was made public for testing purposes
 	public static void augmentMatrix(int[][] matrix, int[][] lineMatrix) {
 		int dim = matrix.length;
 		
@@ -493,8 +493,8 @@ public class Hungarian {
 		return score;
 	}
 	
-	// Verifies that if a pair is assigned to a room that the pair's instrument is supported by that room
-	private static boolean checkCompatible(Pair pair, RoomDayTime roomDayTime, ArrayList<String> specialInstruments) {
+	// Verifies that if a pair is assigned to a room that the pair's instrument and time are supported by that room
+	public static boolean checkCompatible(Pair pair, RoomDayTime roomDayTime, ArrayList<String> specialInstruments) {
 		if (specialInstruments.contains(pair.getInstrument())) {
 			if (!roomDayTime.getRoom().getSpecialInstruments().contains(pair.getInstrument())) {
 				return false;
@@ -506,7 +506,10 @@ public class Hungarian {
 		}
 		
 		return true;
-		
 	}
 	
+	// Returns the number of lines drawn by the last call to calculateLineMatrix()
+	public static int getNumLines() {
+		return numLines;
+	}
 }
