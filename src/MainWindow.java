@@ -9,8 +9,6 @@ import java.awt.Container;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -191,7 +189,6 @@ class ScheduleButtonActionListener implements ActionListener {
 	@Override
 	@SuppressWarnings(value = { "unused" })
 	public void actionPerformed(ActionEvent e) {
-		// TODO open files and create schedule
 		System.out.println("Scheduling would happen now");
 		System.out.println("Room Data File Path: " + roomDataTextField.getText());
 		System.out.println("Student Data File Path: " + studentDataTextField.getText());
@@ -211,56 +208,37 @@ class ScheduleButtonActionListener implements ActionListener {
 		
 		try {
 			rooms = ExcelReader.parseRoomData(roomDataTextField.getText());
-		} catch (FileNotFoundException fnfe) {
-			System.err.println("FileNotFoundException");
-			showErrorDialog(fnfe.getMessage());
-		} catch (IOException ioe) {
-			System.err.println("IOException");
-			showErrorDialog(ioe.getMessage());
-		} catch (InvalidInputFormatException iife) {
-			System.err.println("InvalidInputException");
-			showErrorDialog(iife.getMessage());
+		} catch (Exception ex) {
+			showErrorDialog(ex.getMessage());
+			return;
 		}
 
 		try {
 			students = ExcelReader.parseStudentData(studentDataTextField.getText());
-		} catch (FileNotFoundException fnfe) {
-			System.err.println("FileNotFoundException");
-			showErrorDialog(fnfe.getMessage());
-		} catch (IOException ioe) {
-			System.err.println("IOException");
-			showErrorDialog(ioe.getMessage());
-		} catch (InvalidInputFormatException iife) {
-			System.err.println("InvalidInputException");
-			showErrorDialog(iife.getMessage());
+		} catch (Exception ex) {
+			showErrorDialog(ex.getMessage());
+			return;
 		}
 
 		try {
 			teachers = ExcelReader.parseTeacherData(teacherDataTextField.getText());
-		} catch (FileNotFoundException fnfe) {
-			System.err.println("FileNotFoundException");
-			showErrorDialog(fnfe.getMessage());
-		} catch (IOException ioe) {
-			System.err.println("IOException");
-			showErrorDialog(ioe.getMessage());
-		} catch (InvalidInputFormatException iife) {
-			System.err.println("InvalidInputException");
-			showErrorDialog(iife.getMessage());
+		} catch (Exception ex) {
+			showErrorDialog(ex.getMessage());
+			return;
 		}
 		
-		// TODO: eventually, errors in the parsing should stop the program, but not right now for the sake of demoing to Stotts
-		
-		// TODO: scoring
+		// Scoring
 		ScoringEngine se = new ScoringEngine(students, teachers);
 		ArrayList<Pair> mandatoryPairs = se.getMandatoryPairs();
 		Pair[][] scores = se.scoreNonMandatoryPairs();
 		
-		// TODO: scheduling
+		// Scheduling
 		ArrayList<String> specialInstruments = HelperMethods.getAllPossibleSpecialInstruments(rooms);
 		ArrayList<RoomDayTime> roomDayTimes = HelperMethods.getRoomDayTimes(rooms);
 		Randomization randomizer = new Randomization(mandatoryPairs, scores, rooms, se.getStudents(), se.getTeachers());
-		
 		HungarianResult bestResult = randomizer.schedule();
+		
+		// TODO: print output
 	}
 	
 	// Play an error sound and display an error dialog with a given message
