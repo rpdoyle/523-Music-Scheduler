@@ -377,7 +377,6 @@ public class Hungarian {
 					minIndex = i;
 				}
 			}
-			System.out.println("The mindIndex is: " + minIndex + " and minInRow is: " + minInRow);
 			
 			// If the minimum value does not change, then we know we have a complete solution
 			if (min == Integer.MAX_VALUE) {
@@ -390,7 +389,7 @@ public class Hungarian {
 						rowZeros[minIndex] = 0;
 						colZeros[j] = 0;
 					
-						for (int k = 0; k < dim; k++) {
+						for (int k = 0; k < dim;  k++) {
 							if (matrix[minIndex][k] == 0) {
 								colZeros[k]--;
 							}
