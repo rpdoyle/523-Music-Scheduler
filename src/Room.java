@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /*
  * File: Room.java
  * Description: This class stores data for a Room.
@@ -5,10 +7,10 @@
 
 public class Room {
 	private String name;
-	private String[] specialInstruments;
+	private ArrayList<String> specialInstruments;
 	private int[] availableTimes;
 
-	public Room(String name, String[] specialInstruments, int[] availableTimes) {
+	public Room(String name, ArrayList<String> specialInstruments, int[] availableTimes) {
 		this.name = name;
 		this.specialInstruments = specialInstruments;
 		this.availableTimes = availableTimes;
@@ -18,7 +20,7 @@ public class Room {
 		return name;
 	}
 	
-	public String[] getSpecialInstruments() {
+	public ArrayList<String> getSpecialInstruments() {
 		return specialInstruments;
 	}
 	
