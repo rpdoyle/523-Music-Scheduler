@@ -45,7 +45,6 @@ public class ExcelReader {
 		rowsIterator.next();
 		
 		// Loop through each row of data, creating a Room object with each iteration 
-		
 		while (rowsIterator.hasNext()) { 
 			XSSFRow currentRow = (XSSFRow)rowsIterator.next();
 			
