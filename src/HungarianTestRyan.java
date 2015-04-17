@@ -288,8 +288,7 @@ public class HungarianTestRyan {
 	// Creates a dummy Teacher object for use in the above test cases
 	private Teacher createTestTeacher() {
 		int id = 829;
-		String firstName = "Test";
-		String lastName = "Teacher";
+		String name = "Test Teacher";
 		String returningStudent = "Fred Cook";
 		String returningInstrument = "Flute";
 		String keepReturningStudent = "Yes";
@@ -302,7 +301,7 @@ public class HungarianTestRyan {
 		String crimeRecord = "No";
 		int[] availableTimes = new int[] {828, 1293, 9932, 8272};
 		
-		return new Teacher(id, firstName, lastName, returningStudent, returningInstrument, keepReturningStudent, instruments, instrumentExperience,
+		return new Teacher(id, name, returningStudent, returningInstrument, keepReturningStudent, instruments, instrumentExperience,
 						genderPreference, agePreference, levelPreference, language, crimeRecord, availableTimes);	
 	}
 

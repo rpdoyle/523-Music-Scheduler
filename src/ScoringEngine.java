@@ -102,9 +102,8 @@ public class ScoringEngine {
 					// arraylists so that they can be removed afterward
 					if (mutualTimes.size() > 0) {
 						mandatoryPairs.add(new Pair(returningStudents.get(i),
-								returningTeachers.get(j), returningStudents
-										.get(i).getInstruments()[0], 2000,
-								mutualTimes));
+								returningTeachers.get(j), 2000, mutualTimes, returningStudents
+										.get(i).getInstruments()[0]));
 						returningStudents.remove(i);
 						i--;
 						returningTeachers.remove(j);
@@ -178,7 +177,7 @@ public class ScoringEngine {
 				// If a mutual time was not found, then this pair is
 				// incompatible. Give them a score of -1
 				if (mutualTimes.size() == 0) {
-					scores[i][j] = new Pair(students.get(j), teachers.get(i), "", -1, null);
+					scores[i][j] = new Pair(students.get(j), teachers.get(i), -1, null, "");
 					continue;
 				}
 
@@ -201,7 +200,7 @@ public class ScoringEngine {
 					// If the score isn't 300, then an instrument match wasn't
 					// found, and this pair won't work.
 					if (score != 300) {
-						scores[i][j] = new Pair(students.get(j), teachers.get(i), "", -1, null);
+						scores[i][j] = new Pair(students.get(j), teachers.get(i), -1, null, "");
 						continue;
 					}
 				} else { // If the student is not advanced, check all instrument
@@ -247,7 +246,7 @@ public class ScoringEngine {
 					// If score is still zero, no instruments matched, so this
 					// pair won't work
 					if (score == 0) {
-						scores[i][j] = new Pair(students.get(j), teachers.get(i), "", -1, null);
+						scores[i][j] = new Pair(students.get(j), teachers.get(i), -1, null, "");
 						continue;
 					}
 				}
@@ -300,7 +299,7 @@ public class ScoringEngine {
 					score += 1;
 				}
 
-				scores[i][j] = new Pair(students.get(j), teachers.get(i), returningInstrument, score, mutualTimes);
+				scores[i][j] = new Pair(students.get(j), teachers.get(i), score, mutualTimes, returningInstrument);
 			}
 		}
 

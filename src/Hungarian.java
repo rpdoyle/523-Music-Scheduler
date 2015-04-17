@@ -329,7 +329,6 @@ public class Hungarian {
 		for (int i = 0; i < dim; i++) {
 			for (int j = 0; j < dim; j++) {
 				if (matrix[i][j] < min && matrix[i][j] > 0){
-				//if (matrix[i][j] < min && lineMatrix[i][j] == 0) {
 					min = matrix[i][j];
 				}
 			}
