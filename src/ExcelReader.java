@@ -50,7 +50,7 @@ public class ExcelReader {
 			
 			String roomName = getStringFromCell(currentRow, Columns.ROOM_NAME, true);
 			
-			ArrayList<String> specialInstrumentsArr = (ArrayList<String>) Arrays.asList(getStringArrayFromCell(currentRow, Columns.ROOM_INSTRUMENTS, false));
+			ArrayList<String> specialInstrumentsArr = new ArrayList<String> (Arrays.asList(getStringArrayFromCell(currentRow, Columns.ROOM_INSTRUMENTS, false)));
 			
 			int[] availableTimes = getAvailableTimes(Columns.ROOM_MONDAY_TIMES, Columns.ROOM_TUESDAY_TIMES, Columns.ROOM_WEDNESDAY_TIMES, Columns.ROOM_THURSDAY_TIMES,
 									Columns.ROOM_FRIDAY_TIMES, currentRow);
@@ -231,7 +231,8 @@ public class ExcelReader {
 			String[] languageArr = getStringArrayFromCell(currentRow, Columns.TEACHER_LANGUAGES, false);
 
 			// Get information about teacher's crime record
-			String crimeRecord = getStringFromCell(currentRow, Columns.TEACHER_CRIME_RECORD, true);
+			// TODO: don't need this. not sure which cell it's actually reading. made false to run other tests
+			String crimeRecord = getStringFromCell(currentRow, Columns.TEACHER_CRIME_RECORD, false);
 			// TODO: if convicted, don't add to arraylist
 
 			// Get teacher's available times

@@ -129,11 +129,7 @@ public class MainWindow {
 				| IllegalAccessException | UnsupportedLookAndFeelException e) {
 			System.err.println("Error: Could not set system look and feel");
 		}
-		
-		roomDataTextField.setText("C:\\Users\\Ryan\\workspace\\523-Music-Scheduler\\test-files\\Room Information (Responses).xlsx");
-		studentDataTextField.setText("C:\\Users\\Ryan\\workspace\\523-Music-Scheduler\\test-files\\Room Information (Responses).xlsx");
-		teacherDataTextField.setText("C:\\Users\\Ryan\\workspace\\523-Music-Scheduler\\test-files\\Room Information (Responses).xlsx");
-		
+
 		// Display the frame on the screen
 		frame.setVisible(true);
 	}
