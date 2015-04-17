@@ -1,16 +1,12 @@
 /*
  * File: HelperMethodsTest.java
- * Description: Implements JUnit tests for Room.java
+ * Description: Implements JUnit tests for HelperMethods.java
  * 	
  */
 
 import static org.junit.Assert.*;
-
-import java.awt.List;
 import java.util.ArrayList;
 import java.util.Arrays;
-
-import org.junit.Before;
 import org.junit.Test;
 
 public class HelperMethodsTest {
@@ -40,7 +36,7 @@ public class HelperMethodsTest {
 		ArrayList<Room> rooms = new ArrayList<Room>(Arrays.asList(testRoom, testRoom2));
 		assertEquals(new ArrayList<String>(Arrays.asList("Drums", "Piano", "Saxophone")), HelperMethods.getAllPossibleSpecialInstruments(rooms));
 	}
-	// Need to double check that this test really works. Perhaps pointers are being used?
+
 	@Test
 	public void testGetRoomDayTimes(){
 		Room testRoom = new Room("Test Name 110", new ArrayList<String>(Arrays.asList("Drums", "Piano")), new int[] {500, 1670, 4309});
@@ -61,7 +57,6 @@ public class HelperMethodsTest {
 		rdt.add(testrdt6);
 		RoomDayTimeComparator pc = new RoomDayTimeComparator();
 		assertEquals(0, pc.compareLists(rdt, HelperMethods.getRoomDayTimes(rooms)));
-	
 	}
 
 }

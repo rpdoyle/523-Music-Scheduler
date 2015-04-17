@@ -1,3 +1,8 @@
+/*
+ * File: Hungarian.java
+ * Description: Implements the Hungarian Algorithm
+ */
+
 import java.util.ArrayList;
 
 public class Hungarian {
@@ -25,13 +30,14 @@ public class Hungarian {
 			return null;
 		}
 	}
+	
 	// From the randomly generated pairs and room-day-times, set up the matrix to start the Hungarian algorithm
 	private static int[][] createOriginalMatrix(ArrayList<Pair> pairs, ArrayList<RoomDayTime> roomDayTimes, ArrayList<String> specialInstruments) {
 		int numPairs = pairs.size();
 		int numRDTs = roomDayTimes.size();
 		int[][] originalMatrix;
 		
-		// Generate original matrix of pairs vs. room day times
+		// Generate original matrix of pairs vs. RoomDayTimes
 		if (numPairs > numRDTs) {
 			originalMatrix = new int[numPairs][numPairs];
 			
@@ -163,10 +169,11 @@ public class Hungarian {
 		numLines = 0;
 		
 		int dim = matrix.length;
-		// in each spot, covered will hold integer values that indicate how many lines are covering that spot
+		
+		// In each spot, covered will hold integer values that indicate how many lines are covering that spot
 		int[][] covered = new int[dim][dim];
-		// rowZeros and colZeros hold integer values indicating how many uncovered 0s are in each row and column 
-		// to begin with
+		
+		// RowZeros and colZeros hold integer values indicating how many uncovered 0s are in each row and column to begin with
 		int[] rowZeros = getRowZeros(matrix, covered);
 		int[] colZeros = getColZeros(matrix, covered);
 		boolean uncoveredZeros = true;
@@ -177,6 +184,7 @@ public class Hungarian {
 		while (uncoveredZeros) {
 			int maxZeros = Integer.MIN_VALUE;
 			lineDrawn = false;
+			
 			// Determine which row or column has the most 0s
 			for (int i = 0; i < dim; i++) {
 				if (rowZeros[i] > maxZeros) {
@@ -187,8 +195,8 @@ public class Hungarian {
 					maxZeros = rowZeros[i];
 				}
 			}
-			// Check: if maxZeros was found in a row, we need to update the elements in covered in the row to be 1, since we are "drawing a line"
 			
+			// Check: if maxZeros was found in a row, we need to update the elements in covered in the row to be 1, since we are "drawing a line"
 			for (int i = 0; i < dim; i++) {
 				if (rowZeros[i] == maxZeros) {
 					for (int j = 0; j < dim; j++) {
@@ -199,8 +207,8 @@ public class Hungarian {
 					break;
 				}
 			}
-			// If we did not draw the line across a row, then we need to find the column that has the most 0s and draw the line down the column
 			
+			// If we did not draw the line across a row, then we need to find the column that has the most 0s and draw the line down the column
 			if (!lineDrawn) {
 				for (int j = 0; j < dim; j++) {
 					if (colZeros[j] == maxZeros) {
@@ -213,11 +221,13 @@ public class Hungarian {
 					}
 				}
 			}
+			
 			// Recalculate the new number of uncovered 0s in each row and column
 			rowZeros = getRowZeros(matrix, covered);
 			colZeros = getColZeros(matrix, covered);
 			
 			uncoveredZeros = false;
+			
 			// Check to see if we still have any uncovered 0s in the matrix. If so, continue with the while loop
 			for (int i = 0; i < dim; i++) {
 				if (rowZeros[i] > 0) {
@@ -318,7 +328,7 @@ public class Hungarian {
 		// Find minimum uncovered element
 		for (int i = 0; i < dim; i++) {
 			for (int j = 0; j < dim; j++) {
-				if (matrix[i][j] < min){
+				if (matrix[i][j] < min && matrix[i][j] > 0){
 				//if (matrix[i][j] < min && lineMatrix[i][j] == 0) {
 					min = matrix[i][j];
 				}
@@ -367,6 +377,7 @@ public class Hungarian {
 					minIndex = i;
 				}
 			}
+			System.out.println("The mindIndex is: " + minIndex + " and minInRow is: " + minInRow);
 			
 			// If the minimum value does not change, then we know we have a complete solution
 			if (min == Integer.MAX_VALUE) {
@@ -375,15 +386,15 @@ public class Hungarian {
 			
 			if (minInRow) {
 				for (int j = 0; j < dim; j++) {
-					if (matrix[minIndex][j] == 0) {
+					if (matrix[minIndex][j] == 0 && colZeros[j] > 0) {
 						rowZeros[minIndex] = 0;
 						colZeros[j] = 0;
-						
+					
 						for (int k = 0; k < dim; k++) {
 							if (matrix[minIndex][k] == 0) {
 								colZeros[k]--;
 							}
-							
+
 							if (matrix[k][j] == 0) {
 								rowZeros[k]--;
 							}
@@ -400,7 +411,7 @@ public class Hungarian {
 				}
 			} else {
 				for (int i = 0; i < dim; i++) {
-					if (matrix[i][minIndex] == 0) {
+					if (matrix[i][minIndex] == 0 && rowZeros[i] > 0 ) {
 						rowZeros[i] = 0;
 						colZeros[minIndex] = 0;
 						
@@ -425,12 +436,12 @@ public class Hungarian {
 				}
 			}
 		}
-		
 		return pairTimes;
 	}
 
-	// Siblings must be scheduled at the same time. siblingCheck verifies that all siblings were scheduled for the same time
-	private static boolean siblingCheck(ArrayList<PairTime> pairTimes) {
+	// SiblingCheck verifies that all siblings were scheduled for the same time
+	// This method was made public for testing
+	public static boolean siblingCheck(ArrayList<PairTime> pairTimes) {
 		ArrayList<Student> siblingsToCheck = new ArrayList<Student>();
 		ArrayList<Integer> siblingTimes = new ArrayList<Integer>();
 		ArrayList<Student> checkedSiblings = new ArrayList<Student>();

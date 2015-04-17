@@ -1,6 +1,6 @@
 /*
  * File: RoomDayTimeTest.java
- * Description: Implements JUnit tests for Room.java
+ * Description: Implements JUnit tests for RoomDayTime.java
  * 	
  */
 

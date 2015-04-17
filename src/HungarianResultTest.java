@@ -1,11 +1,10 @@
 /*
  * File: HungarianResultTest.java
- * Description: Implements JUnit tests for Room.java
+ * Description: Implements JUnit tests for HungarianResult.java
  * 	
  */
 
 import static org.junit.Assert.*;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import org.junit.Before;

@@ -1,3 +1,9 @@
+/*
+ * File: RoomDayTimeComparator.java
+ * Description: Implements methods necessary to compare two RoomDayTime objects
+ * 	
+ */
+
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -5,10 +11,12 @@ public class RoomDayTimeComparator implements Comparator<RoomDayTime> {
 	
 	@Override
 	public int compare(RoomDayTime rdt1, RoomDayTime rdt2) {
-		// If the two RoomDayTimes have the same time, keep checking
+		
+			// If the two RoomDayTimes have the same time, keep checking
 			if (rdt1.getTime()==rdt2.getTime()){
 				Room r1 = rdt1.getRoom(); 
 				Room r2 = rdt2.getRoom();
+
 				// Check to see if the two Rooms have the same name. If so, continue to check to see if they have the same Special Instruments
 				if (r1.getName().equals(r2.getName())){
 					int r1SpecialInstrumentSize, r2SpecialInstrumentSize;
@@ -32,38 +40,38 @@ public class RoomDayTimeComparator implements Comparator<RoomDayTime> {
 							return 1;
 						}
 					}
+					
 					// Check to see if the two rooms have the same Available Times
 					int r1AT, r2AT;
 					if (r1.getAvailableTimes().length != 0){
 						r1AT = r1.getAvailableTimes().length;
-					} else{
+					} else {
 						r1AT = 0;
 					}
 					if (r2.getAvailableTimes().length != 0){
 						r2AT = r2.getAvailableTimes().length;
-					}else{
+					} else {
 						r2AT = 0;
 					}
 					if ( r1AT != r2AT){
 						return 1;
 					}
 					for (int i = 0; i < r1AT; i++) {
-						if (!(r1.getAvailableTimes()[i]==
-								r2.getAvailableTimes()[i])) {
+						if (!(r1.getAvailableTimes()[i] == r2.getAvailableTimes()[i])) {
 							return 1;
 						}
 					}
 					return 0;
 					
 				} 
-					return 0;
+				return 0;
 
 			} 
-				return 1;
+			return 1;
 		
 	}
 
-	// Compare the elements in two Arrays
+	// Compare the elements in two ArrayLists
 	public int compareLists(ArrayList<RoomDayTime> a1, ArrayList<RoomDayTime> a2){
 		if (a1.size() != a2.size()){
 			return 1;

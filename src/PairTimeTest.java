@@ -1,15 +1,15 @@
 /*
  * File: PairTimeTest.java
- * Description: Implements JUnit tests for Room.java
+ * Description: Implements JUnit tests for PairTime.java
  * 	
  */
 
 import static org.junit.Assert.*;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import org.junit.Before;
 import org.junit.Test;
+
 public class PairTimeTest {
 	
 	Student testStudent;
