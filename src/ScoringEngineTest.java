@@ -98,8 +98,7 @@ public class ScoringEngineTest {
 		ArrayList<Integer> mutualTimes = new ArrayList<>();
 		mutualTimes.add(650);
 		mutualTimes.add(1812);
-		mandatoryPairs.add(new Pair(createStudent2(), createTeacher1(),
-				"Guitar", 2000, mutualTimes));
+		mandatoryPairs.add(new Pair(createStudent2(), createTeacher1(), 2000, mutualTimes, "Guitar"));
 		PairComparator pc = new PairComparator();
 		assertEquals(pc.compareLists(scoringEngine.getMandatoryPairs(),
 				mandatoryPairs), 0);
@@ -126,18 +125,13 @@ public class ScoringEngineTest {
 		// 11 is 311
 		Pair[][] pairs = {
 				{
-						new Pair(createStudent1(), createTeacher2(), "Guitar",
-								317, mutualTimes1),
-						new Pair(createStudent3(), createTeacher2(), "", -1,
-								mutualTimes2) },
+						new Pair(createStudent1(), createTeacher2(), 317, mutualTimes1, "Guitar"),
+						new Pair(createStudent3(), createTeacher2(), -1, mutualTimes2, "") },
 				{
-						new Pair(createStudent1(), createTeacher3(), "", -1,
-								mutualTimes3),
-						new Pair(createStudent3(), createTeacher3(), "Piano",
-								311, mutualTimes4) } };
+						new Pair(createStudent1(), createTeacher3(), -1, mutualTimes3, ""),
+						new Pair(createStudent3(), createTeacher3(), 311, mutualTimes4, "Piano") } };
+		
 		PairComparator pc = new PairComparator();
-		assertEquals(
-				pc.compareArrays(scoringEngine.scoreNonMandatoryPairs(), pairs),
-				0);
+		assertEquals(pc.compareArrays(scoringEngine.scoreNonMandatoryPairs(), pairs), 0);
 	}
 }

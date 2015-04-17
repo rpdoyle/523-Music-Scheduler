@@ -9,17 +9,17 @@ public class Pair {
 
 	private Student student;
 	private Teacher teacher;
-	private String instrument;
 	private int score;
 	private ArrayList<Integer> mutualTimes;
+	private String instrument;
 
-	public Pair(Student student, Teacher teacher, String instrument, int score,
-			ArrayList<Integer> mutualTimes) {
+	public Pair(Student student, Teacher teacher, int score,
+			ArrayList<Integer> mutualTimes, String instrument) {
 		this.student = student;
 		this.teacher = teacher;
-		this.instrument = instrument;
 		this.score = score;
 		this.mutualTimes = mutualTimes;
+		this.instrument = instrument;
 	}
 
 	public Student getStudent() {
@@ -30,15 +30,15 @@ public class Pair {
 		return teacher;
 	}
 
-	public String getInstrument() {
-		return instrument;
-	}
-
 	public int getScore() {
 		return score;
 	}
 
 	public ArrayList<Integer> getMutualTimes() {
 		return mutualTimes;
+	}
+	
+	public String getInstrument() {
+		return instrument;
 	}
 }
