@@ -40,9 +40,9 @@ public class HelperMethodsTest {
 		ArrayList<Room> rooms = new ArrayList<Room>(Arrays.asList(testRoom, testRoom2));
 		assertEquals(new ArrayList<String>(Arrays.asList("Drums", "Piano", "Saxophone")), HelperMethods.getAllPossibleSpecialInstruments(rooms));
 	}
-	// Need to double check that this test reall works. Perhaps pointers are being used?
+	// Need to double check that this test really works. Perhaps pointers are being used?
 	@Test
-	public void testgetRoomDayTimes(){
+	public void testGetRoomDayTimes(){
 		Room testRoom = new Room("Test Name 110", new ArrayList<String>(Arrays.asList("Drums", "Piano")), new int[] {500, 1670, 4309});
 		Room testRoom2 = new Room("Test Name 210", new ArrayList<String>(Arrays.asList("Piano", "Saxophone")), new int[] {500, 1670, 4309});
 		ArrayList<Room> rooms = new ArrayList<Room>(Arrays.asList(testRoom, testRoom2));
@@ -52,8 +52,15 @@ public class HelperMethodsTest {
 		RoomDayTime testrdt4 = new RoomDayTime(testRoom2, testRoom2.getAvailableTimes()[0]);
 		RoomDayTime testrdt5 = new RoomDayTime(testRoom2, testRoom2.getAvailableTimes()[1]);
 		RoomDayTime testrdt6 = new RoomDayTime(testRoom2, testRoom2.getAvailableTimes()[2]);
-		ArrayList<RoomDayTime> rdt = new ArrayList<RoomDayTime>(Arrays.asList(testrdt, testrdt2, testrdt3, testrdt4, testrdt5, testrdt6));
-		assertEquals(rdt, HelperMethods.getRoomDayTimes(rooms));
+		ArrayList<RoomDayTime> rdt = new ArrayList<RoomDayTime>();
+		rdt.add(testrdt);
+		rdt.add(testrdt2);
+		rdt.add(testrdt3);
+		rdt.add(testrdt4);
+		rdt.add(testrdt5);
+		rdt.add(testrdt6);
+		RoomDayTimeComparator pc = new RoomDayTimeComparator();
+		assertEquals(0, pc.compareLists(rdt, HelperMethods.getRoomDayTimes(rooms)));
 	
 	}
 

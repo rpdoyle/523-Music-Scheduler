@@ -73,7 +73,8 @@ public class Hungarian {
 	}
 	
 	// Assumes square matrix
-	private static int[][] createMinMatrix(int[][] originalMatrix) {
+	// Changed to public for testing's sake
+	public static int[][] createMinMatrix(int[][] originalMatrix) {
 		int dim = originalMatrix.length;
 		
 		int[][] minMatrix = new int[dim][dim];
@@ -100,7 +101,8 @@ public class Hungarian {
 	}
 	
 	// Assumes square matrix
-	private static void rowReduce(int[][] matrix) {
+	// This method was made public for testing purposes
+	public static void rowReduce(int[][] matrix) {
 		int dim = matrix.length;
 		
 		for (int i = 0; i < dim; i++) {
@@ -121,7 +123,8 @@ public class Hungarian {
 	}
 	
 	// Assumes square matrix
-	private static void columnReduce(int[][] matrix) {
+	// This method was made public for testing
+	public static void columnReduce(int[][] matrix) {
 		int dim = matrix.length;
 		
 		for (int j = 0; j < dim; j++) {
@@ -306,7 +309,8 @@ public class Hungarian {
 	}
 	
 	// Performs the augmentation of the "covered" matrix
-	private static void augmentMatrix(int[][] matrix, int[][] lineMatrix) {
+	// This method was made public for testing purposes
+	public static void augmentMatrix(int[][] matrix, int[][] lineMatrix) {
 		int dim = matrix.length;
 		
 		int min = Integer.MAX_VALUE;
@@ -314,13 +318,14 @@ public class Hungarian {
 		// Find minimum uncovered element
 		for (int i = 0; i < dim; i++) {
 			for (int j = 0; j < dim; j++) {
-				if (matrix[i][j] < min && lineMatrix[i][j] == 0) {
+				if (matrix[i][j] < min){
+				//if (matrix[i][j] < min && lineMatrix[i][j] == 0) {
 					min = matrix[i][j];
 				}
 			}
 		}
 		
-		// Add minimum to every covered element, twice to elements covered twice
+		// Add minimum to the double-crossed elements and subtract from all uncovered elements
 		for (int i = 0; i < dim; i++) {
 			for (int j = 0; j < dim; j++) {
 				if (lineMatrix[i][j] == 0) {
@@ -334,7 +339,7 @@ public class Hungarian {
 	}
 	
 	// Given a matrix that has been through all of the steps of the Hungarian algorithm, create the PairTime objects
-	private static ArrayList<PairTime> choosePairTimes(int[][] matrix, ArrayList<Pair> pairs, ArrayList<RoomDayTime> roomDayTimes) {
+	public static ArrayList<PairTime> choosePairTimes(int[][] matrix, ArrayList<Pair> pairs, ArrayList<RoomDayTime> roomDayTimes) {
 		int dim = matrix.length;
 		
 		ArrayList<PairTime> pairTimes = new ArrayList<PairTime>();
@@ -467,7 +472,8 @@ public class Hungarian {
 	}
 	
 	// Returns the sum of all of the Student-Teacher pairs that were included in the list pairTimes
-	private static int calculateScore(ArrayList<PairTime> pairTimes) {
+	// This method was made public for testing
+	public static int calculateScore(ArrayList<PairTime> pairTimes) {
 		int score = 0;
 		
 		for (int i = 0; i < pairTimes.size(); i++) {
