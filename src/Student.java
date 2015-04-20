@@ -33,7 +33,7 @@ public class Student {
 		this.availableTimes= availableTimes;
 		siblings = new ArrayList<Student>();
 	}
-		
+	
 	public int getID(){
 		return id;
 	}

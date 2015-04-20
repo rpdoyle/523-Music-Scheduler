@@ -1,15 +1,14 @@
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
-import java.util.Set;
 
 public class Randomization {
 
 	// This causes a timeout if we haven't generated a better schedule yet
-	public static final int IMPROVEMENTTIMEOUT = 500;
+	public static final int IMPROVEMENTTIMEOUT = 100;
 	// This causes a timeout if we haven't found a new pair yet
-	public static final int NEWPAIRTIMEOUT = 500;
-	// This determines how many pairs we will pass to Hunagarian. We want to
+	public static final int NEWPAIRTIMEOUT = 100;
+	// This determines how many pairs we will pass to Hungarian. We want to
 	// pass more than the number of RoomDayTimes
 	public static final double EXTRAPAIRSMULTIPLIER = 1.5;
 
@@ -30,9 +29,9 @@ public class Randomization {
 	}
 
 	public HungarianResult schedule() {
-		int maxScore = 0, timeSinceImprovement = 0, timeSinceNewPair, sumScores = 0, count = 0;
+		int maxScore = 0, timeSinceImprovement = 0, timeSinceNewPair;
 		// This is used to test whether or not we should call Hungarian
-		boolean siblingFound = false, feasiblePairs = true;
+		boolean feasibleSchedule = true;
 		HungarianResult currentResult, bestResult = null;
 
 		// These arraylists contain valid indices into the student and teacher
@@ -45,7 +44,7 @@ public class Randomization {
 		int numTeachers = teachers.size();
 
 		ArrayList<Pair> possiblePairs = new ArrayList<>();
-		Set<Integer> siblings = new HashSet<>();
+		HashSet<Integer> siblings = new HashSet<>();
 
 		int numRoomDayTimes = HelperMethods.getRoomDayTimes(rooms).size();
 
@@ -56,8 +55,7 @@ public class Randomization {
 		// schedule that scores sufficiently, or you haven't improved for a
 		// certain period of time
 
-		while (maxScore < getSufficientScore(sumScores, count) && count < 100
-				&& timeSinceImprovement < IMPROVEMENTTIMEOUT) {
+		while (timeSinceImprovement < IMPROVEMENTTIMEOUT) {
 			possiblePairs.clear();
 			siblings.clear();
 
@@ -71,15 +69,9 @@ public class Randomization {
 			}
 
 			// Check whether any mandatory pair students have siblings. If so,
-			// add them to the siblings arraylist for future checking
-			for (Pair mandatoryPair : mandatoryPairs) {
-				if (mandatoryPair.getStudent().getSiblings().size() > 0) {
-					for (Student sibling : mandatoryPair.getStudent()
-							.getSiblings()) {
-						siblings.add(sibling.getID());
-					}
-				}
-			}
+			// add them to the siblings HashSet for future checking
+			siblings = getMandatoryPairSiblings(mandatoryPairs);
+
 			// Add the mandatory pairs to the possible pairs arraylist for
 			// scheduling
 			possiblePairs.addAll(mandatoryPairs);
@@ -118,28 +110,10 @@ public class Randomization {
 					timeSinceNewPair++;
 				}
 			}
-			
-			feasiblePairs = true;
-			siblingFound = false;
 
-			// Check whether the siblings of scheduled students were also
-			// scheduled
-			for (Integer siblingID : siblings) {
-				for (Pair siblingPair : possiblePairs) {
-					if (siblingPair.getStudent().getID() == siblingID) {
-						siblingFound = true;
-						break;
-					}
-				}
-				if (!siblingFound) {
-					feasiblePairs = false;
-					break;
-				}
-			}
+			feasibleSchedule = checkIfSiblingsPaired(siblings, possiblePairs);
 
-			// If a sibling wasn't scheduled, then don't even bother calling
-			// Hungarian on this one
-			if (!feasiblePairs) {
+			if (!feasibleSchedule) {
 				continue;
 			}
 
@@ -153,9 +127,6 @@ public class Randomization {
 				continue;
 			}
 
-			sumScores += currentResult.getScore();
-			count++;
-
 			// If this latest result beats all our past results, save it
 			if (currentResult.getScore() > maxScore) {
 				maxScore = currentResult.getScore();
@@ -168,8 +139,40 @@ public class Randomization {
 		return bestResult;
 	}
 
-	public int getSufficientScore(int sumScores, int count) {
-		int avgScore = sumScores / count;
-		return 3 * avgScore / 2;
+	public static HashSet<Integer> getMandatoryPairSiblings(
+			ArrayList<Pair> mandatoryPairs) {
+		// Check whether any mandatory pair students have siblings. If so,
+		// add them to the siblings arraylist for future checking
+
+		HashSet<Integer> siblings = new HashSet<>();
+
+		for (Pair mandatoryPair : mandatoryPairs) {
+			if (mandatoryPair.getStudent().getSiblings().size() > 0) {
+				for (Student sibling : mandatoryPair.getStudent().getSiblings()) {
+					siblings.add(sibling.getID());
+				}
+			}
+		}
+		return siblings;
+	}
+
+	public static boolean checkIfSiblingsPaired(HashSet<Integer> siblings,
+			ArrayList<Pair> possiblePairs) {
+		boolean siblingFound = false;
+
+		// Check whether the siblings of scheduled students were also
+		// scheduled
+		for (Integer siblingID : siblings) {
+			for (Pair siblingPair : possiblePairs) {
+				if (siblingPair.getStudent().getID() == siblingID) {
+					siblingFound = true;
+					break;
+				}
+			}
+			if (!siblingFound) {
+				return false;
+			}
+		}
+		return true;
 	}
 }
