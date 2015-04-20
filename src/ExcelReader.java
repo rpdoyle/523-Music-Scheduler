@@ -60,10 +60,10 @@ public class ExcelReader {
 			rooms.add(room);
 			
 			// TODO: remove these print statements after showing Dr. Stotts it works
-			System.out.println("Found another room");
-			System.out.println(room.getName());
+			//System.out.println("Found another room");
+			//System.out.println(room.getName());
 			//System.out.println(Arrays.toString(room.getSpecialInstruments()));
-			System.out.println(Arrays.toString(room.getAvailableTimes()));
+			//System.out.println(Arrays.toString(room.getAvailableTimes()));
 		}
 		
 		workbook.close();
@@ -99,7 +99,7 @@ public class ExcelReader {
 			students.add(student);
 			
 			// TODO: remove these print statements after showing Dr. Stotts it works
-			printOutput(student);
+			//printOutput(student);
 			
 			// Increase the id so the next student has a new id
 			id++;
@@ -124,7 +124,7 @@ public class ExcelReader {
 				sibling1.getSiblings().add(student);
 				
 				// TODO: remove these print statements after Dr. Stotts sees the output
-				printOutput(sibling1);
+				//printOutput(sibling1);
 				id++;
 			}
 
@@ -146,7 +146,7 @@ public class ExcelReader {
 				sibling2.getSiblings().add(sibling1);
 				
 				
-				printOutput(sibling2);
+				//printOutput(sibling2);
 				id++;
 			}
 			
@@ -170,7 +170,7 @@ public class ExcelReader {
 				sibling3.getSiblings().add(sibling2);
 								
 				// TODO: remove these print statements once Dr. Stott's sees the output
-				printOutput(sibling3);
+				//printOutput(sibling3);
 				
 				id++;
 			}
@@ -251,21 +251,21 @@ public class ExcelReader {
 
 			// TODO: remove these print statements after showing Dr. Stotts it
 			// works
-			System.out.println("Found another teacher");
-			System.out.println(teacher.getId());
-			System.out.println(teacher.getName());
-			System.out.println(teacher.getReturningStudent());
-			System.out.println(teacher.getReturningInstrument());
-			System.out.println(teacher.getKeepReturningStudent());
-			System.out.println(Arrays.toString(teacher.getInstruments()));
-			System.out.println(Arrays.toString(teacher.getInstrumentExperience()));
-			System.out.println(teacher.getGenderPreference());
-			System.out.println(teacher.getAgePreference());
-			System.out.println(teacher.getLevelPreference());
-			System.out.println(Arrays.toString(teacher.getLanguages()));
-			System.out.println(teacher.getCrimeRecord());
-			System.out.println(Arrays.toString(teacher.getAvailableTimes()));
-
+			//System.out.println("Found another teacher");
+			//System.out.println(teacher.getId());
+			//System.out.println(teacher.getName());
+			//System.out.println(teacher.getReturningStudent());
+			//System.out.println(teacher.getReturningInstrument());
+			//System.out.println(teacher.getKeepReturningStudent());
+			//System.out.println(Arrays.toString(teacher.getInstruments()));
+			//System.out.println(Arrays.toString(teacher.getInstrumentExperience()));
+			//System.out.println(teacher.getGenderPreference());
+			//System.out.println(teacher.getAgePreference());
+			//System.out.println(teacher.getLevelPreference());
+			//System.out.println(Arrays.toString(teacher.getLanguages()));
+			//System.out.println(teacher.getCrimeRecord());
+			//System.out.println(Arrays.toString(teacher.getAvailableTimes()));
+			
 			id++;
 		}
 		
