@@ -28,8 +28,7 @@ public class ExcelWriter {
 
 		// Create the style used for the header row
 		CellStyle headerStyle = myWorkBook.createCellStyle();
-		headerStyle.setFillForegroundColor(IndexedColors.GREY_50_PERCENT
-				.getIndex());
+		headerStyle.setFillForegroundColor(IndexedColors.GREY_50_PERCENT.getIndex());
 		headerStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
 		headerStyle.setFont(headerFont);
 
@@ -94,8 +93,7 @@ public class ExcelWriter {
 		}
 	}
 
-	public static String[][] prepareDataToWriteToExcel(
-			HungarianResult hungarianResult) {
+	public static String[][] prepareDataToWriteToExcel(HungarianResult hungarianResult) {
 
 		// Create a pairTime object from the hungarianResult
 		ArrayList<PairTime> pairTime = hungarianResult.getPairTimes();
@@ -126,12 +124,11 @@ public class ExcelWriter {
 			int time = roomDayTime.getTime();
 			Room room = roomDayTime.getRoom();
 			// Create a student and teacher from the pair
-			Student student = pair.getStudent();
-			Teacher teacher = pair.getTeacher();
+			String student = pair.getStudent().getName();
+			String teacher = pair.getTeacher().getName();
 
 			// If the time matches 4:20 - write the teacher and student names
-			if (time == 980 || time == 2420 || time == 3860 || time == 5300
-					|| time == 6740) {
+			if (time == 980 || time == 2420 || time == 3860 || time == 5300 || time == 6740) {
 
 				// Write the room name in the first column of the row
 				excelData[rowIndex][0] = room.getName();
@@ -170,12 +167,11 @@ public class ExcelWriter {
 			int time = roomDayTime.getTime();
 			Room room = roomDayTime.getRoom();
 			// Create a student and teacher from the pair
-			Student student = pair.getStudent();
-			Teacher teacher = pair.getTeacher();
+			String student = pair.getStudent().getName();
+			String teacher = pair.getTeacher().getName();
 
 			// If the time matches 5:00 - write the teacher and student names
-			if (time == 1020 || time == 2460 || time == 3900 || time == 5340
-					|| time == 6780) {
+			if (time == 1020 || time == 2460 || time == 3900 || time == 5340 || time == 6780) {
 
 				// Write the room name in the first column of the row
 				excelData[rowIndex][0] = room.getName();
@@ -209,12 +205,11 @@ public class ExcelWriter {
 			int time = roomDayTime.getTime();
 			Room room = roomDayTime.getRoom();
 			// Create a student and teacher from the pair
-			Student student = pair.getStudent();
-			Teacher teacher = pair.getTeacher();
+			String student = pair.getStudent().getName();
+			String teacher = pair.getTeacher().getName();
 
 			// If the time matches 5:40 - write the teacher and student names
-			if (time == 1060 || time == 2500 || time == 3940 || time == 5380
-					|| time == 6820) {
+			if (time == 1060 || time == 2500 || time == 3940 || time == 5380 || time == 6820) {
 
 				// Write the room name in the first column of the row
 				excelData[rowIndex][0] = room.getName();
@@ -248,12 +243,11 @@ public class ExcelWriter {
 			int time = roomDayTime.getTime();
 			Room room = roomDayTime.getRoom();
 			// Create a student and teacher from the pair
-			Student student = pair.getStudent();
-			Teacher teacher = pair.getTeacher();
+			String student = pair.getStudent().getName();
+			String teacher = pair.getTeacher().getName();
 
 			// If the time matches 6:20 - write the teacher and student names
-			if (time == 1100 || time == 2540 || time == 3980 || time == 5420
-					|| time == 6860) {
+			if (time == 1100 || time == 2540 || time == 3980 || time == 5420 || time == 6860) {
 
 				// Write the room name in the first column of the row
 				excelData[rowIndex][0] = room.getName();
@@ -287,12 +281,11 @@ public class ExcelWriter {
 			int time = roomDayTime.getTime();
 			Room room = roomDayTime.getRoom();
 			// Create a student and teacher from the pair
-			Student student = pair.getStudent();
-			Teacher teacher = pair.getTeacher();
+			String student = pair.getStudent().getName();
+			String teacher = pair.getTeacher().getName();
 
 			// If the time matches 7:00 - write the teacher and student names
-			if (time == 1140 || time == 2580 || time == 4020 || time == 5460
-					|| time == 6900) {
+			if (time == 1140 || time == 2580 || time == 4020 || time == 5460 || time == 6900) {
 
 				// Write the room name in the first column of the row
 				excelData[rowIndex][0] = room.getName();
