@@ -13,6 +13,7 @@ public class ExcelWriter {
 
 	public static void writeDataToExcelFile(String fileName, String[][] data) {
 
+		// Create the workbook and sheet that the file that will be written to
 		HSSFWorkbook myWorkBook = new HSSFWorkbook();
 		HSSFSheet mySheet = myWorkBook.createSheet();
 		HSSFRow myRow = null;
@@ -27,7 +28,8 @@ public class ExcelWriter {
 
 		// Create the style used for the header row
 		CellStyle headerStyle = myWorkBook.createCellStyle();
-		headerStyle.setFillForegroundColor(IndexedColors.GREY_50_PERCENT.getIndex());
+		headerStyle.setFillForegroundColor(IndexedColors.GREY_50_PERCENT
+				.getIndex());
 		headerStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
 		headerStyle.setFont(headerFont);
 
@@ -72,6 +74,7 @@ public class ExcelWriter {
 
 		}
 
+		// Set the column width to fit its contents
 		mySheet.autoSizeColumn(0);
 		mySheet.autoSizeColumn(1);
 		mySheet.autoSizeColumn(2);
@@ -81,6 +84,7 @@ public class ExcelWriter {
 		mySheet.autoSizeColumn(6);
 
 		try {
+			// Write the output to the file
 			FileOutputStream out = new FileOutputStream(fileName);
 			myWorkBook.write(out);
 			out.close();
@@ -90,13 +94,18 @@ public class ExcelWriter {
 		}
 	}
 
-	// TODO: this will only take in hungarianResults in the future
-	public static String[][] prepareDataToWriteToExcel(ArrayList<RoomDayTime> roomDayTimes/*,
-			ArrayList<HungarianResult> hungarianResults*/) {
+	public static String[][] prepareDataToWriteToExcel(
+			HungarianResult hungarianResult) {
+
+		// Create a pairTime object from the hungarianResult
+		ArrayList<PairTime> pairTime = hungarianResult.getPairTimes();
+
+		// Create a new excelaAta String[][] to write data to
 		String[][] excelData = new String[1000][1000];
 
 		int rowIndex;
 
+		// Create the contents of the header row
 		excelData[0][1] = "Monday (teacher, student)";
 		excelData[0][2] = "Tuesday (teacher, student)";
 		excelData[0][3] = "Wednesday (teacher, student)";
@@ -108,42 +117,39 @@ public class ExcelWriter {
 		rowIndex = 3;
 
 		// Room has availability at 4:20 PM
-		// TODO: change roomDayTimes to hungarianResults and work from there
-		// and each of the following for loops
-		for (int i = 0; i < roomDayTimes.size(); i++) {
+		for (int i = 0; i < pairTime.size(); i++) {
 
-			RoomDayTime roomDayTime = roomDayTimes.get(i);
+			// Create a pair object and a roomDayTime object from the pairTime
+			Pair pair = pairTime.get(i).getPair();
+			RoomDayTime roomDayTime = pairTime.get(i).getRoomDayTime();
+			// Create a time and room from the roomDayTime
+			int time = roomDayTime.getTime();
 			Room room = roomDayTime.getRoom();
+			// Create a student and teacher from the pair
+			Student student = pair.getStudent();
+			Teacher teacher = pair.getTeacher();
 
-			//HungarianResult hungarianResult = hungarianResults.get(i);
-			//RoomDayTime hungarianRDT = hungarianResult.getPairTimes().get(i).getRoomDayTime();
+			// If the time matches 4:20 - write the teacher and student names
+			if (time == 980 || time == 2420 || time == 3860 || time == 5300
+					|| time == 6740) {
 
-			if (roomDayTime.getTime() == 980 || roomDayTime.getTime() == 2420
-					|| roomDayTime.getTime() == 3860 || roomDayTime.getTime() == 5300
-					|| roomDayTime.getTime() == 6740) {
-
+				// Write the room name in the first column of the row
 				excelData[rowIndex][0] = room.getName();
 
-				// TODO: Change the room is available text to the
-				// hungarianResult.getPairTimes().get(i).getPair().getStudent()
-				// .getName()/.getTeacher().getName() if
-				// hungarianRDT == the correct room and day time
-				// Also include the score from hungarianResult for each pair
-
-				if (roomDayTime.getTime() == 980) {
-					excelData[rowIndex][1] = "Room is available";
+				if (time == 980) {
+					excelData[rowIndex][1] = teacher + ", " + student;
 				}
-				if (roomDayTime.getTime() == 2420) {
-					excelData[rowIndex][2] = "Room is available";
+				if (time == 2420) {
+					excelData[rowIndex][2] = teacher + ", " + student;
 				}
-				if (roomDayTime.getTime() == 2860) {
-					excelData[rowIndex][3] = "Room is available";
+				if (time == 2860) {
+					excelData[rowIndex][3] = teacher + ", " + student;
 				}
-				if (roomDayTime.getTime() == 5300) {
-					excelData[rowIndex][4] = "Room is available";
+				if (time == 5300) {
+					excelData[rowIndex][4] = teacher + ", " + student;
 				}
-				if (roomDayTime.getTime() == 6740) {
-					excelData[rowIndex][5] = "Room is available";
+				if (time == 6740) {
+					excelData[rowIndex][5] = teacher + ", " + student;
 				}
 
 				rowIndex++;
@@ -155,38 +161,35 @@ public class ExcelWriter {
 		excelData[rowIndex][0] = "5:00 - 5:40 PM";
 		rowIndex++;
 
-		// Room has availability at 5:00 PM
-		for (int i = 0; i < roomDayTimes.size(); i++) {
-			RoomDayTime roomDayTime = roomDayTimes.get(i);
+		for (int i = 0; i < pairTime.size(); i++) {
+
+			// Create a pair object and a roomDayTime object from the pairTime
+			Pair pair = pairTime.get(i).getPair();
+			RoomDayTime roomDayTime = pairTime.get(i).getRoomDayTime();
+			// Create a time and room from the roomDayTime
+			int time = roomDayTime.getTime();
 			Room room = roomDayTime.getRoom();
+			// Create a student and teacher from the pair
+			Student student = pair.getStudent();
+			Teacher teacher = pair.getTeacher();
 
-			//HungarianResult hungarianResult = hungarianResults.get(i);
-			//RoomDayTime hungarianRDT = hungarianResult.getPairTimes().get(i).getRoomDayTime();
+			// If the time matches 5:00 - write the teacher and student names
+			if (time == 1020 || time == 2460 || time == 3900 || time == 5340
+					|| time == 6780) {
 
-			if (roomDayTime.getTime() == 1020 || roomDayTime.getTime() == 2460
-					|| roomDayTime.getTime() == 3900
-					|| roomDayTime.getTime() == 5340
-					|| roomDayTime.getTime() == 6780) {
-
+				// Write the room name in the first column of the row
 				excelData[rowIndex][0] = room.getName();
 
-				// TODO
-				// Change the room is available text to the
-				// hungarianResult.getPairTimes().get(i).getPair().getStudent()
-				// .getName()/.getTeacher().getName() if
-				// hungarianRDT == the correct room and day time
-				// Also include the score from hungarianResult for each pair
-
-				if (roomDayTime.getTime() == 1020) {
-					excelData[rowIndex][1] = "Room is available";
-				} else if (roomDayTime.getTime() == 2460) {
-					excelData[rowIndex][2] = "Room is available";
-				} else if (roomDayTime.getTime() == 3900) {
-					excelData[rowIndex][3] = "Room is available";
-				} else if (roomDayTime.getTime() == 5340) {
-					excelData[rowIndex][4] = "Room is available";
-				} else if (roomDayTime.getTime() == 6780) {
-					excelData[rowIndex][5] = "Room is available";
+				if (time == 1020) {
+					excelData[rowIndex][1] = teacher + ", " + student;
+				} else if (time == 2460) {
+					excelData[rowIndex][2] = teacher + ", " + student;
+				} else if (time == 3900) {
+					excelData[rowIndex][3] = teacher + ", " + student;
+				} else if (time == 5340) {
+					excelData[rowIndex][4] = teacher + ", " + student;
+				} else if (time == 6780) {
+					excelData[rowIndex][5] = teacher + ", " + student;
 				}
 
 				rowIndex++;
@@ -197,37 +200,35 @@ public class ExcelWriter {
 		excelData[rowIndex][0] = "5:40 - 6:20 PM";
 		rowIndex++;
 
-		for (int i = 0; i < roomDayTimes.size(); i++) {
-			RoomDayTime roomDayTime = roomDayTimes.get(i);
+		for (int i = 0; i < pairTime.size(); i++) {
+
+			// Create a pair object and a roomDayTime object from the pairTime
+			Pair pair = pairTime.get(i).getPair();
+			RoomDayTime roomDayTime = pairTime.get(i).getRoomDayTime();
+			// Create a time and room from the roomDayTime
+			int time = roomDayTime.getTime();
 			Room room = roomDayTime.getRoom();
+			// Create a student and teacher from the pair
+			Student student = pair.getStudent();
+			Teacher teacher = pair.getTeacher();
 
-			//HungarianResult hungarianResult = hungarianResults.get(i);
-			//RoomDayTime hungarianRDT = hungarianResult.getPairTimes().get(i).getRoomDayTime();
+			// If the time matches 5:40 - write the teacher and student names
+			if (time == 1060 || time == 2500 || time == 3940 || time == 5380
+					|| time == 6820) {
 
-			if (roomDayTime.getTime() == 1060 || roomDayTime.getTime() == 2500
-					|| roomDayTime.getTime() == 3940
-					|| roomDayTime.getTime() == 5380
-					|| roomDayTime.getTime() == 6820) {
-
+				// Write the room name in the first column of the row
 				excelData[rowIndex][0] = room.getName();
 
-				// TODO
-				// Change the room is available text to the
-				// hungarianResult.getPairTimes().get(i).getPair().getStudent()
-				// .getName()/.getTeacher().getName() if
-				// hungarianRDT == the correct room and day time
-				// Also include the score from hungarianResult for each pair
-
-				if (roomDayTime.getTime() == 1060) {
-					excelData[rowIndex][1] = "Room is available";
-				} else if (roomDayTime.getTime() == 2500) {
-					excelData[rowIndex][2] = "Room is available";
-				} else if (roomDayTime.getTime() == 3940) {
-					excelData[rowIndex][3] = "Room is available";
-				} else if (roomDayTime.getTime() == 5380) {
-					excelData[rowIndex][4] = "Room is available";
-				} else if (roomDayTime.getTime() == 6820) {
-					excelData[rowIndex][5] = "Room is available";
+				if (time == 1060) {
+					excelData[rowIndex][1] = teacher + ", " + student;
+				} else if (time == 2500) {
+					excelData[rowIndex][2] = teacher + ", " + student;
+				} else if (time == 3940) {
+					excelData[rowIndex][3] = teacher + ", " + student;
+				} else if (time == 5380) {
+					excelData[rowIndex][4] = teacher + ", " + student;
+				} else if (time == 6820) {
+					excelData[rowIndex][5] = teacher + ", " + student;
 				}
 
 				rowIndex++;
@@ -238,37 +239,35 @@ public class ExcelWriter {
 		excelData[rowIndex][0] = "6:20 - 7:00 PM";
 		rowIndex++;
 
-		for (int i = 0; i < roomDayTimes.size(); i++) {
-			RoomDayTime roomDayTime = roomDayTimes.get(i);
+		for (int i = 0; i < pairTime.size(); i++) {
+
+			// Create a pair object and a roomDayTime object from the pairTime
+			Pair pair = pairTime.get(i).getPair();
+			RoomDayTime roomDayTime = pairTime.get(i).getRoomDayTime();
+			// Create a time and room from the roomDayTime
+			int time = roomDayTime.getTime();
 			Room room = roomDayTime.getRoom();
+			// Create a student and teacher from the pair
+			Student student = pair.getStudent();
+			Teacher teacher = pair.getTeacher();
 
-			//HungarianResult hungarianResult = hungarianResults.get(i);
-			//RoomDayTime hungarianRDT = hungarianResult.getPairTimes().get(i).getRoomDayTime();
+			// If the time matches 6:20 - write the teacher and student names
+			if (time == 1100 || time == 2540 || time == 3980 || time == 5420
+					|| time == 6860) {
 
-			if (roomDayTime.getTime() == 1100 || roomDayTime.getTime() == 2540
-					|| roomDayTime.getTime() == 3980
-					|| roomDayTime.getTime() == 5420
-					|| roomDayTime.getTime() == 6860) {
-
+				// Write the room name in the first column of the row
 				excelData[rowIndex][0] = room.getName();
 
-				// TODO
-				// Change the room is available text to the
-				// hungarianResult.getPairTimes().get(i).getPair().getStudent()
-				// .getName()/.getTeacher().getName() if
-				// hungarianRDT == the correct room and day time
-				// Also include the score from hungarianResult for each pair
-
-				if (roomDayTime.getTime() == 1100) {
-					excelData[rowIndex][1] = "Room is available";
-				} else if (roomDayTime.getTime() == 2540) {
-					excelData[rowIndex][2] = "Room is available";
-				} else if (roomDayTime.getTime() == 3980) {
-					excelData[rowIndex][3] = "Room is available";
-				} else if (roomDayTime.getTime() == 5420) {
-					excelData[rowIndex][4] = "Room is available";
-				} else if (roomDayTime.getTime() == 6860) {
-					excelData[rowIndex][5] = "Room is available";
+				if (time == 1100) {
+					excelData[rowIndex][1] = teacher + ", " + student;
+				} else if (time == 2540) {
+					excelData[rowIndex][2] = teacher + ", " + student;
+				} else if (time == 3980) {
+					excelData[rowIndex][3] = teacher + ", " + student;
+				} else if (time == 5420) {
+					excelData[rowIndex][4] = teacher + ", " + student;
+				} else if (time == 6860) {
+					excelData[rowIndex][5] = teacher + ", " + student;
 				}
 
 				rowIndex++;
@@ -279,37 +278,35 @@ public class ExcelWriter {
 		excelData[rowIndex][0] = "7:00 - 7:40 PM";
 		rowIndex++;
 
-		for (int i = 0; i < roomDayTimes.size(); i++) {
-			RoomDayTime roomDayTime = roomDayTimes.get(i);
+		for (int i = 0; i < pairTime.size(); i++) {
+
+			// Create a pair object and a roomDayTime object from the pairTime
+			Pair pair = pairTime.get(i).getPair();
+			RoomDayTime roomDayTime = pairTime.get(i).getRoomDayTime();
+			// Create a time and room from the roomDayTime
+			int time = roomDayTime.getTime();
 			Room room = roomDayTime.getRoom();
+			// Create a student and teacher from the pair
+			Student student = pair.getStudent();
+			Teacher teacher = pair.getTeacher();
 
-			//HungarianResult hungarianResult = hungarianResults.get(i);
-			//RoomDayTime hungarianRDT = hungarianResult.getPairTimes().get(i).getRoomDayTime();
+			// If the time matches 7:00 - write the teacher and student names
+			if (time == 1140 || time == 2580 || time == 4020 || time == 5460
+					|| time == 6900) {
 
-			if (roomDayTime.getTime() == 1140 || roomDayTime.getTime() == 2580
-					|| roomDayTime.getTime() == 4020
-					|| roomDayTime.getTime() == 5460
-					|| roomDayTime.getTime() == 6900) {
-
+				// Write the room name in the first column of the row
 				excelData[rowIndex][0] = room.getName();
 
-				// TODO
-				// Change the room is available text to the
-				// hungarianResult.getPairTimes().get(i).getPair().getStudent()
-				// .getName()/.getTeacher().getName() if
-				// hungarianRDT == the correct room and day time
-				// Also include the score from hungarianResult for each pair
-
-				if (roomDayTime.getTime() == 1140) {
-					excelData[rowIndex][1] = "Room is available";
-				} else if (roomDayTime.getTime() == 2580) {
-					excelData[rowIndex][2] = "Room is available";
-				} else if (roomDayTime.getTime() == 4020) {
-					excelData[rowIndex][3] = "Room is available";
-				} else if (roomDayTime.getTime() == 5460) {
-					excelData[rowIndex][4] = "Room is available";
-				} else if (roomDayTime.getTime() == 6900) {
-					excelData[rowIndex][5] = "Room is available";
+				if (time == 1140) {
+					excelData[rowIndex][1] = teacher + ", " + student;
+				} else if (time == 2580) {
+					excelData[rowIndex][2] = teacher + ", " + student;
+				} else if (time == 4020) {
+					excelData[rowIndex][3] = teacher + ", " + student;
+				} else if (time == 5460) {
+					excelData[rowIndex][4] = teacher + ", " + student;
+				} else if (time == 6900) {
+					excelData[rowIndex][5] = teacher + ", " + student;
 				}
 
 				rowIndex++;

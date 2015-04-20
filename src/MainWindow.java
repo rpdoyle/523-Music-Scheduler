@@ -234,7 +234,9 @@ class ScheduleButtonActionListener implements ActionListener {
 		Randomization randomizer = new Randomization(mandatoryPairs, scores, rooms, se.getStudents(), se.getTeachers());
 		HungarianResult bestResult = randomizer.schedule();
 		
-		// TODO: print output
+		String filename = "/Users/afrank11/COMP523/testExcelOutput.xls";
+		String [][] data = ExcelWriter.prepareDataToWriteToExcel(bestResult);
+		ExcelWriter.writeDataToExcelFile(filename, data);
 	}
 	
 	// Play an error sound and display an error dialog with a given message
