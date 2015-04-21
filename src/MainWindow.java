@@ -149,15 +149,12 @@ public class MainWindow {
 		helpText.setWrapStyleWord(true);
 		helpText.setBackground(Color.WHITE);
 
-	
 		helpContentPane.add(helpText);
 		helpButton.addActionListener(new HelpButtonActionListener(helpFrame));
 		layout.putConstraint(SpringLayout.SOUTH, helpButton, -15, SpringLayout.SOUTH, contentPane);
 		layout.putConstraint(SpringLayout.WEST, helpButton, 15, SpringLayout.WEST, contentPane);
 		
 		contentPane.add(helpButton);
-		
-	
 		
 		// Set the look and feel to match the operating system we are running on
 		try {
