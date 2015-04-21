@@ -472,8 +472,7 @@ public class ExcelReader {
 		String returningTeacher;
 		if (checker.equalsIgnoreCase("yes")){
 			returningTeacher = getStringFromCell(currentRow, rTeacher, false);	
-		}
-		else{
+		} else{
 			returningTeacher = "";
 		}
 		
