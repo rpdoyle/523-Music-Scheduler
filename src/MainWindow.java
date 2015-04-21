@@ -4,8 +4,10 @@
  * 				for our COMP 523 Music Scheduler program.
  */
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,6 +18,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.UIManager;
@@ -116,11 +119,45 @@ public class MainWindow {
 		contentPane.add(scheduleButton);
 		
 		JButton helpButton = new JButton("?");
-		helpButton.addActionListener(new HelpButtonActionListener());
+
+		//Creates a new Help Window.
+		JFrame helpFrame = new JFrame("Help Window");
+		helpFrame.setSize(450, 340);
+		helpFrame.setResizable(true);
+		Rectangle bounds = helpFrame.getBounds();
+		helpFrame.setLocation(10 + bounds.x, 10 + bounds.y);
+	
+		Container helpContentPane = helpFrame.getContentPane();
+		SpringLayout helpLayout = new SpringLayout();
+		helpContentPane.setLayout(helpLayout);
+		helpContentPane.setBackground(Color.BLUE);
+	
+		String message = "For the Music Scheduler to run correctly, make sure you have :"
+			+ ""
+			+ "1. All the EXCEL files selected."
+			+ "2. I think blah blah blah .";
+	
+		JTextArea helpText = new JTextArea(message);
+	
+		helpText.setEditable(false);
+		helpLayout.putConstraint(SpringLayout.WEST, helpText, 15, SpringLayout.WEST, helpContentPane);
+		helpLayout.putConstraint(SpringLayout.NORTH, helpText, 15, SpringLayout.NORTH, helpContentPane);
+		helpLayout.putConstraint(SpringLayout.EAST, helpText, -15, SpringLayout.EAST, helpContentPane);
+		helpLayout.putConstraint(SpringLayout.SOUTH, helpText, -15, SpringLayout.SOUTH, helpContentPane);
+
+		helpText.setLineWrap(true);
+		helpText.setWrapStyleWord(true);
+		helpText.setBackground(Color.WHITE);
+
+	
+		helpContentPane.add(helpText);
+		helpButton.addActionListener(new HelpButtonActionListener(helpFrame));
 		layout.putConstraint(SpringLayout.SOUTH, helpButton, -15, SpringLayout.SOUTH, contentPane);
 		layout.putConstraint(SpringLayout.WEST, helpButton, 15, SpringLayout.WEST, contentPane);
 		
 		contentPane.add(helpButton);
+		
+	
 		
 		// Set the look and feel to match the operating system we are running on
 		try {
@@ -248,15 +285,20 @@ class ScheduleButtonActionListener implements ActionListener {
 
 // ActionListener to handle the help button
 class HelpButtonActionListener implements ActionListener {
-
-	public HelpButtonActionListener() {
-		
+	
+	private final JFrame helpFrame;	
+	
+	public HelpButtonActionListener(final JFrame helpFrame) {
+		super();
+		this.helpFrame = helpFrame;
 	}
 	
 	// Show the help dialog
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO show help dialog
-		System.out.println("Help would now show");
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			helpFrame.setVisible(true);
+		}
+			
 	}
-}
+
+
