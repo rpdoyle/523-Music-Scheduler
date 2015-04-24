@@ -107,11 +107,11 @@ public class ExcelWriter {
 		int rowIndex;
 
 		// Create the contents of the header row
-		excelData[0][1] = "Monday (teacher, student)";
-		excelData[0][2] = "Tuesday (teacher, student)";
-		excelData[0][3] = "Wednesday (teacher, student)";
-		excelData[0][4] = "Thursday (teacher, student)";
-		excelData[0][5] = "Friday (teacher, student)";
+		excelData[0][1] = "Monday (teacher, student, instrument)";
+		excelData[0][2] = "Tuesday (teacher, student, instrument)";
+		excelData[0][3] = "Wednesday (teacher, student, instrument)";
+		excelData[0][4] = "Thursday (teacher, student, instrument)";
+		excelData[0][5] = "Friday (teacher, student, instrument)";
 
 		excelData[2][0] = HelperMethods.intTimeToString((int) intArr[0]);
 		
@@ -136,9 +136,10 @@ public class ExcelWriter {
 				// Create a time and room from the roomDayTime
 				int time = roomDayTime.getTime();
 				Room room = roomDayTime.getRoom();
-				// Create a student and teacher from the pair
+				// Create a student, teacher, and instrument from the pair
 				String student = pair.getStudent().getName();
 				String teacher = pair.getTeacher().getName();
+				String instrument = pair.getInstrument();
 
 				if ((int) intArr[j] == time) {
 					// Write the time and room name in the first column of the row
@@ -146,15 +147,15 @@ public class ExcelWriter {
 					
 					// Write the names of the teacher and student in the correct column
 					if (HelperMethods.getDayOfLesson(time) == 1) {
-						excelData[rowIndex][1] = teacher + ", " + student;
+						excelData[rowIndex][1] = teacher + ", " + student + ", " + instrument;
 					} else if (HelperMethods.getDayOfLesson(time) == 2) {
-						excelData[rowIndex][2] = teacher + ", " + student;
+						excelData[rowIndex][2] = teacher + ", " + student + ", " + instrument;
 					} else if (HelperMethods.getDayOfLesson(time) == 3) {
-						excelData[rowIndex][3] = teacher + ", " + student;
+						excelData[rowIndex][3] = teacher + ", " + student + ", " + instrument;
 					} else if (HelperMethods.getDayOfLesson(time) == 4) {
-						excelData[rowIndex][4] = teacher + ", " + student;
+						excelData[rowIndex][4] = teacher + ", " + student + ", " + instrument;
 					} else if (HelperMethods.getDayOfLesson(time) == 5) {
-						excelData[rowIndex][5] = teacher + ", " + student;
+						excelData[rowIndex][5] = teacher + ", " + student + ", " + instrument;
 					} 
 					
 					rowIndex++;
