@@ -59,7 +59,7 @@ public class ExcelWriter {
 					myCell.setCellStyle(headerStyle);
 				} else if (myCell.getRowIndex() == 2) {
 					myCell.setCellStyle(timeStyle);
-				} else if (myCell.toString().contains("PM")) {
+				} else if (myCell.toString().contains("PM") || myCell.toString().contains("AM")) {
 					myCell.setCellStyle(timeStyle);
 					for (int i = 1; i < 6; i++) {
 						HSSFCell timeCell = myRow.createCell(i);
