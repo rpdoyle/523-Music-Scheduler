@@ -73,4 +73,9 @@ public class HelperMethods {
 
 		return result;
 	}
+	
+	public static int getDayOfLesson(int i) {
+		i = (int) Math.ceil(i/1440);
+		return i;
+	}
 }

@@ -12,6 +12,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -268,8 +269,15 @@ class ScheduleButtonActionListener implements ActionListener {
 		Randomization randomizer = new Randomization(mandatoryPairs, scores, rooms, se.getStudents(), se.getTeachers());
 		HungarianResult bestResult = randomizer.schedule();
 		
+		// Create a roomDayTimeInts HashSet based on the times of the roomDayTimes
+		HashSet<Integer> roomDayTimeInts = new HashSet<Integer>();
+		
+		for (int i = 0; i < roomDayTimes.size(); i++) {
+			roomDayTimeInts.add(roomDayTimes.get(i).getTime());
+		}
+		
 		String filename = "/Users/afrank11/Desktop/testExcelOutput.xls";
-		String [][] data = ExcelWriter.prepareDataToWriteToExcel(bestResult);
+		String [][] data = ExcelWriter.prepareDataToWriteToExcel(bestResult, roomDayTimeInts);
 		ExcelWriter.writeDataToExcelFile(filename, data);
 	}
 	

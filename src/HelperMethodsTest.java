@@ -72,5 +72,23 @@ public class HelperMethodsTest {
 		assertEquals(HelperMethods.intTimeToString(4827), "8:27 AM");
 		assertEquals(HelperMethods.intTimeToString(5150), "1:50 PM");
 	}
+	
+	@Test
+	public void testGetDayOfLesson() {
+		assertEquals(HelperMethods.getDayOfLesson(0), 0);
+		assertEquals(HelperMethods.getDayOfLesson(1439), 0);
+		assertEquals(HelperMethods.getDayOfLesson(1440), 1);
+		assertEquals(HelperMethods.getDayOfLesson(2879), 1);
+		assertEquals(HelperMethods.getDayOfLesson(2880), 2);
+		assertEquals(HelperMethods.getDayOfLesson(4319), 2);
+		assertEquals(HelperMethods.getDayOfLesson(4320), 3);
+		assertEquals(HelperMethods.getDayOfLesson(5759), 3);
+		assertEquals(HelperMethods.getDayOfLesson(5760), 4);
+		assertEquals(HelperMethods.getDayOfLesson(7199), 4);
+		assertEquals(HelperMethods.getDayOfLesson(7200), 5);
+		assertEquals(HelperMethods.getDayOfLesson(8639), 5);
+		assertEquals(HelperMethods.getDayOfLesson(8640), 6);
+		assertEquals(HelperMethods.getDayOfLesson(10079), 6);
+	}
 
 }
