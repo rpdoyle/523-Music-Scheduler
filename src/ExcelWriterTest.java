@@ -79,11 +79,11 @@ public class ExcelWriterTest {
 		String [][] data = ExcelWriter.prepareDataToWriteToExcel(testHungarianResult, roomDayTimeInts);
 		
 		// Test that the header row is being correctly written
-		assertEquals("Monday (teacher, student)", data[0][1]);
-		assertEquals("Tuesday (teacher, student)", data[0][2]);
-		assertEquals("Wednesday (teacher, student)", data[0][3]);
-		assertEquals("Thursday (teacher, student)", data[0][4]);
-		assertEquals("Friday (teacher, student)", data[0][5]);
+		assertEquals("Monday (teacher, student, instrument)", data[0][1]);
+		assertEquals("Tuesday (teacher, student, instrument)", data[0][2]);
+		assertEquals("Wednesday (teacher, student, instrument)", data[0][3]);
+		assertEquals("Thursday (teacher, student, instrument)", data[0][4]);
+		assertEquals("Friday (teacher, student, instrument)", data[0][5]);
 
 		// Test that the writer is skipping a line after the header row
 		assertEquals(null, data[1][0]);
@@ -93,7 +93,7 @@ public class ExcelWriterTest {
 		
 		// Test that the first room and teacher/student pair is being correctly written
 		assertEquals("Test Name 110", data[3][0]);
-		assertEquals("Bob Person, Alex Frankfort", data[3][1]);
+		assertEquals("Bob Person, Alex Frankfort, piano", data[3][1]);
 		
 		// Test that the second time row is being correctly written
 		assertEquals("4:20 AM", data[4][0]);
@@ -101,19 +101,19 @@ public class ExcelWriterTest {
 		// Test that the second room and teacher/student pair is being correctly written
 		// This pair has the same room and day as the previous pair but at a different time
 		assertEquals("Test Name 110", data[5][0]);
-		assertEquals("Jim Halpert, Bryan Head", data[5][1]);
+		assertEquals("Jim Halpert, Bryan Head, drums", data[5][1]);
 		
 		// Test that the third time row is being correctly written
 		assertEquals("1:10 PM", data[6][0]);
 		
 		// Test that the third room and teacher/student pair is being correctly written
 		assertEquals("Test Name 210", data[7][0]);
-		assertEquals("Taylor Killion, Amanda Thompson", data[7][2]);
+		assertEquals("Taylor Killion, Amanda Thompson, voice", data[7][2]);
 		
 		// Test that the fourth room and teacher/student pair is being correctly written
 		// This pair has the same time and day as the previous pair but in a different room
 		assertEquals("Test Name 310", data[8][0]);
-		assertEquals("Osana Osaretin, Sheena Davis", data[8][2]);
+		assertEquals("Osana Osaretin, Sheena Davis, piano", data[8][2]);
 		
 	}
 }
