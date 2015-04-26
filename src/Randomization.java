@@ -51,13 +51,19 @@ public class Randomization {
 		Random randS = new Random();
 		Random randT = new Random();
 
+		int randStudentIndex, randTeacherIndex, randStudentIndexIndex, randTeacherIndexIndex;
+
 		// Continue generating new possible schedules until you have made a
 		// schedule that scores sufficiently, or you haven't improved for a
 		// certain period of time
 
 		while (timeSinceImprovement < IMPROVEMENTTIMEOUT) {
+			System.out.println("Time Since Improvement:   "
+					+ timeSinceImprovement);
 			possiblePairs.clear();
 			siblings.clear();
+			studentIndices.clear();
+			teacherIndices.clear();
 
 			// Recreate the arraylists containing the indices into the student
 			// and teacher arraylists
@@ -85,10 +91,10 @@ public class Randomization {
 					&& timeSinceNewPair < NEWPAIRTIMEOUT
 					&& studentIndices.size() > 0 && teacherIndices.size() > 0) {
 				// Get random pointers into the students and teachers arraylists
-				int randStudentIndex = studentIndices.get(randS
-						.nextInt(studentIndices.size()));
-				int randTeacherIndex = teacherIndices.get(randT
-						.nextInt(teacherIndices.size()));
+				randStudentIndexIndex = randS.nextInt(studentIndices.size());
+				randTeacherIndexIndex = randT.nextInt(teacherIndices.size());
+				randStudentIndex = studentIndices.get(randStudentIndexIndex);
+				randTeacherIndex = teacherIndices.get(randTeacherIndexIndex);
 
 				// If their score in greater than zero, add them!
 				if (scores[randTeacherIndex][randStudentIndex].getScore() > 0) {
@@ -102,8 +108,8 @@ public class Randomization {
 							siblings.add(sibling.getID());
 						}
 					}
-					studentIndices.remove(randStudentIndex);
-					teacherIndices.remove(randTeacherIndex);
+					studentIndices.remove(randStudentIndexIndex);
+					teacherIndices.remove(randTeacherIndexIndex);
 					timeSinceNewPair = 0;
 				} else {
 					// If the pair didn't work, increment our timeout test value

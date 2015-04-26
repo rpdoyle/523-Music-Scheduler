@@ -276,7 +276,7 @@ class ScheduleButtonActionListener implements ActionListener {
 			roomDayTimeInts.add(roomDayTimes.get(i).getTime());
 		}
 		
-		String filename = "/Users/afrank11/Desktop/testExcelOutput.xls";
+		String filename = "/Users/alexjp/Desktop/testExcelOutput.xls";
 		String [][] data = ExcelWriter.prepareDataToWriteToExcel(bestResult, roomDayTimeInts);
 		ExcelWriter.writeDataToExcelFile(filename, data);
 	}
