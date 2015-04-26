@@ -159,7 +159,7 @@ public class HungarianTestFaith {
 		assertArrayEquals(expected, original);
 	}
 	
-	@Test
+	/*@Test
 	public void testSiblingCheck(){
 		Student testStudent = new Student(1, "Faith Collins", "21", "Female", "Selena", "Piano", new String[] {"Piano", "Violin", "Trumpet"}, new String[] {"0-2", "0-2", "0-2"}, "spanish", new int[] {500, 1670, 4309} );
 		Student testStudent2 = new Student(2, "Sarah Collins", "21", "Female", "Selena", "Piano", new String[] {"Piano", "Violin", "Trumpet"}, new String[] {"0-2", "0-2", "0-2"}, "spanish", new int[] {500, 1670, 4309} );
@@ -179,5 +179,5 @@ public class HungarianTestFaith {
 		pairTime.add(testPairTime);
 		pairTime.add(testPairTime2);
 		assertEquals(true, Hungarian.siblingCheck(pairTime));
-	}
+	}*/
 }

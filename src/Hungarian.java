@@ -23,12 +23,12 @@ public class Hungarian {
 		
 		ArrayList<PairTime> pairTimes = choosePairTimes(minMatrix, pairs, roomDayTimes);
 		
-		if (siblingCheck(pairTimes)) {
-			int score = calculateScore(pairTimes);
-			return new HungarianResult(pairTimes, score);
-		} else {
-			return null;
-		}
+		//if (siblingCheck(pairTimes)) {
+		int score = calculateScore(pairTimes);
+		return new HungarianResult(pairTimes, score);
+		//} else {
+		//	return null;
+		//}
 	}
 	
 	// From the randomly generated pairs and room-day-times, set up the matrix to start the Hungarian algorithm
@@ -439,7 +439,7 @@ public class Hungarian {
 
 	// SiblingCheck verifies that all siblings were scheduled for the same time
 	// This method was made public for testing
-	public static boolean siblingCheck(ArrayList<PairTime> pairTimes) {
+	/*public static boolean siblingCheck(ArrayList<PairTime> pairTimes) {
 		ArrayList<Student> siblingsToCheck = new ArrayList<Student>();
 		ArrayList<Integer> siblingTimes = new ArrayList<Integer>();
 		ArrayList<Student> checkedSiblings = new ArrayList<Student>();
@@ -478,7 +478,7 @@ public class Hungarian {
 		} else {
 			return true;
 		}
-	}
+	}*/
 	
 	// Returns the sum of all of the Student-Teacher pairs that were included in the list pairTimes
 	// This method was made public for testing
