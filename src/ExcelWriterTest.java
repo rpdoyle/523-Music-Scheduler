@@ -93,7 +93,7 @@ public class ExcelWriterTest {
 		
 		// Test that the first room and teacher/student pair is being correctly written
 		assertEquals("Test Name 110", data[3][0]);
-		assertEquals("Bob Person, Alex Frankfort, piano", data[3][1]);
+		assertEquals("Bob Person, Alex Frankfort, piano", data[3][2]);
 		
 		// Test that the second time row is being correctly written
 		assertEquals("4:20 AM", data[4][0]);
@@ -101,19 +101,22 @@ public class ExcelWriterTest {
 		// Test that the second room and teacher/student pair is being correctly written
 		// This pair has the same room and day as the previous pair but at a different time
 		assertEquals("Test Name 110", data[5][0]);
-		assertEquals("Jim Halpert, Bryan Head, drums", data[5][1]);
+		assertEquals("Jim Halpert, Bryan Head, drums", data[5][2]);
 		
 		// Test that the third time row is being correctly written
 		assertEquals("1:10 PM", data[6][0]);
 		
 		// Test that the third room and teacher/student pair is being correctly written
 		assertEquals("Test Name 210", data[7][0]);
-		assertEquals("Taylor Killion, Amanda Thompson, voice", data[7][2]);
+		assertEquals("Taylor Killion, Amanda Thompson, voice", data[7][3]);
+		
+		// Test that the fourth time row is being correctly written
+		assertEquals("1:10 PM", data[8][0]);
 		
 		// Test that the fourth room and teacher/student pair is being correctly written
 		// This pair has the same time and day as the previous pair but in a different room
-		assertEquals("Test Name 310", data[8][0]);
-		assertEquals("Osana Osaretin, Sheena Davis, piano", data[8][2]);
+		assertEquals("Test Name 310", data[9][0]);
+		assertEquals("Osana Osaretin, Sheena Davis, piano", data[9][3]);
 		
 	}
 }

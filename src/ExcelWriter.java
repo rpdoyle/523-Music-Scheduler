@@ -112,21 +112,10 @@ public class ExcelWriter {
 		excelData[0][3] = "Wednesday (teacher, student, instrument)";
 		excelData[0][4] = "Thursday (teacher, student, instrument)";
 		excelData[0][5] = "Friday (teacher, student, instrument)";
-
-		excelData[2][0] = HelperMethods.intTimeToString((int) intArr[0]);
-		
-		boolean firstPassDone = false;
 			
-		rowIndex = 3;
+		rowIndex = 2;
 
 		for (int j = 0; j < intArr.length; j++) {
-			
-			if (firstPassDone) {
-				excelData[rowIndex][0] = HelperMethods.intTimeToString((int) intArr[j]);
-				rowIndex++;
-			} else {
-				firstPassDone = true;
-			}
 			
 			for (int i = 0; i < pairTime.size(); i++) {
 				
@@ -142,21 +131,25 @@ public class ExcelWriter {
 				String instrument = pair.getInstrument();
 
 				if ((int) intArr[j] == time) {
+					
 					// Write the time and room name in the first column of the row
+					excelData[rowIndex][0] = HelperMethods.intTimeToString((int) intArr[j]);
+					rowIndex++;
+
 					excelData[rowIndex][0] = room.getName();
 					
 					// Write the names of the teacher and student in the correct column
-					if (HelperMethods.getDayOfLesson(time) == 1) {
+					if (HelperMethods.getDayOfLesson(time) == 0) {
 						excelData[rowIndex][1] = teacher + ", " + student + ", " + instrument;
-					} else if (HelperMethods.getDayOfLesson(time) == 2) {
+					} else if (HelperMethods.getDayOfLesson(time) == 1) {
 						excelData[rowIndex][2] = teacher + ", " + student + ", " + instrument;
-					} else if (HelperMethods.getDayOfLesson(time) == 3) {
+					} else if (HelperMethods.getDayOfLesson(time) == 2) {
 						excelData[rowIndex][3] = teacher + ", " + student + ", " + instrument;
-					} else if (HelperMethods.getDayOfLesson(time) == 4) {
+					} else if (HelperMethods.getDayOfLesson(time) == 3) {
 						excelData[rowIndex][4] = teacher + ", " + student + ", " + instrument;
-					} else if (HelperMethods.getDayOfLesson(time) == 5) {
+					} else if (HelperMethods.getDayOfLesson(time) == 4) {
 						excelData[rowIndex][5] = teacher + ", " + student + ", " + instrument;
-					} 
+					}
 					
 					rowIndex++;
 				}
