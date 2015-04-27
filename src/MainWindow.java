@@ -178,8 +178,6 @@ public class MainWindow {
 		
 		// Add Scroll Functionality
 		JScrollPane scroll = new JScrollPane (helpText);
-		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		
 		// Put the helpText in the Container
 		helpLayout.putConstraint(SpringLayout.WEST, scroll, 15, SpringLayout.WEST, helpContentPane);
