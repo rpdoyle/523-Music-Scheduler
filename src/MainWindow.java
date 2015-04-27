@@ -253,7 +253,7 @@ class OutputSelectButtonActionListener implements ActionListener {
 		final JFileChooser fc = new JFileChooser();
 		fc.setCurrentDirectory(null);
 		fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-		fc.showSaveDialog(parent);
+		fc.showDialog(parent, "Select");
 		String path = fc.getSelectedFile().getPath();
 		textField.setText(path);
 	}
