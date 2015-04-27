@@ -31,7 +31,7 @@ public class Randomization {
 	public HungarianResult schedule() {
 		int maxScore = 0, timeSinceImprovement = 0, timeSinceNewPair;
 		// This is used to test whether or not we should call Hungarian
-		boolean feasibleSchedule = true;
+		//boolean feasibleSchedule = true;
 		HungarianResult currentResult, bestResult = null;
 
 		// These arraylists contain valid indices into the student and teacher
@@ -44,7 +44,7 @@ public class Randomization {
 		int numTeachers = teachers.size();
 
 		ArrayList<Pair> possiblePairs = new ArrayList<>();
-		HashSet<Integer> siblings = new HashSet<>();
+		//HashSet<Integer> siblings = new HashSet<>();
 
 		int numRoomDayTimes = HelperMethods.getRoomDayTimes(rooms).size();
 
@@ -61,7 +61,7 @@ public class Randomization {
 			System.out.println("Time Since Improvement:   "
 					+ timeSinceImprovement);
 			possiblePairs.clear();
-			siblings.clear();
+			//siblings.clear();
 			studentIndices.clear();
 			teacherIndices.clear();
 
@@ -76,7 +76,7 @@ public class Randomization {
 
 			// Check whether any mandatory pair students have siblings. If so,
 			// add them to the siblings HashSet for future checking
-			siblings = getMandatoryPairSiblings(mandatoryPairs);
+			//siblings = getMandatoryPairSiblings(mandatoryPairs);
 
 			// Add the mandatory pairs to the possible pairs arraylist for
 			// scheduling
@@ -102,12 +102,12 @@ public class Randomization {
 							.add(scores[randTeacherIndex][randStudentIndex]);
 					// If the student has siblings, add them to the siblings
 					// arraylist
-					if (students.get(randStudentIndex).getSiblings().size() > 0) {
+					/*if (students.get(randStudentIndex).getSiblings().size() > 0) {
 						for (Student sibling : students.get(randStudentIndex)
 								.getSiblings()) {
 							siblings.add(sibling.getID());
 						}
-					}
+					}*/
 					studentIndices.remove(randStudentIndexIndex);
 					teacherIndices.remove(randTeacherIndexIndex);
 					timeSinceNewPair = 0;
@@ -117,11 +117,11 @@ public class Randomization {
 				}
 			}
 
-			feasibleSchedule = checkIfSiblingsPaired(siblings, possiblePairs);
+			//feasibleSchedule = checkIfSiblingsPaired(siblings, possiblePairs);
 
-			if (!feasibleSchedule) {
+			/*if (!feasibleSchedule) {
 				continue;
-			}
+			}*/
 
 			currentResult = Hungarian.run(possiblePairs,
 					HelperMethods.getRoomDayTimes(rooms),
@@ -162,7 +162,7 @@ public class Randomization {
 		return siblings;
 	}
 
-	public static boolean checkIfSiblingsPaired(HashSet<Integer> siblings,
+	/*public static boolean checkIfSiblingsPaired(HashSet<Integer> siblings,
 			ArrayList<Pair> possiblePairs) {
 		boolean siblingFound = false;
 
@@ -180,5 +180,5 @@ public class Randomization {
 			}
 		}
 		return true;
-	}
+	}*/
 }

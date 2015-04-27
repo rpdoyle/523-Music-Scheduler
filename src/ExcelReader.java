@@ -117,7 +117,7 @@ public class ExcelReader {
 						Columns.SIBLING_1_MONDAY_TIMES, Columns.SIBLING_1_TUESDAY_TIMES, Columns.SIBLING_1_WEDNESDAY_TIMES, Columns.SIBLING_1_THURSDAY_TIMES,
 						Columns.SIBLING_1_FRIDAY_TIMES, currentRow);
 
-				students.add(sibling1);
+				//students.add(sibling1);
 				
 				// Add the new sibling to the student's sibling ArrayList
 				student.getSiblings().add(sibling1);
@@ -137,7 +137,7 @@ public class ExcelReader {
 						Columns.SIBLING_2_MONDAY_TIMES, Columns.SIBLING_2_TUESDAY_TIMES, Columns.SIBLING_2_WEDNESDAY_TIMES, Columns.SIBLING_2_THURSDAY_TIMES,
 						Columns.SIBLING_2_FRIDAY_TIMES, currentRow);
 
-				students.add(sibling2);
+				//students.add(sibling2);
 				
 				// Update sibling ArrayLists
 				student.getSiblings().add(sibling2);
@@ -159,7 +159,7 @@ public class ExcelReader {
 						Columns.SIBLING_3_MONDAY_TIMES, Columns.SIBLING_3_TUESDAY_TIMES, Columns.SIBLING_3_WEDNESDAY_TIMES, Columns.SIBLING_3_THURSDAY_TIMES,
 						Columns.SIBLING_3_FRIDAY_TIMES, currentRow);
 
-				students.add(sibling3);
+				//students.add(sibling3);
 				
 				// Adding the siblings to each other's Siblings ArrayLists
 				student.getSiblings().add(sibling3);

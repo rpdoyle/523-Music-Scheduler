@@ -46,7 +46,7 @@ public class RandomizationTest {
 		return testTeacher1;
 	}
 	
-	@Test
+	/*@Test
 	public void testCheckIfSiblingsPaired() {
 		HashSet<Integer> siblings = new HashSet<>();
 		siblings.add(123);
@@ -60,7 +60,7 @@ public class RandomizationTest {
 		siblings.add(123);
 		siblings.add(159);
 		assertEquals(false, Randomization.checkIfSiblingsPaired(siblings, possiblePairs));
-	}
+	}*/
 
 	@Test
 	public void testGetMandatoryPairSiblings() {

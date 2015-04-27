@@ -300,21 +300,21 @@ class ScheduleButtonActionListener implements ActionListener {
 		try {
 			rooms = ExcelReader.parseRoomData(roomDataTextField.getText());
 		} catch (Exception ex) {
-			showErrorDialog(ex.getMessage());
+			showErrorDialog("Room Data: " + ex.getMessage());
 			return;
 		}
 
 		try {
 			students = ExcelReader.parseStudentData(studentDataTextField.getText());
 		} catch (Exception ex) {
-			showErrorDialog(ex.getMessage());
+			showErrorDialog("Student Data: " + ex.getMessage());
 			return;
 		}
 
 		try {
 			teachers = ExcelReader.parseTeacherData(teacherDataTextField.getText());
 		} catch (Exception ex) {
-			showErrorDialog(ex.getMessage());
+			showErrorDialog("Teacher Data: " + ex.getMessage());
 			return;
 		}
 		
