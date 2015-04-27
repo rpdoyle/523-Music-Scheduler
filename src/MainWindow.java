@@ -190,11 +190,7 @@ public class MainWindow {
 	    helpContentPane.add(scroll);
 	    
 		helpButton.addActionListener(new HelpButtonActionListener(helpFrame));
-	    
-	    // TODO: format the paragraphs so that it is not just one big blob of text
-		
-		
-		
+	    		
 		// Set the look and feel to match the operating system we are running on
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -251,28 +247,15 @@ class OutputSelectButtonActionListener implements ActionListener {
 		this.parent = parent;
 	}
 	
-	// Open a file chooser dialog and set textField's text to the path of the selected file
+	// Open a file chooser dialog and set textField's text to the path of the desired place to store the output file
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		final JFileChooser fc = new JFileChooser();
-		fc.setCurrentDirectory(new java.io.File("."));
+		fc.setCurrentDirectory(null);
 		fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-		fc.setAcceptAllFileFilterUsed(false);
 		fc.showSaveDialog(parent);
 		String path = fc.getSelectedFile().getPath();
 		textField.setText(path);
-		
-//		// Only allow the user to select files with Excel extensions
-//		FileNameExtensionFilter excelFilter = new FileNameExtensionFilter("Excel Documents", new String[] {"xls", "xlsx"});
-//		fc.setFileFilter(excelFilter);
-//		fc.setAcceptAllFileFilterUsed(false);
-//		
-//		int returnVal = fc.showDialog(parent, "Select");
-//		
-//		if (returnVal == JFileChooser.APPROVE_OPTION) {
-//			String path = fc.getSelectedFile().getPath();
-//			textField.setText(path);
-//		}
 	}
 }
 
