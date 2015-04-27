@@ -7,6 +7,7 @@
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Font;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -19,6 +20,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
@@ -34,7 +36,7 @@ public class MainWindow {
 		
 		JFrame frame = new JFrame();
 		frame.setTitle("Music Scheduler");
-		frame.setSize(450, 340);
+		frame.setSize(450, 420);
 		frame.setResizable(false);
 		
 		// Center the window on the screen
@@ -60,7 +62,7 @@ public class MainWindow {
 		layout.putConstraint(SpringLayout.NORTH, roomDataTextField, 5, SpringLayout.SOUTH, roomDataLabel);
 		layout.putConstraint(SpringLayout.WEST, roomDataTextField, 15, SpringLayout.WEST, contentPane);
 		layout.putConstraint(SpringLayout.EAST, roomDataTextField, -5, SpringLayout.WEST, selectRoomDataButton);
-		layout.putConstraint(SpringLayout.SOUTH, roomDataTextField, 0, SpringLayout.SOUTH, selectRoomDataButton);;
+		layout.putConstraint(SpringLayout.SOUTH, roomDataTextField, 0, SpringLayout.SOUTH, selectRoomDataButton);
 		
 		selectRoomDataButton.addActionListener(new SelectButtonActionListener(roomDataTextField, frame));
 		
@@ -111,19 +113,37 @@ public class MainWindow {
 		contentPane.add(selectTeacherDataButton);
 		contentPane.add(teacherDataTextField);
 		
+		JLabel outputDataLabel = new JLabel("Output Path");
+		layout.putConstraint(SpringLayout.WEST, outputDataLabel,15, SpringLayout.WEST, contentPane);
+		layout.putConstraint(SpringLayout.NORTH, outputDataLabel, 30, SpringLayout.SOUTH, teacherDataTextField);
+		
+		JTextField outputDataTextField = new JTextField();
+		outputDataTextField.setEditable(true);
+		layout.putConstraint(SpringLayout.NORTH, outputDataTextField, 5, SpringLayout.SOUTH, outputDataLabel);
+		layout.putConstraint(SpringLayout.WEST, outputDataTextField, 15, SpringLayout.WEST, contentPane);
+		layout.putConstraint(SpringLayout.EAST, outputDataTextField, -15, SpringLayout.EAST, contentPane);
+		layout.putConstraint(SpringLayout.SOUTH, outputDataTextField, 27, SpringLayout.SOUTH, outputDataLabel);
+
+		contentPane.add(outputDataLabel);
+		contentPane.add(outputDataTextField);
+		
 		JButton scheduleButton = new JButton("Schedule");
-		scheduleButton.addActionListener(new ScheduleButtonActionListener(roomDataTextField, studentDataTextField, teacherDataTextField, frame));;
-		layout.putConstraint(SpringLayout.NORTH, scheduleButton, 30, SpringLayout.SOUTH, teacherDataTextField);
+		scheduleButton.addActionListener(new ScheduleButtonActionListener(roomDataTextField, studentDataTextField, teacherDataTextField, outputDataTextField, frame));;
+		layout.putConstraint(SpringLayout.NORTH, scheduleButton, 30, SpringLayout.SOUTH, outputDataTextField);
 		layout.putConstraint(SpringLayout.WEST, scheduleButton, 150, SpringLayout.WEST, contentPane);
 		layout.putConstraint(SpringLayout.EAST, scheduleButton, -150, SpringLayout.EAST, contentPane);
 		
 		contentPane.add(scheduleButton);
 		
 		JButton helpButton = new JButton("?");
+		layout.putConstraint(SpringLayout.SOUTH, helpButton, -15, SpringLayout.SOUTH, contentPane);
+		layout.putConstraint(SpringLayout.WEST, helpButton, 15, SpringLayout.WEST, contentPane);
+		
+		contentPane.add(helpButton);
 
-		//Creates a new Help Window.
+		// Creates a new Help Window.
 		JFrame helpFrame = new JFrame("Help Window");
-		helpFrame.setSize(450, 340);
+		helpFrame.setSize(600, 600);
 		helpFrame.setResizable(true);
 		Rectangle bounds = helpFrame.getBounds();
 		helpFrame.setLocation(10 + bounds.x, 10 + bounds.y);
@@ -131,31 +151,38 @@ public class MainWindow {
 		Container helpContentPane = helpFrame.getContentPane();
 		SpringLayout helpLayout = new SpringLayout();
 		helpContentPane.setLayout(helpLayout);
-		helpContentPane.setBackground(Color.BLUE);
 	
-		String message = "For the Music Scheduler to run correctly, make sure you have :"
-			+ ""
-			+ "1. All the EXCEL files selected."
-			+ "2. I think blah blah blah .";
+		String message = UserManual.MESSAGE_1 + UserManual.MESSAGE_2 + UserManual.MESSAGE_3 + UserManual.MESSAGE_4;
 	
+		// Create a JTextArea for the User Manual
 		JTextArea helpText = new JTextArea(message);
-	
-		helpText.setEditable(false);
-		helpLayout.putConstraint(SpringLayout.WEST, helpText, 15, SpringLayout.WEST, helpContentPane);
-		helpLayout.putConstraint(SpringLayout.NORTH, helpText, 15, SpringLayout.NORTH, helpContentPane);
-		helpLayout.putConstraint(SpringLayout.EAST, helpText, -15, SpringLayout.EAST, helpContentPane);
-		helpLayout.putConstraint(SpringLayout.SOUTH, helpText, -15, SpringLayout.SOUTH, helpContentPane);
-
 		helpText.setLineWrap(true);
 		helpText.setWrapStyleWord(true);
 		helpText.setBackground(Color.WHITE);
-
-		helpContentPane.add(helpText);
-		helpButton.addActionListener(new HelpButtonActionListener(helpFrame));
-		layout.putConstraint(SpringLayout.SOUTH, helpButton, -15, SpringLayout.SOUTH, contentPane);
-		layout.putConstraint(SpringLayout.WEST, helpButton, 15, SpringLayout.WEST, contentPane);
 		
-		contentPane.add(helpButton);
+		// Set the Font 
+		Font f = new Font("Helvetica", 0, 22);
+		helpText.setFont(f);
+		helpText.setEditable(false);
+		
+		// Add Scroll Functionality
+		JScrollPane scroll = new JScrollPane (helpText);
+		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		
+		// Put the helpText in the Container
+		helpLayout.putConstraint(SpringLayout.WEST, scroll, 15, SpringLayout.WEST, helpContentPane);
+		helpLayout.putConstraint(SpringLayout.NORTH, scroll, 15, SpringLayout.NORTH, helpContentPane);
+		helpLayout.putConstraint(SpringLayout.EAST, scroll, -15, SpringLayout.EAST, helpContentPane);
+		helpLayout.putConstraint(SpringLayout.SOUTH, scroll, -15, SpringLayout.SOUTH, helpContentPane);
+
+	    helpContentPane.add(scroll);
+	    
+		helpButton.addActionListener(new HelpButtonActionListener(helpFrame));
+	    
+	    // TODO: format the paragraphs so that it is not just one big blob of text
+		
+		
 		
 		// Set the look and feel to match the operating system we are running on
 		try {
@@ -207,12 +234,14 @@ class ScheduleButtonActionListener implements ActionListener {
 	private final JTextField roomDataTextField;
 	private final JTextField studentDataTextField;
 	private final JTextField teacherDataTextField;
+	private final JTextField outputDataTextField;
 	private final JFrame parent;
 	
-	public ScheduleButtonActionListener(final JTextField roomDataTextField, final JTextField studentDataTextField, final JTextField teacherDataTextField, final JFrame parent) {
+	public ScheduleButtonActionListener(final JTextField roomDataTextField, final JTextField studentDataTextField, final JTextField teacherDataTextField, final JTextField outputDataTextField, final JFrame parent) {
 		this.roomDataTextField = roomDataTextField;
 		this.studentDataTextField = studentDataTextField;
 		this.teacherDataTextField = teacherDataTextField;
+		this.outputDataTextField = outputDataTextField;
 		this.parent = parent;
 	}
 	
@@ -231,6 +260,8 @@ class ScheduleButtonActionListener implements ActionListener {
 			showErrorDialog("Please specify a spreadsheet with student data.");
 		} else if (teacherDataTextField.getText().length() == 0) {
 			showErrorDialog("Please specify a spreadsheet with teacher data.");
+		} else if (outputDataTextField.getText().length() == 0) {
+			showErrorDialog("Please specify an output path for the spreadsheet.");
 		}
 		
 		ArrayList<Room> rooms = null;
@@ -275,10 +306,19 @@ class ScheduleButtonActionListener implements ActionListener {
 		for (int i = 0; i < roomDayTimes.size(); i++) {
 			roomDayTimeInts.add(roomDayTimes.get(i).getTime());
 		}
-		
-		String filename = "/Users/afrank11/Desktop/testExcelOutput.xls";
+		// this filename will be captured from the user as they input it into the GUI
+		//String filename = "/Users/fcollins/Desktop/testExcelOutputFAITH.xls";
+		String filename = outputDataTextField.getText();
 		String [][] data = ExcelWriter.prepareDataToWriteToExcel(bestResult, roomDayTimeInts);
 		ExcelWriter.writeDataToExcelFile(filename, data);
+		
+		showFinishDialog("Scheduling is complete!");
+	}
+	
+	// Play a sound and display an alert notifying the user that the application is done running.
+	public void showFinishDialog(String finishMessage){
+		Toolkit.getDefaultToolkit().beep();
+		JOptionPane.showMessageDialog(parent, finishMessage, "Complete", JOptionPane.INFORMATION_MESSAGE);
 	}
 	
 	// Play an error sound and display an error dialog with a given message
