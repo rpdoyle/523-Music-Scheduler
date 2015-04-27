@@ -12,7 +12,10 @@ import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 
 import javax.swing.JButton;
@@ -117,14 +120,22 @@ public class MainWindow {
 		layout.putConstraint(SpringLayout.WEST, outputDataLabel,15, SpringLayout.WEST, contentPane);
 		layout.putConstraint(SpringLayout.NORTH, outputDataLabel, 30, SpringLayout.SOUTH, teacherDataTextField);
 		
+		JButton selectOutputDataButton = new JButton("Select...");
+		layout.putConstraint(SpringLayout.NORTH, selectOutputDataButton, 5, SpringLayout.SOUTH, outputDataLabel);
+		layout.putConstraint(SpringLayout.EAST, selectOutputDataButton, -15, SpringLayout.EAST, contentPane);
+		
+		
 		JTextField outputDataTextField = new JTextField();
-		outputDataTextField.setEditable(true);
+		outputDataTextField.setEditable(false);
 		layout.putConstraint(SpringLayout.NORTH, outputDataTextField, 5, SpringLayout.SOUTH, outputDataLabel);
 		layout.putConstraint(SpringLayout.WEST, outputDataTextField, 15, SpringLayout.WEST, contentPane);
-		layout.putConstraint(SpringLayout.EAST, outputDataTextField, -15, SpringLayout.EAST, contentPane);
-		layout.putConstraint(SpringLayout.SOUTH, outputDataTextField, 27, SpringLayout.SOUTH, outputDataLabel);
+		layout.putConstraint(SpringLayout.EAST, outputDataTextField, -5, SpringLayout.WEST, selectOutputDataButton);
+		layout.putConstraint(SpringLayout.SOUTH, outputDataTextField, 0, SpringLayout.SOUTH, selectOutputDataButton);
 
+		selectOutputDataButton.addActionListener(new OutputSelectButtonActionListener(outputDataTextField, frame) ); 
+		
 		contentPane.add(outputDataLabel);
+		contentPane.add(selectOutputDataButton);
 		contentPane.add(outputDataTextField);
 		
 		JButton scheduleButton = new JButton("Schedule");
@@ -141,7 +152,7 @@ public class MainWindow {
 		
 		contentPane.add(helpButton);
 
-		// Creates a new Help Window.
+		// Creates the Help Window.
 		JFrame helpFrame = new JFrame("Help Window");
 		helpFrame.setSize(600, 600);
 		helpFrame.setResizable(true);
@@ -228,6 +239,43 @@ class SelectButtonActionListener implements ActionListener {
 	}
 }
 
+//ActionListener to handle the output select buttons in the user interface.
+class OutputSelectButtonActionListener implements ActionListener {
+
+	private final JTextField textField;
+	private final Component parent;
+	
+	public OutputSelectButtonActionListener(final JTextField textField, final Component parent) {
+		super();
+		this.textField = textField;
+		this.parent = parent;
+	}
+	
+	// Open a file chooser dialog and set textField's text to the path of the selected file
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		final JFileChooser fc = new JFileChooser();
+		fc.setCurrentDirectory(new java.io.File("."));
+		fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		fc.setAcceptAllFileFilterUsed(false);
+		fc.showSaveDialog(parent);
+		String path = fc.getSelectedFile().getPath();
+		textField.setText(path);
+		
+//		// Only allow the user to select files with Excel extensions
+//		FileNameExtensionFilter excelFilter = new FileNameExtensionFilter("Excel Documents", new String[] {"xls", "xlsx"});
+//		fc.setFileFilter(excelFilter);
+//		fc.setAcceptAllFileFilterUsed(false);
+//		
+//		int returnVal = fc.showDialog(parent, "Select");
+//		
+//		if (returnVal == JFileChooser.APPROVE_OPTION) {
+//			String path = fc.getSelectedFile().getPath();
+//			textField.setText(path);
+//		}
+	}
+}
+
 // ActionListener to handle the schedule button
 class ScheduleButtonActionListener implements ActionListener {
 
@@ -306,9 +354,10 @@ class ScheduleButtonActionListener implements ActionListener {
 		for (int i = 0; i < roomDayTimes.size(); i++) {
 			roomDayTimeInts.add(roomDayTimes.get(i).getTime());
 		}
-		// this filename will be captured from the user as they input it into the GUI
-		//String filename = "/Users/fcollins/Desktop/testExcelOutputFAITH.xls";
-		String filename = outputDataTextField.getText();
+		
+		DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd-HH.mm.ss");
+		Date date = new Date();
+		String filename = outputDataTextField.getText() + "/Schedule-" + dateFormat.format(date) + ".xls";
 		String [][] data = ExcelWriter.prepareDataToWriteToExcel(bestResult, roomDayTimeInts);
 		ExcelWriter.writeDataToExcelFile(filename, data);
 		
