@@ -163,7 +163,7 @@ public class MainWindow {
 		SpringLayout helpLayout = new SpringLayout();
 		helpContentPane.setLayout(helpLayout);
 	
-		String message = UserManual.MESSAGE_1 + UserManual.MESSAGE_2 + UserManual.MESSAGE_3 + UserManual.MESSAGE_4;
+		String message = UserManual.MESSAGE_1 + '\n' + '\n' + UserManual.MESSAGE_2 + '\n' + '\n' + UserManual.MESSAGE_3 + '\n' + '\n' + UserManual.MESSAGE_4;
 	
 		// Create a JTextArea for the User Manual
 		JTextArea helpText = new JTextArea(message);
