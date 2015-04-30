@@ -5,7 +5,6 @@
 
 // TODO: Remove keepReturningStudent and just don't store a returning student
 // 		 if the teacher doesn't want to keep them?
-// TODO: One name field vs. first and last names
 
 public class Teacher {
 

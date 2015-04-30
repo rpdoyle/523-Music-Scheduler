@@ -1,3 +1,8 @@
+/*
+ * File: ScoringEngingeTest.java
+ * Description: Implements JUnit tests for ScoringEngine.java
+ */
+
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;

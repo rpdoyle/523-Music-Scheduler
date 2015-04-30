@@ -1,3 +1,8 @@
+/* 
+ * File: RandomizationTest.java
+ * Description: Implements JUnit tests for Randomization.java
+ */
+
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
@@ -45,22 +50,6 @@ public class RandomizationTest {
 						"English" }, "No", new int[] { 650, 1293, 1812, 8272 });
 		return testTeacher1;
 	}
-	
-	/*@Test
-	public void testCheckIfSiblingsPaired() {
-		HashSet<Integer> siblings = new HashSet<>();
-		siblings.add(123);
-		siblings.add(789);
-		ArrayList<Pair> possiblePairs = new ArrayList<>();
-		possiblePairs.add(new Pair(createStudent1(), createTeacher1(), 300, null, ""));
-		possiblePairs.add(new Pair(createStudent2(), createTeacher1(), 300, null, ""));
-		possiblePairs.add(new Pair(createStudent3(), createTeacher1(), 300, null, ""));
-		assertEquals(true, Randomization.checkIfSiblingsPaired(siblings, possiblePairs));
-		siblings.clear();
-		siblings.add(123);
-		siblings.add(159);
-		assertEquals(false, Randomization.checkIfSiblingsPaired(siblings, possiblePairs));
-	}*/
 
 	@Test
 	public void testGetMandatoryPairSiblings() {

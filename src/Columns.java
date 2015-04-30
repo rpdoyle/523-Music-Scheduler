@@ -2,7 +2,6 @@
  * File: Columns.java
  * Description: Provides constants for which column indices
  * 				contain which data in the input excel sheets.
- * 	
  */
 
 public class Columns {

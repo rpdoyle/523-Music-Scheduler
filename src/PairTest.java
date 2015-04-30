@@ -1,7 +1,6 @@
 /*
  * File: PairTest.java
  * Description: Implements JUnit tests for Pair.java
- * 	
  */
 
 import static org.junit.Assert.*;

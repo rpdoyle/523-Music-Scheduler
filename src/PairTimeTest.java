@@ -1,7 +1,6 @@
 /*
  * File: PairTimeTest.java
  * Description: Implements JUnit tests for PairTime.java
- * 	
  */
 
 import static org.junit.Assert.*;

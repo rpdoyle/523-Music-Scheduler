@@ -1,7 +1,6 @@
 /*
  * File: RoomDayTimeComparator.java
  * Description: Implements methods necessary to compare two RoomDayTime objects
- * 	
  */
 
 import java.util.ArrayList;
@@ -9,6 +8,7 @@ import java.util.Comparator;
 
 public class RoomDayTimeComparator implements Comparator<RoomDayTime> {
 	
+	// Compares two RoomDayTime objects for equality
 	@Override
 	public int compare(RoomDayTime rdt1, RoomDayTime rdt2) {
 		

@@ -1,5 +1,10 @@
-import java.util.ArrayList;
+/*
+ * File: HungarianResult.java
+ * Description: This file contains the format the result
+ * 				returned by the Hungarian algorithm.
+ */
 
+import java.util.ArrayList;
 
 public class HungarianResult {
 	private ArrayList<PairTime> pairTimes;

@@ -1,8 +1,6 @@
 /*
- /*
  * File: TeacherTest.java
  * Description: Implements JUnit tests for Teacher.java
- * 	
  */
 
 import static org.junit.Assert.*;
