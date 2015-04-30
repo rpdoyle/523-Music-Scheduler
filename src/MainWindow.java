@@ -275,9 +275,7 @@ class ScheduleButtonActionListener implements ActionListener {
 		for (int i = 0; i < roomDayTimes.size(); i++) {
 			roomDayTimeInts.add(roomDayTimes.get(i).getTime());
 		}
-		
-		System.out.println("There are " + bestResult.getPairTimes().size() + " pairs");
-		
+				
 		String filename = "/Users/afrank11/Desktop/testExcelOutput.xls";
 		String [][] data = ExcelWriter.prepareDataToWriteToExcel(bestResult, roomDayTimeInts);
 		ExcelWriter.writeDataToExcelFile(filename, data);
