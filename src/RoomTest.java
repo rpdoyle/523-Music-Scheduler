@@ -1,7 +1,6 @@
 /*
  * File: RoomTest.java
  * Description: Implements JUnit tests for Room.java
- * 	
  */
 
 import static org.junit.Assert.*;

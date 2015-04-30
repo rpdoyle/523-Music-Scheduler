@@ -1,9 +1,9 @@
- import java.util.ArrayList;
-
 /* 
  * File: Pair.java
  * Description: This class stores data for a Student/Teacher pair.
  */
+
+import java.util.ArrayList;
 
 public class Pair {
 

@@ -1,8 +1,8 @@
 /*
  * File: PairTimeComparator.java
  * Description: Implements methods that allow PairTime objects to be compared
- * 	
  */
+
 import java.util.ArrayList;
 
 public class PairTimeComparator {

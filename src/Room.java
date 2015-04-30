@@ -1,9 +1,9 @@
-import java.util.ArrayList;
-
 /*
  * File: Room.java
  * Description: This class stores data for a Room.
  */
+
+import java.util.ArrayList;
 
 public class Room {
 	private String name;

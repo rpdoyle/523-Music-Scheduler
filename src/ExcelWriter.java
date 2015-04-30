@@ -1,3 +1,9 @@
+/*
+ * File: ExcelWriter.java
+ * Description: Implements the methods used for writing
+ * 				schedules to an Excel file.
+ */
+
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,7 +36,8 @@ public class ExcelWriter {
 
 		// Create the style used for the header row
 		CellStyle headerStyle = myWorkBook.createCellStyle();
-		headerStyle.setFillForegroundColor(IndexedColors.GREY_50_PERCENT.getIndex());
+		headerStyle.setFillForegroundColor(IndexedColors.GREY_50_PERCENT
+				.getIndex());
 		headerStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
 		headerStyle.setFont(headerFont);
 
@@ -59,7 +66,8 @@ public class ExcelWriter {
 					myCell.setCellStyle(headerStyle);
 				} else if (myCell.getRowIndex() == 2) {
 					myCell.setCellStyle(timeStyle);
-				} else if (myCell.toString().contains("PM") || myCell.toString().contains("AM")) {
+				} else if (myCell.toString().contains("PM")
+						|| myCell.toString().contains("AM")) {
 					myCell.setCellStyle(timeStyle);
 					for (int i = 1; i < 6; i++) {
 						HSSFCell timeCell = myRow.createCell(i);
@@ -92,13 +100,14 @@ public class ExcelWriter {
 		}
 	}
 
-	public static String[][] prepareDataToWriteToExcel(HungarianResult hungarianResult, HashSet<Integer> roomDayTimeInts) {
-		
+	public static String[][] prepareDataToWriteToExcel(
+			HungarianResult hungarianResult, HashSet<Integer> roomDayTimeInts) {
+
 		// Create an object array based on the roomDayTimeInts
 		Object[] intArr = roomDayTimeInts.toArray();
 		Arrays.sort(intArr);
-		
-		// Create a pairTime object from the hungarianResult and a pairTimeInts object to store the times
+
+		// Create a pairTime object from the hungarianResult
 		ArrayList<PairTime> pairTime = hungarianResult.getPairTimes();
 		
 		// Create two arraylists of PairTimes
@@ -267,7 +276,7 @@ public class ExcelWriter {
 				}
 			}
 		}
-		
+
 		return excelData;
 	}
 

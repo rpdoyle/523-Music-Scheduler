@@ -1,3 +1,7 @@
+/* 
+ * File: Pair.java
+ * Description: Implements methods that allow Pair objects to be compared.
+ */
 
 import java.util.ArrayList;
 import java.util.Comparator;

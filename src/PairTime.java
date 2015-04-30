@@ -1,3 +1,8 @@
+/* 
+ * File: PairTime.java
+ * Description: This class stores a Pair object and the time
+ * 				at which that pair is scheduled.
+ */
 
 public class PairTime {
 	private Pair pair;

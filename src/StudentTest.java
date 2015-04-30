@@ -1,7 +1,6 @@
 /*
  * File: StudentTest.java
  * Description: Implements JUnit tests for Student.java
- * 	
  */
 
 import static org.junit.Assert.*;

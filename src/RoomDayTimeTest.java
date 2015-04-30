@@ -1,7 +1,6 @@
 /*
  * File: RoomDayTimeTest.java
  * Description: Implements JUnit tests for RoomDayTime.java
- * 	
  */
 
 import static org.junit.Assert.*;

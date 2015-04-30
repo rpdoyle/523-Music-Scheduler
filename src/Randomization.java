@@ -1,3 +1,9 @@
+/* 
+ * File: Randomization.java
+ * Description: This class randomly generates Student/Teacher pairs to be
+ * 				scheduled by the Hungarian algorithm.
+ */
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
@@ -28,14 +34,21 @@ public class Randomization {
 		this.teachers = teachers;
 	}
 
+	// Generate random groups of Pair objects that constitute a possible
+	// schedule. Pass an ArrayList containing these Pair objects to the
+	// Hungarian algorithm for the generation of a schedule. Maintain the max
+	// score to determine the best schedule. This selection of additional Pair
+	// objects for scheduling and the generation of new schedules is monitored
+	// by a timeout. If new Pair objects are not acquired or better schedules
+	// aren't generated, then the loop will break.
 	public HungarianResult schedule() {
 		int maxScore = 0, timeSinceImprovement = 0, timeSinceNewPair;
 		// This is used to test whether or not we should call Hungarian
-		//boolean feasibleSchedule = true;
+		// boolean feasibleSchedule = true;
 		HungarianResult currentResult, bestResult = null;
 
-		// These arraylists contain valid indices into the student and teacher
-		// arraylists. In other words, the students and teachers at these
+		// These ArrayLists contain valid indices into the student and teacher
+		// ArrayLists. In other words, the students and teachers at these
 		// indices are yet to be paired
 		ArrayList<Integer> studentIndices = new ArrayList<>();
 		ArrayList<Integer> teacherIndices = new ArrayList<>();
@@ -44,8 +57,7 @@ public class Randomization {
 		int numTeachers = teachers.size();
 
 		ArrayList<Pair> possiblePairs = new ArrayList<>();
-		//HashSet<Integer> siblings = new HashSet<>();
-
+		
 		int numRoomDayTimes = HelperMethods.getRoomDayTimes(rooms).size();
 
 		Random randS = new Random();
@@ -61,12 +73,11 @@ public class Randomization {
 			System.out.println("Time Since Improvement:   "
 					+ timeSinceImprovement);
 			possiblePairs.clear();
-			//siblings.clear();
 			studentIndices.clear();
 			teacherIndices.clear();
 
-			// Recreate the arraylists containing the indices into the student
-			// and teacher arraylists
+			// Recreate the ArrayLists containing the indices into the student
+			// and teacher ArrayLists
 			for (int i = 0; i < numStudents; i++) {
 				studentIndices.add(i);
 			}
@@ -74,23 +85,19 @@ public class Randomization {
 				teacherIndices.add(i);
 			}
 
-			// Check whether any mandatory pair students have siblings. If so,
-			// add them to the siblings HashSet for future checking
-			//siblings = getMandatoryPairSiblings(mandatoryPairs);
-
-			// Add the mandatory pairs to the possible pairs arraylist for
+			// Add the mandatory pairs to the possible pairs ArrayList for
 			// scheduling
 			possiblePairs.addAll(mandatoryPairs);
 
 			timeSinceNewPair = 0;
 
-			// Keep generating new pairs until your possiblePairs arraylist is
+			// Keep generating new pairs until your possiblePairs ArrayList is
 			// too big, or you haven't found a new pair within a certain period
 			// of time, or there are no teachers or no students left to pair
 			while (possiblePairs.size() < (numRoomDayTimes * EXTRAPAIRSMULTIPLIER)
 					&& timeSinceNewPair < NEWPAIRTIMEOUT
 					&& studentIndices.size() > 0 && teacherIndices.size() > 0) {
-				// Get random pointers into the students and teachers arraylists
+				// Get random pointers into the students and teachers ArrayLists
 				randStudentIndexIndex = randS.nextInt(studentIndices.size());
 				randTeacherIndexIndex = randT.nextInt(teacherIndices.size());
 				randStudentIndex = studentIndices.get(randStudentIndexIndex);
@@ -100,14 +107,6 @@ public class Randomization {
 				if (scores[randTeacherIndex][randStudentIndex].getScore() > 0) {
 					possiblePairs
 							.add(scores[randTeacherIndex][randStudentIndex]);
-					// If the student has siblings, add them to the siblings
-					// arraylist
-					/*if (students.get(randStudentIndex).getSiblings().size() > 0) {
-						for (Student sibling : students.get(randStudentIndex)
-								.getSiblings()) {
-							siblings.add(sibling.getID());
-						}
-					}*/
 					studentIndices.remove(randStudentIndexIndex);
 					teacherIndices.remove(randTeacherIndexIndex);
 					timeSinceNewPair = 0;
@@ -116,12 +115,6 @@ public class Randomization {
 					timeSinceNewPair++;
 				}
 			}
-
-			//feasibleSchedule = checkIfSiblingsPaired(siblings, possiblePairs);
-
-			/*if (!feasibleSchedule) {
-				continue;
-			}*/
 
 			currentResult = Hungarian.run(possiblePairs,
 					HelperMethods.getRoomDayTimes(rooms),
@@ -145,10 +138,11 @@ public class Randomization {
 		return bestResult;
 	}
 
+	// Check whether any mandatory pair students have siblings. If so,
+	// add them to the siblings ArrayList for future checking
 	public static HashSet<Integer> getMandatoryPairSiblings(
 			ArrayList<Pair> mandatoryPairs) {
-		// Check whether any mandatory pair students have siblings. If so,
-		// add them to the siblings arraylist for future checking
+		
 
 		HashSet<Integer> siblings = new HashSet<>();
 
@@ -161,24 +155,4 @@ public class Randomization {
 		}
 		return siblings;
 	}
-
-	/*public static boolean checkIfSiblingsPaired(HashSet<Integer> siblings,
-			ArrayList<Pair> possiblePairs) {
-		boolean siblingFound = false;
-
-		// Check whether the siblings of scheduled students were also
-		// scheduled
-		for (Integer siblingID : siblings) {
-			for (Pair siblingPair : possiblePairs) {
-				if (siblingPair.getStudent().getID() == siblingID) {
-					siblingFound = true;
-					break;
-				}
-			}
-			if (!siblingFound) {
-				return false;
-			}
-		}
-		return true;
-	}*/
 }

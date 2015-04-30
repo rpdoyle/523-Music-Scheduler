@@ -1,9 +1,10 @@
-import java.util.ArrayList;
-
 /*
  * File: ScoringEnginge.java
  * Description: This class stores data for a ScoringEngine.
  */
+
+import java.util.ArrayList;
+
 public class ScoringEngine {
 
 	private ArrayList<Student> students;
@@ -18,11 +19,14 @@ public class ScoringEngine {
 	public ArrayList<Student> getStudents() {
 		return students;
 	}
-	
+
 	public ArrayList<Teacher> getTeachers() {
 		return teachers;
 	}
-	
+
+	// Searches the students and teachers ArrayLists for returning pairs, and
+	// returns an ArrayList of Pair objects that encapsulate these mandatory
+	// pairings
 	public ArrayList<Pair> getMandatoryPairs() {
 		ArrayList<Pair> mandatoryPairs = new ArrayList<Pair>();
 		ArrayList<Student> returningStudents = new ArrayList<Student>();
@@ -74,7 +78,7 @@ public class ScoringEngine {
 					// student's or the teacher's availableTimes array
 					while (k < numStudentTimes && l < numTeacherTimes) {
 						// If the times are equal, add that time to the
-						// mutualTimes arraylist. Also, increment k and l to
+						// mutualTimes ArrayList. Also, increment k and l to
 						// check each person's next time
 						if (returningStudents.get(i).getAvailableTimes()[k] == returningTeachers
 								.get(j).getAvailableTimes()[l]) {
@@ -99,11 +103,11 @@ public class ScoringEngine {
 					// containing the student, the teacher, their score of 2000
 					// as a mandatory pair, and their mutual times. Also, add
 					// these indices to the returned students and teachers
-					// arraylists so that they can be removed afterward
+					// ArrayLists so that they can be removed afterward
 					if (mutualTimes.size() > 0) {
 						mandatoryPairs.add(new Pair(returningStudents.get(i),
-								returningTeachers.get(j), 2000, mutualTimes, returningStudents
-										.get(i).getInstruments()[0]));
+								returningTeachers.get(j), 2000, mutualTimes,
+								returningStudents.get(i).getInstruments()[0]));
 						returningStudents.remove(i);
 						i--;
 						returningTeachers.remove(j);
@@ -115,13 +119,13 @@ public class ScoringEngine {
 		}
 
 		// If a returning student couldn't be paired with a previous teacher,
-		// add them back to the students arraylist
+		// add them back to the students ArrayList
 		for (Student unpairedStudent : returningStudents) {
 			students.add(unpairedStudent);
 		}
 
 		// If a returning teacher couldn't be paired with a previous student,
-		// add them back to the teachers arraylist
+		// add them back to the teachers ArrayList
 		for (Teacher unpairedTeacher : returningTeachers) {
 			teachers.add(unpairedTeacher);
 		}
@@ -129,12 +133,17 @@ public class ScoringEngine {
 		return mandatoryPairs;
 	}
 
+	// Assign a score to every possible Student/Teacher pair (except returning
+	// students and teachers who are paired using getMandatoryPairs). This
+	// method should be run after getMandatoryPairs since getMandatoryPairs will
+	// remove from the students and teachers ArrayLists the students and
+	// teachers who are placed into mandatory pairs
 	public Pair[][] scoreNonMandatoryPairs() {
 		Pair[][] scores = new Pair[teachers.size()][students.size()];
 		int score;
 		int numStudents = students.size(), numTeachers = teachers.size();
 		String returningInstrument = "";
-		
+
 		for (int i = 0; i < numTeachers; i++) {
 			for (int j = 0; j < numStudents; j++) {
 				score = 0;
@@ -156,7 +165,7 @@ public class ScoringEngine {
 					int teacherTime = teachers.get(i).getAvailableTimes()[l];
 
 					// If the times are equal, add that time to the
-					// mutualTimes arraylist. Also, increment k and l to
+					// mutualTimes ArrayList. Also, increment k and l to
 					// check each person's next time
 					if (studentTime == teacherTime) {
 						mutualTimes.add(studentTime);
@@ -177,7 +186,8 @@ public class ScoringEngine {
 				// If a mutual time was not found, then this pair is
 				// incompatible. Give them a score of -1
 				if (mutualTimes.size() == 0) {
-					scores[i][j] = new Pair(students.get(j), teachers.get(i), -1, null, "");
+					scores[i][j] = new Pair(students.get(j), teachers.get(i),
+							-1, null, "");
 					continue;
 				}
 
@@ -192,7 +202,8 @@ public class ScoringEngine {
 						if (students.get(j).getInstruments()[0]
 								.equalsIgnoreCase(instrument)) {
 							score += 300;
-							returningInstrument = students.get(j).getInstruments()[0];
+							returningInstrument = students.get(j)
+									.getInstruments()[0];
 							break;
 						}
 					}
@@ -200,7 +211,8 @@ public class ScoringEngine {
 					// If the score isn't 300, then an instrument match wasn't
 					// found, and this pair won't work.
 					if (score != 300) {
-						scores[i][j] = new Pair(students.get(j), teachers.get(i), -1, null, "");
+						scores[i][j] = new Pair(students.get(j),
+								teachers.get(i), -1, null, "");
 						continue;
 					}
 				} else { // If the student is not advanced, check all instrument
@@ -210,7 +222,8 @@ public class ScoringEngine {
 						if (students.get(j).getInstruments()[0]
 								.equalsIgnoreCase(instrument)) {
 							score += 300;
-							returningInstrument = students.get(j).getInstruments()[0];
+							returningInstrument = students.get(j)
+									.getInstruments()[0];
 							break;
 						}
 					}
@@ -223,7 +236,8 @@ public class ScoringEngine {
 							if (students.get(j).getInstruments()[1]
 									.equalsIgnoreCase(instrument)) {
 								score += 200;
-								returningInstrument = students.get(j).getInstruments()[1];
+								returningInstrument = students.get(j)
+										.getInstruments()[1];
 								break;
 							}
 						}
@@ -237,7 +251,8 @@ public class ScoringEngine {
 							if (students.get(j).getInstruments()[2]
 									.equalsIgnoreCase(instrument)) {
 								score += 100;
-								returningInstrument = students.get(j).getInstruments()[2];
+								returningInstrument = students.get(j)
+										.getInstruments()[2];
 								break;
 							}
 						}
@@ -246,7 +261,8 @@ public class ScoringEngine {
 					// If score is still zero, no instruments matched, so this
 					// pair won't work
 					if (score == 0) {
-						scores[i][j] = new Pair(students.get(j), teachers.get(i), -1, null, "");
+						scores[i][j] = new Pair(students.get(j),
+								teachers.get(i), -1, null, "");
 						continue;
 					}
 				}
@@ -299,7 +315,8 @@ public class ScoringEngine {
 					score += 1;
 				}
 
-				scores[i][j] = new Pair(students.get(j), teachers.get(i), score, mutualTimes, returningInstrument);
+				scores[i][j] = new Pair(students.get(j), teachers.get(i),
+						score, mutualTimes, returningInstrument);
 			}
 		}
 

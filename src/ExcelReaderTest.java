@@ -1,7 +1,6 @@
 /*
  * File: ExcelReaderTest.java
  * Description: Implements JUnit tests for ExcelReader.java
- * 	
  */
 
 import static org.junit.Assert.*;
