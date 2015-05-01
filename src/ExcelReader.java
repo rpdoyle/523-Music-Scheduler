@@ -1,10 +1,3 @@
-/*
- * File: ExcelReader.java
- * Description: Implements the methods used for parsing
- * 				Room, Student, and Teacher data into
- * 				Room, Student, and Teacher objects.
- */
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -20,15 +13,25 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-// Excel Reader contains static methods for parsing Room, Student, and Teacher spreadsheet files
-// into ArrayLists of Room, Student, and Teacher objects.
+/**
+ * Contains static methods for parsing Room, Student, and Teacher spreadsheet files into 
+ * ArrayLists of Room, Student and Teacher objects.
+ */
 public class ExcelReader {
+	
 	// Store the current cell of interest globally so the helper methods can
 	// easily access it
 	private static Cell currentCell = null;
 
-	// Open an excel document with Room data, parse the data, and return an
-	// ArrayList of Room objects
+	/**
+	 * Open an excel document with Room data and parse the data.
+	 * 
+	 * @param filepath the filepath of the spreadsheet of the Room data
+	 * @return an ArrayList of Room Objects
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 * @throws InvalidInputFormatException
+	 */
 	public static ArrayList<Room> parseRoomData(String filepath)
 			throws FileNotFoundException, IOException,
 			InvalidInputFormatException {
@@ -71,8 +74,15 @@ public class ExcelReader {
 		return rooms;
 	}
 
-	// Open an excel document with Student data, parse the data, and return an
-	// ArrayList of Student objects
+	/**
+	 * Open an excel document with Student data and parse the data. 
+	 * 
+	 * @param filepath the filepath of the spreadsheet of the Student data
+	 * @return an ArrayList of Student objects
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 * @throws InvalidInputFormatException
+	 */
 	public static ArrayList<Student> parseStudentData(String filepath)
 			throws FileNotFoundException, IOException,
 			InvalidInputFormatException {
@@ -121,6 +131,7 @@ public class ExcelReader {
 
 			if (getStringFromCell(currentRow, Columns.STUDENT_HAS_SIBLING_1,
 					true).equalsIgnoreCase("yes")) {
+				
 				// Currently the sibling has no field of returning instrument,
 				// so I will capture their first choice instrument as their
 				// returning instrument
@@ -215,8 +226,15 @@ public class ExcelReader {
 		return students;
 	}
 
-	// Open an excel document with Teacher data, parse the data, and return an
-	// ArrayList of Teacher objects
+	/**
+	 * Open an excel document with Teacher data and parse the data. 
+	 * 
+	 * @param filepath the filepath of the spreadsheet of the Teacher data
+	 * @return an ArrayList of Teacher objects
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 * @throws InvalidInputFormatException
+	 */
 	public static ArrayList<Teacher> parseTeacherData(String filepath)
 			throws FileNotFoundException, IOException,
 			InvalidInputFormatException {
@@ -251,6 +269,7 @@ public class ExcelReader {
 			String keepReturningStudent = "";
 
 			if (returningTeacher.equalsIgnoreCase("yes")) {
+				
 				// Get information about the returning student if the teacher is
 				// returning
 				returningStudent = getStringFromCell(currentRow,
@@ -308,10 +327,18 @@ public class ExcelReader {
 		return teachers;
 	}
 
-	// If possible, get the string representation of the value of a cell at a
-	// given row and cell index
+	/**
+	 * Get the string representation of the value of a cell at a given row and cell index.
+	 * 
+	 * @param row the Row in the spreadsheet
+	 * @param index the index of the cell that we will be retrieving a String from 
+	 * @param required true if this cell is a required input from the user, false if this cell is not 
+	 * @return the String from the cell
+	 * @throws InvalidInputFormatException
+	 */
 	public static String getStringFromCell(Row row, int index, boolean required)
 			throws InvalidInputFormatException {
+		
 		// Get the value of the requested cell, or create a blank cell if the
 		// requested cell is null (no value)
 		currentCell = row.getCell(index, Row.CREATE_NULL_AS_BLANK);
@@ -320,6 +347,7 @@ public class ExcelReader {
 			return currentCell.getStringCellValue();
 		} else if (currentCell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
 			return String.valueOf((int) currentCell.getNumericCellValue());
+			
 			// If the cell is blank and not required, this is okay and we can
 			// save a blank screen. If not, throw an exception.
 		} else if (currentCell.getCellType() == Cell.CELL_TYPE_BLANK
@@ -327,6 +355,7 @@ public class ExcelReader {
 			return "";
 		} else if (currentCell.getCellType() == Cell.CELL_TYPE_BLANK
 				&& (required)) {
+			
 			// If we could not get a string from the required cell, show an
 			// error with the human-readable cell reference (e.g. A4)
 			CellReference cellRef = new CellReference(row.getRowNum(), index);
@@ -335,6 +364,7 @@ public class ExcelReader {
 												+ cellRef.formatAsString()
 												+ ".\nPlease make sure the cell contains the required data.");
 		} else {
+			
 			// If we could not get a string from the cell, show an error with
 			// the human-readable cell reference (e.g. A4)
 			CellReference cellRef = new CellReference(row.getRowNum(), index);
@@ -344,10 +374,18 @@ public class ExcelReader {
 		}
 	}
 
-	// If possible, read the value of a cell at a given row and cell index as a
-	// comma separated array of strings
+	/**
+	 * Read the value of a cell at a given row and cell index as a comma separated array of strings
+	 * 
+	 * @param row the Row in the spreadsheet
+	 * @param index the index of the cell that we will be retrieving the array of Strings from 
+	 * @param required true if this cell is a required input from the user, false if this cell is not
+	 * @return
+	 * @throws InvalidInputFormatException
+	 */
 	public static String[] getStringArrayFromCell(Row row, int index,
 			boolean required) throws InvalidInputFormatException {
+		
 		// Get the value of the requested cell, or create a blank cell if the
 		// requested cell is null (no value)
 		currentCell = row.getCell(index, Row.CREATE_NULL_AS_BLANK);
@@ -357,6 +395,7 @@ public class ExcelReader {
 		} else if (currentCell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
 			String[] result = { String.valueOf((int) currentCell.getNumericCellValue()) };
 			return result;
+			
 			// If the cell is blank and it is not required, that is okay. If
 			// not, it will throw an exception.
 		} else if (currentCell.getCellType() == Cell.CELL_TYPE_BLANK
@@ -364,6 +403,7 @@ public class ExcelReader {
 			return new String[0];
 		} else if (currentCell.getCellType() == Cell.CELL_TYPE_BLANK
 				&& (required)) {
+			
 			// If we could not get a string array from the required cell, show
 			// an error with the human-readable cell reference (e.g. A4)
 			CellReference cellRef = new CellReference(row.getRowNum(), index);
@@ -372,6 +412,7 @@ public class ExcelReader {
 													+ cellRef.formatAsString()
 													+ ".\nPlease make sure the cell contains the required data.");
 		} else {
+			
 			// If we could not get a string array from the cell, show an error
 			// with the human-readable cell reference (e.g. A4)
 			CellReference cellRef = new CellReference(row.getRowNum(), index);
@@ -381,22 +422,24 @@ public class ExcelReader {
 		}
 	}
 
-	// Given a string array of meeting times, create an integer array of start
-	// times, with each integer
-	// representing the number of minutes that have passed since 12:00 AM
-	// Monday.
-	//
-	// dayOffset represents the number of days since Monday. Monday would have a
-	// 0 dayOffset, Tuesday a 1,
-	// Wednesday a 2, etc.
-	//
-	// Date are expected to follow the following format guidelines:
-	// - Dates must be in AM/PM format, not military time
-	// - Leading 0s before single digit hours are optional, but accepted
-	// - There may be any number of spaces, or none, between the minutes and AM
-	// or PM
-	// - AM and PM may be written as am, AM, pm, or PM, but mixed capitalization
-	// is not allowed
+
+	/**
+	 * Given a string array of meeting times, create an integer array of start
+	 * times, with each integer
+	 * representing the number of minutes that have passed since 12:00 AM Monday.
+	 * dayOffset represents the number of days since Monday.
+	 * Monday would have a 0 dayOffset, Tuesday a 1, Wednesday a 2, etc.
+	 * Date are expected to follow the following format guidelines:
+	 * 	- Dates must be in AM/PM format, not military time
+	 * 	- Leading 0s before single digit hours are optional, but accepted
+	 * 	- There may be any number of spaces, or none, between the minutes and AM or PM
+	 * 	- AM and PM may be written as am, AM, pm, or PM, but mixed capitalization is not allowed
+	 * 
+	 * @param times an array of String times i.e 12:00 AM
+	 * @param dayOffset the offset as specified above
+	 * @return an integer Array of converted Strings to times
+	 * @throws InvalidInputFormatException
+	 */
 	public static int[] getStartTimeArr(String[] times, int dayOffset)
 			throws InvalidInputFormatException {
 		int[] startTimes = new int[times.length];
@@ -411,6 +454,7 @@ public class ExcelReader {
 		for (int i = 0; i < times.length; i++) {
 
 			if (!timePattern.matcher(times[i]).matches()) {
+				
 				// If we encounter an invalid date format, show an error with
 				// the invalid format and examples of proper format
 				throw new InvalidInputFormatException(
@@ -442,12 +486,14 @@ public class ExcelReader {
 						+ (60 * (startHour % 12) + startMinute);
 
 				if (isPM) {
+					
 					// Adds 720 minutes to account for 12:00AM - 11:59PM
 					time += 720;
 				}
 
 				startTimes[i] = time;
 			} catch (Exception e) {
+				
 				// If we encounter an invalid date format, show an error with
 				// the invalid format and examples of proper format
 				throw new InvalidInputFormatException(
@@ -461,10 +507,21 @@ public class ExcelReader {
 		return startTimes;
 	}
 
-	// c1-c5 correspond to the column values corresponding to Monday through
-	// Friday
+	/**
+	 * Creates an array of available times from all the available times in a given row in the spreadsheet. 
+	 * 
+	 * @param c1 the column value corresponding to Monday
+	 * @param c2 the column value corresponding to Tuesday
+	 * @param c3 the column value corresponding to Wednesday
+	 * @param c4 the column value corresponding to Thursday
+	 * @param c5 the column value corresponding to Friday
+	 * @param current the XSSFRow that we are currently working on 
+	 * @return an integer of the available times from a specific row
+	 * @throws InvalidInputFormatException
+	 */
 	public static int[] getAvailableTimes(int c1, int c2, int c3, int c4,
 			int c5, XSSFRow current) throws InvalidInputFormatException {
+		
 		// Get arrays of strings representing meetings times throughout the week
 		String[] mondayTimesArr = getStringArrayFromCell(current, c1, false);
 		String[] tuesdayTimesArr = getStringArrayFromCell(current, c2, false);
@@ -521,7 +578,33 @@ public class ExcelReader {
 		return availableTimes;
 	}
 
-	// Creates a Student object with the necessary data
+	/**
+	 * Creates a Student object with the necessary data
+	 * 
+	 * @param id index of the id of a Student
+	 * @param fName index of the first name of the Student
+	 * @param lName index of the last name of the Student
+	 * @param a index of the age of the Student
+	 * @param g index of the gender of the Student
+	 * @param check index of "yes" or "no", based on if the student wants the same teacher again
+	 * @param rTeacher index of name of the returning teacher
+	 * @param iORStudent index of instrument of the returning student if they are returning
+	 * @param i1 index of first choice instrument
+	 * @param i2 index of second choice instrument
+	 * @param i3 index of third choice instrument
+	 * @param y1 index of first choice instrument years of experience
+	 * @param y2 index of second choice instrument years of experience
+	 * @param y3 index of third choice instrument years of experience
+	 * @param l index of language of the preferred student, if not English
+	 * @param t1 index of times that the student is available on Monday
+	 * @param t2 index of times that the student is available on Tuesday
+	 * @param t3 index of times that the student is available on Wednesday
+	 * @param t4 index of times that the student is available on Thursday
+	 * @param t5 index of times that the student is available on Friday
+	 * @param currentRow the current XSSFRow that is being operated on in the spreadsheet
+	 * @return a new Student object
+	 * @throws InvalidInputFormatException
+	 */
 	public static Student createStudent(int id, int fName, int lName, int a,
 			int g, int check, int rTeacher, int iORStudent, int i1, int i2,
 			int i3, int y1, int y2, int y3, int l, int t1, int t2, int t3,
