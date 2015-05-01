@@ -1,8 +1,7 @@
-/*
- * File: UserManual.java
- * Description: Defines strings to be printed in the user manual
+/**
+ * Defines strings to be printed in the help window
+ *
  */
-
 public class UserManual {
 
 	public static final String MESSAGE_1 = "The music lesson scheduling application is an executable .jar file called MEScheduler.jar. It is compatible with both Windows and Mac OS X machines. The file is in a zipped folder that contains the Apache POI License and Notice files. The application can be downloaded from: (wherever we decide to put the application).";

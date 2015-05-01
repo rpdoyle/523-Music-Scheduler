@@ -1,32 +1,45 @@
-/*
- * File: ScoringEnginge.java
- * Description: This class stores data for a ScoringEngine.
- */
-
 import java.util.ArrayList;
 
+/**
+ * Used for calculating scores representing the compatibilty of Students and Teachers
+ */
 public class ScoringEngine {
 
 	private ArrayList<Student> students;
 	private ArrayList<Teacher> teachers;
 
-	public ScoringEngine(ArrayList<Student> students,
-			ArrayList<Teacher> teachers) {
+	/**
+	 * Constructor for a ScoringEngine
+	 * 
+	 * @param students Students to be scored
+	 * @param teachers Teachers to be scored
+	 */
+	public ScoringEngine(ArrayList<Student> students, ArrayList<Teacher> teachers) {
 		this.students = students;
 		this.teachers = teachers;
 	}
 
+	/**
+	 * @return ArrayList of Students scored by this ScoringEngine
+	 */
 	public ArrayList<Student> getStudents() {
 		return students;
 	}
 
+	/**
+	 * @return ArrayList of Teachers scored by this ScoringEngine
+	 */
 	public ArrayList<Teacher> getTeachers() {
 		return teachers;
 	}
 
-	// Searches the students and teachers ArrayLists for returning pairs, and
-	// returns an ArrayList of Pair objects that encapsulate these mandatory
-	// pairings
+	/**
+	 * Searches the Students and Teachers ArrayLists for returning pairs, and
+	 * returns an ArrayList of Pair objects representing these mandatory
+	 * pairings
+	 * 
+	 * @return Student-Teacher Pairs that must be scheduled
+	 */
 	public ArrayList<Pair> getMandatoryPairs() {
 		ArrayList<Pair> mandatoryPairs = new ArrayList<Pair>();
 		ArrayList<Student> returningStudents = new ArrayList<Student>();
@@ -133,11 +146,14 @@ public class ScoringEngine {
 		return mandatoryPairs;
 	}
 
-	// Assign a score to every possible Student/Teacher pair (except returning
-	// students and teachers who are paired using getMandatoryPairs). This
-	// method should be run after getMandatoryPairs since getMandatoryPairs will
-	// remove from the students and teachers ArrayLists the students and
-	// teachers who are placed into mandatory pairs
+	/**
+	 * Assigns a score to every possible non-mandatory Student-Teacher Pair.
+	 * This method should be run after getMandatoryPairs since getMandatoryPairs
+	 * will remove from the Students and Teachers ArrayLists the Students and
+	 * Teachers who are placed into mandatory Pairs.
+	 * 
+	 * @return Pair[][] representing the Pairs made by matching every Student with every Teacher
+	 */
 	public Pair[][] scoreNonMandatoryPairs() {
 		Pair[][] scores = new Pair[teachers.size()][students.size()];
 		int score;
