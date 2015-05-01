@@ -392,8 +392,7 @@ class ScheduleButtonActionListener implements ActionListener {
 	@Override
 	@SuppressWarnings(value = { "unused" })
 	public void actionPerformed(ActionEvent e) {
-		System.out.println("Scheduling would happen now");
-		System.out.println("Room Data File Path: "
+		System.out.println("Room Data File Path:    "
 				+ roomDataTextField.getText());
 		System.out.println("Student Data File Path: "
 				+ studentDataTextField.getText());

@@ -110,8 +110,6 @@ public class Randomization {
 		// certain period of time
 
 		while (timeSinceImprovement < IMPROVEMENTTIMEOUT) {
-			System.out.println("Time Since Improvement:   "
-					+ timeSinceImprovement);
 			possiblePairs.clear();
 			studentIndices.clear();
 			teacherIndices.clear();
