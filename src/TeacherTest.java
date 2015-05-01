@@ -16,19 +16,22 @@ public class TeacherTest {
 		String returningStudent = "Fred Cook";
 		String returningInstrument = "Flute";
 		String keepReturningStudent = "Yes";
-		String[] instruments = new String[] {"Flute", "Bass", "Viola"};
-		String[] instrumentExperience = new String[] {"2-4 years", "<1 year", "<1 year"};
+		String[] instruments = new String[] { "Flute", "Bass", "Viola" };
+		String[] instrumentExperience = new String[] { "2-4 years", "<1 year",
+				"<1 year" };
 		String genderPreference = "Female";
 		String agePreference = "5-10";
 		String levelPreference = "Beginner";
-		String[] language = new String[] {"Mandarin", "English"};
+		String[] language = new String[] { "Mandarin", "English" };
 		String crimeRecord = "No";
-		int[] availableTimes = new int[] {828, 1293, 9932, 8272};
-		
-		return new Teacher(id, name, returningStudent, returningInstrument, keepReturningStudent, instruments, instrumentExperience,
-						genderPreference, agePreference, levelPreference, language, crimeRecord, availableTimes);				
+		int[] availableTimes = new int[] { 828, 1293, 9932, 8272 };
+
+		return new Teacher(id, name, returningStudent, returningInstrument,
+				keepReturningStudent, instruments, instrumentExperience,
+				genderPreference, agePreference, levelPreference, language,
+				crimeRecord, availableTimes);
 	}
-	
+
 	@Test
 	public void testTeacher() {
 		createTestTeacher();
@@ -67,13 +70,15 @@ public class TeacherTest {
 	@Test
 	public void testGetInstruments() {
 		Teacher testTeacher = createTestTeacher();
-		assertArrayEquals(new String[] {"Flute", "Bass", "Viola"}, testTeacher.getInstruments());
+		assertArrayEquals(new String[] { "Flute", "Bass", "Viola" },
+				testTeacher.getInstruments());
 	}
 
 	@Test
 	public void testGetInstrumentExperience() {
 		Teacher testTeacher = createTestTeacher();
-		assertArrayEquals(new String[] {"2-4 years", "<1 year", "<1 year"}, testTeacher.getInstrumentExperience());
+		assertArrayEquals(new String[] { "2-4 years", "<1 year", "<1 year" },
+				testTeacher.getInstrumentExperience());
 	}
 
 	@Test
@@ -97,7 +102,8 @@ public class TeacherTest {
 	@Test
 	public void testGetLanguage() {
 		Teacher testTeacher = createTestTeacher();
-		assertArrayEquals(new String[] {"Mandarin", "English"}, testTeacher.getLanguages());
+		assertArrayEquals(new String[] { "Mandarin", "English" },
+				testTeacher.getLanguages());
 	}
 
 	@Test
@@ -109,7 +115,8 @@ public class TeacherTest {
 	@Test
 	public void testGetAvailableTimes() {
 		Teacher testTeacher = createTestTeacher();
-		assertArrayEquals(new int[] {828, 1293, 9932, 8272}, testTeacher.getAvailableTimes());
+		assertArrayEquals(new int[] { 828, 1293, 9932, 8272 },
+				testTeacher.getAvailableTimes());
 	}
 
 }

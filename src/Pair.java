@@ -1,7 +1,3 @@
-/* 
- * File: Pair.java
- */
-
 import java.util.ArrayList;
 
 /**
@@ -71,7 +67,9 @@ public class Pair {
 	}
 
 	/**
-	 * @return the mutual times at which the pair can meet
+	 * Returns the mutual times at which a Pair can meet.
+	 * 
+	 * @return the mutual times at which the Pair can meet
 	 */
 	public ArrayList<Integer> getMutualTimes() {
 		return mutualTimes;

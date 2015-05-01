@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-/** 
+/**
  * Implements the Hungarian Algorithm.
  *
  */
@@ -9,11 +9,16 @@ public class Hungarian {
 	private static int numLines = 0;
 
 	/**
-	 * This method executes the Hungarian Algorithm and returns a HungarianResult.
+	 * This method executes the Hungarian Algorithm and returns a
+	 * HungarianResult.
 	 * 
-	 * @param pairs an ArrayList that holds Pair objects that are to be scheduled
-	 * @param roomDayTimes an ArrayList that holds RoomDayTimes objects 
-	 * @param specialInstruments an ArrayList that holds all of the special instruments associated with any rooms
+	 * @param pairs
+	 *            an ArrayList that holds Pair objects that are to be scheduled
+	 * @param roomDayTimes
+	 *            an ArrayList that holds RoomDayTimes objects
+	 * @param specialInstruments
+	 *            an ArrayList that holds all of the special instruments
+	 *            associated with any rooms
 	 * @return the HungarianResult that is produced by the algorithm
 	 */
 	public static HungarianResult run(ArrayList<Pair> pairs,
@@ -37,15 +42,21 @@ public class Hungarian {
 		int score = calculateScore(pairTimes);
 		return new HungarianResult(pairTimes, score);
 	}
-	
+
 	/**
-	 * Creates the original 2-D matrix from the randomly generated pairs and RoomDayTimes to start the Hungarian Algorithm.
+	 * Creates the original 2-D matrix from the randomly generated pairs and
+	 * RoomDayTimes to start the Hungarian Algorithm.
 	 * 
-	 * @param pairs an ArrayList that holds Pair objects that are to be scheduled
-	 * @param roomDayTimes an ArrayList that holds RoomDayTimes objects 
-	 * @param specialInstruments an ArrayList that holds all of the special instruments associated with any rooms
-	 * @return A matrix populated with the number representing the score of the pair if the pair can have a lesson in a particular RoomDayTime,
-	 * or a 0 if the pair is not compatible with a RoomDayTime
+	 * @param pairs
+	 *            an ArrayList that holds Pair objects that are to be scheduled
+	 * @param roomDayTimes
+	 *            an ArrayList that holds RoomDayTimes objects
+	 * @param specialInstruments
+	 *            an ArrayList that holds all of the special instruments
+	 *            associated with any rooms
+	 * @return A matrix populated with the number representing the score of the
+	 *         pair if the pair can have a lesson in a particular RoomDayTime,
+	 *         or a 0 if the pair is not compatible with a RoomDayTime
 	 */
 	public static int[][] createOriginalMatrix(ArrayList<Pair> pairs,
 			ArrayList<RoomDayTime> roomDayTimes,
@@ -101,12 +112,15 @@ public class Hungarian {
 	}
 
 	/**
-	 * Finds the maximum value in the matrix and replaces every element with the difference of the maximum and that value.
-	 * The Hungarian Algorithm is designed to find the minimum result 
-	 * and in this problem the desire is to maximize the score.
+	 * Finds the maximum value in the matrix and replaces every element with the
+	 * difference of the maximum and that value. The Hungarian Algorithm is
+	 * designed to find the minimum result and in this problem the desire is to
+	 * maximize the score.
 	 * 
-	 * Assumes a square matrix. 
-	 * @param originalMatrix a 2-D matrix with the originally populated scores
+	 * Assumes a square matrix.
+	 * 
+	 * @param originalMatrix
+	 *            a 2-D matrix with the originally populated scores
 	 * @return An inverted matrix of the originalMatrix
 	 */
 	public static int[][] createMinMatrix(int[][] originalMatrix) {
@@ -137,10 +151,12 @@ public class Hungarian {
 	}
 
 	/**
-	 * Finds the minimum element in every row and replaces every element with the difference between it and the minimum in the row.
-	 * Assumes a square matrix.
+	 * Finds the minimum element in every row and replaces every element with
+	 * the difference between it and the minimum in the row. Assumes a square
+	 * matrix.
 	 * 
-	 * @param matrix a 2-D matrix
+	 * @param matrix
+	 *            a 2-D matrix
 	 */
 	public static void rowReduce(int[][] matrix) {
 		int dim = matrix.length;
@@ -163,10 +179,12 @@ public class Hungarian {
 	}
 
 	/**
-	 * Finds the minimum element in every column and replace every element with the difference between it and the minimum in the column.
-	 * Assumes a square matrix.
+	 * Finds the minimum element in every column and replace every element with
+	 * the difference between it and the minimum in the column. Assumes a square
+	 * matrix.
 	 * 
 	 * @param matrix
+	 *            a 2-D matrix
 	 */
 	public static void columnReduce(int[][] matrix) {
 		int dim = matrix.length;
@@ -203,11 +221,12 @@ public class Hungarian {
 	}
 
 	/**
-	 * Calculates the Line Matrix
-	 * Assumes a square matrix.
+	 * Calculates the Line Matrix Assumes a square matrix.
 	 * 
-	 * @param matrix a 2-D matrix
-	 * @return a 2-D matrix with "lines" drawn across the rows and down the columns
+	 * @param matrix
+	 *            a 2-D matrix
+	 * @return a 2-D matrix with "lines" drawn across the rows and down the
+	 *         columns
 	 */
 	public static int[][] calculateLineMatrix(int[][] matrix) {
 		numLines = 0;
@@ -296,12 +315,16 @@ public class Hungarian {
 		return covered;
 
 	}
-	
+
 	/**
 	 * Calculates how many uncovered zeros are in a row.
 	 * 
-	 * @param matrix the matrix that has the populated values from the inverted matrix
-	 * @param covered the matrix that keeps track of if an element in matrix is covered or not
+	 * @param matrix
+	 *            the matrix that has the populated values from the inverted
+	 *            matrix
+	 * @param covered
+	 *            the matrix that keeps track of if an element in matrix is
+	 *            covered or not
 	 * @return a 1-D with the number of uncovered zeros in each row
 	 */
 	public static int[] getRowZeros(int[][] matrix, int[][] covered) {
@@ -324,8 +347,12 @@ public class Hungarian {
 	/**
 	 * Calculates how many uncovered zeros are in a column.
 	 * 
-	 * @param matrix the matrix that has the populated values from the inverted matrix
-	 * @param covered the matrix that keeps track of if an element in matrix is covered or not
+	 * @param matrix
+	 *            the matrix that has the populated values from the inverted
+	 *            matrix
+	 * @param covered
+	 *            the matrix that keeps track of if an element in matrix is
+	 *            covered or not
 	 * @return a 1-D with the number of uncovered zeros in each column
 	 */
 	public static int[] getColZeros(int[][] matrix, int[][] covered) {
@@ -348,8 +375,10 @@ public class Hungarian {
 	/**
 	 * Calculates the number of 0s in each row in the given matrix
 	 * 
-	 * @param matrix a 2-D matrix
-	 * @return a 1-D array with each index representing the number of 0s in that row
+	 * @param matrix
+	 *            a 2-D matrix
+	 * @return a 1-D array with each index representing the number of 0s in that
+	 *         row
 	 */
 	public static int[] getRowZeros(int[][] matrix) {
 		int dim = matrix.length;
@@ -371,8 +400,10 @@ public class Hungarian {
 	/**
 	 * Calculates the number of 0s in each column in the given matrix
 	 * 
-	 * @param matrix a 2-D matrix
-	 * @return a 1-D array with each index representing the number of 0s in that column
+	 * @param matrix
+	 *            a 2-D matrix
+	 * @return a 1-D array with each index representing the number of 0s in that
+	 *         column
 	 */
 	public static int[] getColZeros(int[][] matrix) {
 		int dim = matrix.length;
@@ -394,8 +425,11 @@ public class Hungarian {
 	/**
 	 * Performs the augmentation of the "covered" matrix.
 	 * 
-	 * @param matrix a 2-D matrix
-	 * @param lineMatrix a matrix that keeps track of how many lines are crossing over an element
+	 * @param matrix
+	 *            a 2-D matrix
+	 * @param lineMatrix
+	 *            a matrix that keeps track of how many lines are crossing over
+	 *            an element
 	 */
 	public static void augmentMatrix(int[][] matrix, int[][] lineMatrix) {
 		int dim = matrix.length;
@@ -426,11 +460,15 @@ public class Hungarian {
 	}
 
 	/**
-	 * Creates PairTime objects from a matrix that has been through all of the steps of the Hungarian.
+	 * Creates PairTime objects from a matrix that has been through all of the
+	 * steps of the Hungarian.
 	 * 
-	 * @param matrix a matrix that been reduced through the steps of the Hungarian
-	 * @param pairs an ArrayList of Pair objects
-	 * @param roomDayTimes an ArrayList of RoomDayTime objects
+	 * @param matrix
+	 *            a matrix that been reduced through the steps of the Hungarian
+	 * @param pairs
+	 *            an ArrayList of Pair objects
+	 * @param roomDayTimes
+	 *            an ArrayList of RoomDayTime objects
 	 * @return an ArrayList of PairTime objects
 	 */
 	public static ArrayList<PairTime> choosePairTimes(int[][] matrix,
@@ -485,7 +523,7 @@ public class Hungarian {
 								rowZeros[k]--;
 							}
 						}
-						
+
 						// Make sure the pair and room day time that
 						// we want both exist
 						if (minIndex < pairs.size() && j < roomDayTimes.size()) {
@@ -530,10 +568,13 @@ public class Hungarian {
 	}
 
 	/**
-	 * Returns the sum of all of the scores associated with each Student-Teacher pair in the pairTimes list.  
+	 * Returns the sum of all of the scores associated with each Student-Teacher
+	 * pair in the pairTimes list.
 	 * 
-	 * @param pairTimes an ArrayList of PairTime objects 
-	 * @return The total score associated with the PairTime objects in the pairTimes array.
+	 * @param pairTimes
+	 *            an ArrayList of PairTime objects
+	 * @return The total score associated with the PairTime objects in the
+	 *         pairTimes array.
 	 */
 	public static int calculateScore(ArrayList<PairTime> pairTimes) {
 		int score = 0;
@@ -544,14 +585,21 @@ public class Hungarian {
 
 		return score;
 	}
-	
+
 	/**
-	 * Verifies that if a Pair is assigned to a room, the pair's instrument and time are supported by that room.
+	 * Verifies that if a Pair is assigned to a room, the Pair's instrument and
+	 * time are supported by that room.
 	 * 
-	 * @param pair a Pair object to be checked with a RooomDayTime
-	 * @param roomDayTime a RoomDayTime object to be checked with the pair and the instrument
-	 * @param specialInstruments an ArrayList of specialInstruments associated with all rooms
-	 * @return true if the student's lesson can be held in the specified room and false if the student's lesson cannot be held in the specified room
+	 * @param pair
+	 *            a Pair object to be checked with a RooomDayTime
+	 * @param roomDayTime
+	 *            a RoomDayTime object to be checked with the pair and the
+	 *            instrument
+	 * @param specialInstruments
+	 *            an ArrayList of specialInstruments associated with all rooms
+	 * @return true if the student's lesson can be held in the specified room
+	 *         and false if the student's lesson cannot be held in the specified
+	 *         room
 	 */
 	public static boolean checkCompatible(Pair pair, RoomDayTime roomDayTime,
 			ArrayList<String> specialInstruments) {
@@ -570,7 +618,11 @@ public class Hungarian {
 	}
 
 	/**
-	 * @return the number of lines drawn by the last call to calculateLineMatrix()
+	 * Returns the number of lines drawn by the last call to
+	 * calculateLineMatrix()
+	 * 
+	 * @return the number of lines drawn by the last call to
+	 *         calculateLineMatrix()
 	 */
 	public static int getNumLines() {
 		return numLines;

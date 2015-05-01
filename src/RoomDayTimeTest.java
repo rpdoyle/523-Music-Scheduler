@@ -12,20 +12,21 @@ import org.junit.Test;
 public class RoomDayTimeTest {
 	Room testRoom;
 	RoomDayTime testRoomDayTime;
-	
+
 	@Before
-	public void setUp(){
-		testRoom = new Room("Test Name 110", new ArrayList<String>(Arrays.asList("Piano", "Drums")), new int[] {500, 1670, 4309});
+	public void setUp() {
+		testRoom = new Room("Test Name 110", new ArrayList<String>(
+				Arrays.asList("Piano", "Drums")), new int[] { 500, 1670, 4309 });
 		testRoomDayTime = new RoomDayTime(testRoom, 500);
 	}
 
 	@Test
-	public void testGetRoom(){
+	public void testGetRoom() {
 		assertEquals(testRoom, testRoomDayTime.getRoom());
 	}
-	
+
 	@Test
-	public void testGetTime(){
+	public void testGetTime() {
 		assertEquals(500, testRoomDayTime.getTime());
 	}
 }

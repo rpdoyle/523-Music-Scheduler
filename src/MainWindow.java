@@ -32,6 +32,9 @@ public class MainWindow {
 
 	/**
 	 * Draws user interface elements for the main window and help window
+	 * 
+	 * @param args
+	 *            Standard arguments
 	 */
 	public static void main(String[] args) {
 

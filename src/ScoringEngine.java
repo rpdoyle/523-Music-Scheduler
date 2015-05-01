@@ -1,7 +1,8 @@
 import java.util.ArrayList;
 
 /**
- * Used for calculating scores representing the compatibilty of Students and Teachers
+ * Used for calculating scores representing the compatibilty of Students and
+ * Teachers
  */
 public class ScoringEngine {
 
@@ -11,15 +12,20 @@ public class ScoringEngine {
 	/**
 	 * Constructor for a ScoringEngine
 	 * 
-	 * @param students Students to be scored
-	 * @param teachers Teachers to be scored
+	 * @param students
+	 *            Students to be scored
+	 * @param teachers
+	 *            Teachers to be scored
 	 */
-	public ScoringEngine(ArrayList<Student> students, ArrayList<Teacher> teachers) {
+	public ScoringEngine(ArrayList<Student> students,
+			ArrayList<Teacher> teachers) {
 		this.students = students;
 		this.teachers = teachers;
 	}
 
 	/**
+	 * Returns the list of Students scored by this ScoringEngine
+	 * 
 	 * @return ArrayList of Students scored by this ScoringEngine
 	 */
 	public ArrayList<Student> getStudents() {
@@ -27,6 +33,8 @@ public class ScoringEngine {
 	}
 
 	/**
+	 * Returns the list of Teachers scored by this ScoringEngine
+	 * 
 	 * @return ArrayList of Teachers scored by this ScoringEngine
 	 */
 	public ArrayList<Teacher> getTeachers() {
@@ -152,7 +160,8 @@ public class ScoringEngine {
 	 * will remove from the Students and Teachers ArrayLists the Students and
 	 * Teachers who are placed into mandatory Pairs.
 	 * 
-	 * @return Pair[][] representing the Pairs made by matching every Student with every Teacher
+	 * @return Pair[][] representing the Pairs made by matching every Student
+	 *         with every Teacher
 	 */
 	public Pair[][] scoreNonMandatoryPairs() {
 		Pair[][] scores = new Pair[teachers.size()][students.size()];

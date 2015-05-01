@@ -1,7 +1,3 @@
-/* 
- * File: PairTime.java
- */
-
 /**
  * PairTime is the class that encapsulates a Pair object and the time at which
  * that Pair will be scheduled.

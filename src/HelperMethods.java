@@ -9,8 +9,10 @@ public class HelperMethods {
 	/**
 	 * Gathers a complete list of all special instruments supported by any Room
 	 * 
-	 * @param rooms All of the Rooms available for scheduling
-	 * @return ArrayList containing every special instrument supported by the Rooms
+	 * @param rooms
+	 *            All of the Rooms available for scheduling
+	 * @return ArrayList containing every special instrument supported by the
+	 *         Rooms
 	 */
 	public static ArrayList<String> getAllPossibleSpecialInstruments(
 			ArrayList<Room> rooms) {
@@ -33,8 +35,10 @@ public class HelperMethods {
 	/**
 	 * Creates a complete list of all specific room-day-time combinations
 	 * 
-	 * @param rooms All of the Rooms available for scheduling
-	 * @return ArrayList of every possible combination of Rooms with their available times
+	 * @param rooms
+	 *            All of the Rooms available for scheduling
+	 * @return ArrayList of every possible combination of Rooms with their
+	 *         available times
 	 */
 	public static ArrayList<RoomDayTime> getRoomDayTimes(ArrayList<Room> rooms) {
 
@@ -54,7 +58,9 @@ public class HelperMethods {
 	/**
 	 * Converts the integer representation of a time to a string representation
 	 * 
-	 * @param i Integer representing a time as the number of minutes since 12:00 AM on Monday
+	 * @param i
+	 *            Integer representing a time as the number of minutes since
+	 *            12:00 AM on Monday
 	 * @return String representation of time i
 	 */
 	public static String intTimeToString(int i) {
@@ -97,7 +103,9 @@ public class HelperMethods {
 	/**
 	 * Calculates the day of the week associated with an integer time
 	 * 
-	 * @param i Time represented as the number of minutes since 12:00 AM on Monday
+	 * @param i
+	 *            Time represented as the number of minutes since 12:00 AM on
+	 *            Monday
 	 * @return Day of the week represented as an integer
 	 */
 	public static int getDayOfLesson(int i) {

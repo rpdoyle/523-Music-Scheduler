@@ -30,8 +30,11 @@ public class ExcelReader {
 	 *            the filepath of the spreadsheet of the Room data
 	 * @return an ArrayList of Room Objects
 	 * @throws FileNotFoundException
+	 *             FileNotFoundException
 	 * @throws IOException
+	 *             IOException
 	 * @throws InvalidInputFormatException
+	 *             InvalidInputFormatException
 	 */
 	public static ArrayList<Room> parseRoomData(String filepath)
 			throws FileNotFoundException, IOException,
@@ -82,8 +85,11 @@ public class ExcelReader {
 	 *            the filepath of the spreadsheet of the Student data
 	 * @return an ArrayList of Student objects
 	 * @throws FileNotFoundException
+	 *             FileNotFoundException
 	 * @throws IOException
+	 *             IOException
 	 * @throws InvalidInputFormatException
+	 *             InvalidInputFormatException
 	 */
 	public static ArrayList<Student> parseStudentData(String filepath)
 			throws FileNotFoundException, IOException,
@@ -235,8 +241,11 @@ public class ExcelReader {
 	 *            the filepath of the spreadsheet of the Teacher data
 	 * @return an ArrayList of Teacher objects
 	 * @throws FileNotFoundException
+	 *             FileNotFoundException
 	 * @throws IOException
+	 *             IOException
 	 * @throws InvalidInputFormatException
+	 *             InvalidInputFormatException
 	 */
 	public static ArrayList<Teacher> parseTeacherData(String filepath)
 			throws FileNotFoundException, IOException,
@@ -343,6 +352,7 @@ public class ExcelReader {
 	 *            this cell is not
 	 * @return the String from the cell
 	 * @throws InvalidInputFormatException
+	 *             InvalidInputFormatException
 	 */
 	public static String getStringFromCell(Row row, int index, boolean required)
 			throws InvalidInputFormatException {
@@ -398,6 +408,7 @@ public class ExcelReader {
 	 *            this cell is not
 	 * @return Contents of the cell as a String[]
 	 * @throws InvalidInputFormatException
+	 *             InvalidInputFormatException
 	 */
 	public static String[] getStringArrayFromCell(Row row, int index,
 			boolean required) throws InvalidInputFormatException {
@@ -458,6 +469,7 @@ public class ExcelReader {
 	 *            the offset as specified above
 	 * @return an integer Array of converted Strings to times
 	 * @throws InvalidInputFormatException
+	 *             InvalidInputFormatException
 	 */
 	public static int[] getStartTimeArr(String[] times, int dayOffset)
 			throws InvalidInputFormatException {
@@ -544,6 +556,7 @@ public class ExcelReader {
 	 *            the XSSFRow that we are currently working on
 	 * @return an integer of the available times from a specific row
 	 * @throws InvalidInputFormatException
+	 *             InvalidInputFormatException
 	 */
 	public static int[] getAvailableTimes(int c1, int c2, int c3, int c4,
 			int c5, XSSFRow current) throws InvalidInputFormatException {
@@ -646,6 +659,7 @@ public class ExcelReader {
 	 *            spreadsheet
 	 * @return a new Student object
 	 * @throws InvalidInputFormatException
+	 *             InvalidInputFormatException
 	 */
 	public static Student createStudent(int id, int fName, int lName, int a,
 			int g, int check, int rTeacher, int iORStudent, int i1, int i2,

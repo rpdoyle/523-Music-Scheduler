@@ -16,25 +16,31 @@ public class RoomTest {
 	@Test
 	@SuppressWarnings(value = { "unused" })
 	public void testRoom() {
-		Room testRoom = new Room("Test Name 110", new ArrayList<String>(Arrays.asList("Piano", "Drums")), new int[] {500, 1670, 4309});
+		Room testRoom = new Room("Test Name 110", new ArrayList<String>(
+				Arrays.asList("Piano", "Drums")), new int[] { 500, 1670, 4309 });
 	}
 
 	@Test
 	public void testGetName() {
-		Room testRoom = new Room("Test Name 110", new ArrayList<String>(Arrays.asList("Piano", "Drums")), new int[] {500, 1670, 4309});
+		Room testRoom = new Room("Test Name 110", new ArrayList<String>(
+				Arrays.asList("Piano", "Drums")), new int[] { 500, 1670, 4309 });
 		assertEquals("Test Name 110", testRoom.getName());
 	}
 
 	@Test
 	public void testGetSpecialInstruments() {
-		Room testRoom = new Room("Test Name 110", new ArrayList<String>(Arrays.asList("Piano", "Drums")), new int[] {500, 1670, 4309});
-		assertEquals( new ArrayList<String>(Arrays.asList("Piano", "Drums")), testRoom.getSpecialInstruments());
+		Room testRoom = new Room("Test Name 110", new ArrayList<String>(
+				Arrays.asList("Piano", "Drums")), new int[] { 500, 1670, 4309 });
+		assertEquals(new ArrayList<String>(Arrays.asList("Piano", "Drums")),
+				testRoom.getSpecialInstruments());
 	}
 
 	@Test
 	public void testGetAvailableTimes() {
-		Room testRoom = new Room("Test Name 110",  new ArrayList<String>(Arrays.asList("Piano", "Drums")), new int[] {500, 1670, 4309});
-		assertArrayEquals(new int[] {500, 1670, 4309}, testRoom.getAvailableTimes());
+		Room testRoom = new Room("Test Name 110", new ArrayList<String>(
+				Arrays.asList("Piano", "Drums")), new int[] { 500, 1670, 4309 });
+		assertArrayEquals(new int[] { 500, 1670, 4309 },
+				testRoom.getAvailableTimes());
 	}
 
 }

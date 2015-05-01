@@ -1,5 +1,6 @@
 /**
- * This class provides constant values with column indices for each piece of input data.
+ * This class provides constant values with column indices for each piece of
+ * input data.
  */
 public class Columns {
 	public static final int ROOM_NAME = 1;
@@ -9,7 +10,7 @@ public class Columns {
 	public static final int ROOM_WEDNESDAY_TIMES = 5;
 	public static final int ROOM_THURSDAY_TIMES = 6;
 	public static final int ROOM_FRIDAY_TIMES = 7;
-	
+
 	public static final int STUDENT_FIRST_NAME = 1;
 	public static final int STUDENT_LAST_NAME = 2;
 	public static final int STUDENT_AGE = 3;
@@ -29,7 +30,7 @@ public class Columns {
 	public static final int STUDENT_WEDNESDAY_TIMES = 80;
 	public static final int STUDENT_THURSDAY_TIMES = 81;
 	public static final int STUDENT_FRIDAY_TIMES = 82;
-	
+
 	public static final int STUDENT_HAS_SIBLING_1 = 22;
 	public static final int SIBLING_1_FIRST_NAME = 23;
 	public static final int SIBLING_1_LAST_NAME = 24;
@@ -50,7 +51,7 @@ public class Columns {
 	public static final int SIBLING_1_WEDNESDAY_TIMES = 80;
 	public static final int SIBLING_1_THURSDAY_TIMES = 81;
 	public static final int SIBLING_1_FRIDAY_TIMES = 82;
-	
+
 	public static final int STUDENT_HAS_SIBLING_2 = 39;
 	public static final int SIBLING_2_FIRST_NAME = 40;
 	public static final int SIBLING_2_LAST_NAME = 41;
@@ -71,7 +72,7 @@ public class Columns {
 	public static final int SIBLING_2_WEDNESDAY_TIMES = 80;
 	public static final int SIBLING_2_THURSDAY_TIMES = 81;
 	public static final int SIBLING_2_FRIDAY_TIMES = 82;
-	
+
 	public static final int STUDENT_HAS_SIBLING_3 = 56;
 	public static final int SIBLING_3_FIRST_NAME = 57;
 	public static final int SIBLING_3_LAST_NAME = 58;
@@ -92,10 +93,10 @@ public class Columns {
 	public static final int SIBLING_3_WEDNESDAY_TIMES = 80;
 	public static final int SIBLING_3_THURSDAY_TIMES = 81;
 	public static final int SIBLING_3_FRIDAY_TIMES = 82;
-	
+
 	public static final int TEACHER_FIRST_NAME = 1;
 	public static final int TEACHER_LAST_NAME = 2;
-	public static final int TEACHER_IS_RETURNING  = 8;
+	public static final int TEACHER_IS_RETURNING = 8;
 	public static final int TEACHER_RETURNING_STUDENT_NAME = 9;
 	public static final int TEACHER_RETURNING_INSTRUMENT = 10;
 	public static final int TEACHER_KEEP_RETURNING_STUDENT = 11;

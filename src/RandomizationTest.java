@@ -10,7 +10,6 @@ import java.util.HashSet;
 
 import org.junit.Test;
 
-
 public class RandomizationTest {
 
 	private Student createStudent1() {
@@ -40,7 +39,7 @@ public class RandomizationTest {
 						2005 });
 		return testStudent3;
 	}
-	
+
 	private Teacher createTeacher1() {
 		// Should be mandatory paired with Jane (2)
 		Teacher testTeacher1 = new Teacher(123, "Peter Thomas", "Jane",
@@ -56,17 +55,20 @@ public class RandomizationTest {
 		Student student1 = createStudent1();
 		student1.getSiblings().add(createStudent2());
 		student1.getSiblings().add(createStudent3());
-		
+
 		ArrayList<Pair> mandatoryPairs = new ArrayList<>();
 		mandatoryPairs.add(new Pair(student1, createTeacher1(), 300, null, ""));
-		
+
 		HashSet<Integer> siblings = new HashSet<>();
 		siblings.add(456);
 		siblings.add(789);
-		
-		assertEquals(siblings, Randomization.getMandatoryPairSiblings(mandatoryPairs));
-		
+
+		assertEquals(siblings,
+				Randomization.getMandatoryPairSiblings(mandatoryPairs));
+
 		mandatoryPairs.clear();
-		assertEquals(true, Randomization.getMandatoryPairSiblings(mandatoryPairs).isEmpty());
+		assertEquals(true,
+				Randomization.getMandatoryPairSiblings(mandatoryPairs)
+						.isEmpty());
 	}
 }

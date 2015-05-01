@@ -7,8 +7,8 @@ public class InvalidInputFormatException extends Exception {
 	InvalidInputFormatException() {
 		super();
 	}
-	
-	InvalidInputFormatException (String s) {
+
+	InvalidInputFormatException(String s) {
 		super(s);
-	}	  
+	}
 }
