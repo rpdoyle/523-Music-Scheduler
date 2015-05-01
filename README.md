@@ -1,3 +1,5 @@
+To run our pre-compiled code, extract the files from MEScheduler.zip and look at the README.txt in that folder.
+
 Steps to import this project into your Eclipse workspace:
 In Eclipse, click File->Import
 Choose Git->Projects from Git
