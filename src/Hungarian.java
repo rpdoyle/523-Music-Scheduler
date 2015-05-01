@@ -190,7 +190,6 @@ public class Hungarian {
 		boolean lineDrawn;
 
 		// Note: we assume there are uncovered zeros to begin with
-		// TODO: see if this is a problem
 		while (uncoveredZeros) {
 			int maxZeros = Integer.MIN_VALUE;
 			lineDrawn = false;

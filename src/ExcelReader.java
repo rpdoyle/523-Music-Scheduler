@@ -20,8 +20,6 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-// TODO: It's not fantastic to have each error message inline in this file. We can rework these later, but they're fine for now.
-
 // Excel Reader contains static methods for parsing Room, Student, and Teacher spreadsheet files
 // into ArrayLists of Room, Student, and Teacher objects.
 public class ExcelReader {
@@ -264,8 +262,6 @@ public class ExcelReader {
 			}
 
 			// Get information about the teacher's instruments
-			// TODO: teacher connot teach an instrument they've been playing for
-			// less than 4 years
 			String[] instrumentArr = getStringArrayFromCell(currentRow,
 					Columns.TEACHER_INSTRUMENTS, true);
 			String[] instrumentExperienceArr = getStringArrayFromCell(
@@ -284,11 +280,8 @@ public class ExcelReader {
 					Columns.TEACHER_LANGUAGES, false);
 
 			// Get information about teacher's crime record
-			// TODO: don't need this. not sure which cell it's actually reading.
-			// made false to run other tests
 			String crimeRecord = getStringFromCell(currentRow,
 					Columns.TEACHER_CRIME_RECORD, false);
-			// TODO: if convicted, don't add to arraylist
 
 			// Get teacher's available times
 			int[] availableTimes = getAvailableTimes(
@@ -326,9 +319,6 @@ public class ExcelReader {
 		if (currentCell.getCellType() == Cell.CELL_TYPE_STRING) {
 			return currentCell.getStringCellValue();
 		} else if (currentCell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
-			// TODO: this has a known limitation of not allowing decimals in
-			// numerical cells.
-			// This is very minor for our use cases.
 			return String.valueOf((int) currentCell.getNumericCellValue());
 			// If the cell is blank and not required, this is okay and we can
 			// save a blank screen. If not, throw an exception.
@@ -341,18 +331,16 @@ public class ExcelReader {
 			// error with the human-readable cell reference (e.g. A4)
 			CellReference cellRef = new CellReference(row.getRowNum(), index);
 			System.out.println("cell is blank for a required cell");
-			throw new InvalidInputFormatException(
-					"Data Error\n\nCould not read value from the required cell "
-							+ cellRef.formatAsString()
-							+ ".\nPlease make sure the cell contains the required data.");
+			throw new InvalidInputFormatException("Data Error\n\nCould not read value from the required cell "
+												+ cellRef.formatAsString()
+												+ ".\nPlease make sure the cell contains the required data.");
 		} else {
 			// If we could not get a string from the cell, show an error with
 			// the human-readable cell reference (e.g. A4)
 			CellReference cellRef = new CellReference(row.getRowNum(), index);
-			throw new InvalidInputFormatException(
-					"Data Error\n\nCould not read value from cell "
-							+ cellRef.formatAsString()
-							+ ".\nPlease make sure the cell is formatted properly.");
+			throw new InvalidInputFormatException("Data Error\n\nCould not read value from cell "
+												+ cellRef.formatAsString()
+												+ ".\nPlease make sure the cell is formatted properly.");
 		}
 	}
 
@@ -367,11 +355,7 @@ public class ExcelReader {
 		if (currentCell.getCellType() == Cell.CELL_TYPE_STRING) {
 			return currentCell.getStringCellValue().split(",\\s*");
 		} else if (currentCell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
-			// TODO: this has a known limitation of not allowing decimals in
-			// numerical cells.
-			// This is very minor for our use cases.
-			String[] result = { String.valueOf((int) currentCell
-					.getNumericCellValue()) };
+			String[] result = { String.valueOf((int) currentCell.getNumericCellValue()) };
 			return result;
 			// If the cell is blank and it is not required, that is okay. If
 			// not, it will throw an exception.
@@ -384,18 +368,16 @@ public class ExcelReader {
 			// an error with the human-readable cell reference (e.g. A4)
 			CellReference cellRef = new CellReference(row.getRowNum(), index);
 			System.out.println("cell is blank for a required cell");
-			throw new InvalidInputFormatException(
-					"Data Error\n\nCould not read value from the required cell "
-							+ cellRef.formatAsString()
-							+ ".\nPlease make sure the cell contains the required data.");
+			throw new InvalidInputFormatException("Data Error\n\nCould not read value from the required cell "
+													+ cellRef.formatAsString()
+													+ ".\nPlease make sure the cell contains the required data.");
 		} else {
 			// If we could not get a string array from the cell, show an error
 			// with the human-readable cell reference (e.g. A4)
 			CellReference cellRef = new CellReference(row.getRowNum(), index);
-			throw new InvalidInputFormatException(
-					"Data Error\n\nCould not read value from cell "
-							+ cellRef.formatAsString()
-							+ ".\nPlease check that it is formatted properly.");
+			throw new InvalidInputFormatException("Data Error\n\nCould not read value from cell "
+												+ cellRef.formatAsString()
+												+ ".\nPlease check that it is formatted properly.");
 		}
 	}
 
@@ -451,7 +433,6 @@ public class ExcelReader {
 				isPM = false;
 			}
 
-			// TODO: verify that this works for all cases
 			// Compute the integer representation of the start time
 			try {
 				int startHour = Integer.parseInt(startTimeParts[0]);
@@ -580,7 +561,7 @@ public class ExcelReader {
 				getStringFromCell(currentRow, y3, true) };
 
 		String language;
-		// TODO: this assumes l-1 is a yes or no question
+
 		if (getStringFromCell(currentRow, l - 1, true).equalsIgnoreCase("no")) {
 			language = getStringFromCell(currentRow, l, true);
 		} else {

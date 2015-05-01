@@ -23,7 +23,7 @@ public class Randomization {
 	private ArrayList<Room> rooms;
 	private ArrayList<Student> students;
 	private ArrayList<Teacher> teachers;
-
+	
 	public Randomization(ArrayList<Pair> mandatoryPairs, Pair[][] scores,
 			ArrayList<Room> rooms, ArrayList<Student> students,
 			ArrayList<Teacher> teachers) {
