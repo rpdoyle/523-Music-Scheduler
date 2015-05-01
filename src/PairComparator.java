@@ -1,13 +1,23 @@
 /* 
- * File: Pair.java
- * Description: Implements methods that allow Pair objects to be compared.
+ * File: PairComparator.java
  */
 
 import java.util.ArrayList;
 import java.util.Comparator;
 
+/**
+ * Compares two Pair objects for equality. Since two Pair objects might contain
+ * the same field values but be references to different objects, this class
+ * implements methods that are used to test for equality.
+ *
+ */
 public class PairComparator implements Comparator<Pair> {
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
+	 */
 	@Override
 	public int compare(Pair p1, Pair p2) {
 		if (p1.getStudent().getName().equals(p2.getStudent().getName())
@@ -41,6 +51,17 @@ public class PairComparator implements Comparator<Pair> {
 		return 1;
 	}
 
+	/**
+	 * Compares two ArrayLists of Pair objects for equality. This method will
+	 * ensure that, if a Pair object exists in one ArrayList, a Pair object with
+	 * identical fields exists in the other ArrayList.
+	 * 
+	 * @param a1
+	 *            the first ArrayList of Pair objects to be compared
+	 * @param a2
+	 *            the second ArrayList of Pair objects to be compared
+	 * @return 0 if the objects are equal; 1 if the objects are not equal
+	 */
 	public int compareLists(ArrayList<Pair> a1, ArrayList<Pair> a2) {
 		if (a1.size() != a2.size()) {
 			return 1;
@@ -55,6 +76,16 @@ public class PairComparator implements Comparator<Pair> {
 		return 0;
 	}
 
+	/**
+	 * Compares two arrays of Pair objects for equality. This method will ensure
+	 * that, given two Pair arrays, the Pairs at each index are equal.
+	 * 
+	 * @param a1
+	 *            the first Pair array to be compared
+	 * @param a2
+	 *            the second Pair array to be compared
+	 * @return 0 if the objects are equal; 1 if the objects are not equal
+	 */
 	public int compareArrays(Pair[][] a1, Pair[][] a2) {
 		if (a1.length != a2.length) {
 			return 1;

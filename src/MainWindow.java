@@ -1,9 +1,3 @@
-/*
- * File: MainWindow.java
- * Description: Implements the main window of the user interface
- * 				for our COMP 523 Music Scheduler program.
- */
-
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
@@ -31,10 +25,14 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-
+/**
+ * Implements the user interface aspects of the application
+ */
 public class MainWindow {
 	
-	// Method to set up the user interface elements and position them using a SpringLayout
+	/**
+	 * Draws user interface elements for the main window and help window
+	 */
 	public static void main(String[] args) {
 		
 		JFrame frame = new JFrame();
@@ -202,12 +200,20 @@ public class MainWindow {
 	}
 }
 
-// ActionListener to handle the three select buttons in the user interface.
+/**
+ * ActionListener to handle the three select buttons in the user interface
+ */
 class SelectButtonActionListener implements ActionListener {
 
 	private final JTextField textField;
 	private final Component parent;
 	
+	/**
+	 * Constructor for SelectButtonActionListener
+	 * 
+	 * @param textField JTextField to be updated with the selected path
+	 * @param parent parent GUI element
+	 */
 	public SelectButtonActionListener(final JTextField textField, final Component parent) {
 		super();
 		this.textField = textField;
@@ -215,6 +221,9 @@ class SelectButtonActionListener implements ActionListener {
 	}
 	
 	// Open a file chooser dialog and set textField's text to the path of the selected file
+	/* (non-Javadoc)
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		final JFileChooser fc = new JFileChooser();
@@ -233,12 +242,20 @@ class SelectButtonActionListener implements ActionListener {
 	}
 }
 
-//ActionListener to handle the output select buttons in the user interface.
+/**
+ * ActionListener to handle the output select buttons in the user interface
+ */
 class OutputSelectButtonActionListener implements ActionListener {
 
 	private final JTextField textField;
 	private final Component parent;
 	
+	/**
+	 * Constructor for OutputSelectButtonActionListener
+	 * 
+	 * @param textField JTextField to be updated with the selected path
+	 * @param parent parent GUI element
+	 */
 	public OutputSelectButtonActionListener(final JTextField textField, final Component parent) {
 		super();
 		this.textField = textField;
@@ -246,6 +263,9 @@ class OutputSelectButtonActionListener implements ActionListener {
 	}
 	
 	// Open a file chooser dialog and set textField's text to the path of the desired place to store the output file
+	/* (non-Javadoc)
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		final JFileChooser fc = new JFileChooser();
@@ -257,7 +277,9 @@ class OutputSelectButtonActionListener implements ActionListener {
 	}
 }
 
-// ActionListener to handle the schedule button
+/**
+ * ActionListener to handle the schedule button
+ */
 class ScheduleButtonActionListener implements ActionListener {
 
 	private final JTextField roomDataTextField;
@@ -266,6 +288,15 @@ class ScheduleButtonActionListener implements ActionListener {
 	private final JTextField outputDataTextField;
 	private final JFrame parent;
 	
+	/**
+	 * Constructor for ScheduleButtonActionListener
+	 * 
+	 * @param roomDataTextField JTextField with the path to the Room data input file
+	 * @param studentDataTextField JTextField with the path to the Student data input file
+	 * @param teacherDataTextField JTextField with the path to the Teacher data input file
+	 * @param outputDataTextField JTextField with the path to the output folder
+	 * @param parent parent GUI element
+	 */
 	public ScheduleButtonActionListener(final JTextField roomDataTextField, final JTextField studentDataTextField, final JTextField teacherDataTextField, final JTextField outputDataTextField, final JFrame parent) {
 		this.roomDataTextField = roomDataTextField;
 		this.studentDataTextField = studentDataTextField;
@@ -275,6 +306,9 @@ class ScheduleButtonActionListener implements ActionListener {
 	}
 	
 	// Open the files specified in the three text fields and run our scheduling algorithm
+	/* (non-Javadoc)
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
 	@Override
 	@SuppressWarnings(value = { "unused" })
 	public void actionPerformed(ActionEvent e) {
@@ -345,34 +379,52 @@ class ScheduleButtonActionListener implements ActionListener {
 		showFinishDialog("Scheduling is complete!");
 	}
 	
-	// Play a sound and display an alert notifying the user that the application is done running.
+	/**
+	 * Play a sound and display an alert notifying the user that scheduling has completed
+	 * 
+	 * @param finishMessage Message to show in the dialog
+	 */
 	public void showFinishDialog(String finishMessage){
 		Toolkit.getDefaultToolkit().beep();
 		JOptionPane.showMessageDialog(parent, finishMessage, "Complete", JOptionPane.INFORMATION_MESSAGE);
 	}
 	
-	// Play an error sound and display an error dialog with a given message
+	/**
+	 * Play an error sound and display an error dialog with a given message
+	 * 
+	 * @param errorMessage Message to show in the dialog
+	 */
 	public void showErrorDialog(String errorMessage) {
 		Toolkit.getDefaultToolkit().beep();
 		JOptionPane.showMessageDialog(parent, errorMessage, "Error", JOptionPane.ERROR_MESSAGE);
 	}
 }
 
-// ActionListener to handle the help button
+/**
+ * ActionListener to handle the help button
+ */
 class HelpButtonActionListener implements ActionListener {
 	
 	private final JFrame helpFrame;	
 	
+	/**
+	 * Constructor for HelpButtonActionListener
+	 * 
+	 * @param helpFrame JFrame of the help window
+	 */
 	public HelpButtonActionListener(final JFrame helpFrame) {
 		super();
 		this.helpFrame = helpFrame;
 	}
 	
 	// Show the help dialog
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			helpFrame.setVisible(true);
-		}
+	/* (non-Javadoc)
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		helpFrame.setVisible(true);
+	}
 			
 	}
 

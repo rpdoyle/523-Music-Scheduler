@@ -1,10 +1,6 @@
-/*
- * File: InvalidInputFormatException.java
- * Description: This class extends Exception and allows us to
- * 				handle formatting errors related to user-inputed
- * 				excel documents more specifically.
+/**
+ * Thrown when input Excel files have formatting errors
  */
-
 public class InvalidInputFormatException extends Exception {
 	private static final long serialVersionUID = 1L;
 

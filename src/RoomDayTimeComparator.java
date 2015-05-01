@@ -1,14 +1,15 @@
-/*
- * File: RoomDayTimeComparator.java
- * Description: Implements methods necessary to compare two RoomDayTime objects
- */
-
 import java.util.ArrayList;
 import java.util.Comparator;
 
+/**
+ * Implements methods necessary to compare two RoomDayTime objects
+ */
 public class RoomDayTimeComparator implements Comparator<RoomDayTime> {
 	
 	// Compares two RoomDayTime objects for equality
+	/* (non-Javadoc)
+	 * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
+	 */
 	@Override
 	public int compare(RoomDayTime rdt1, RoomDayTime rdt2) {
 		
@@ -71,7 +72,13 @@ public class RoomDayTimeComparator implements Comparator<RoomDayTime> {
 		
 	}
 
-	// Compare the elements in two ArrayLists
+	/**
+	 * Compares elements in two ArrayLists
+	 * 
+	 * @param a1 ArrayList of RoomDayTimes
+	 * @param a2 ArrayList of RoomDayTimes
+	 * @return 1 if they are not equal, 0 if they are equal
+	 */
 	public int compareLists(ArrayList<RoomDayTime> a1, ArrayList<RoomDayTime> a2){
 		if (a1.size() != a2.size()){
 			return 1;

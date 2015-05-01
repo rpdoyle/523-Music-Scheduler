@@ -1,15 +1,17 @@
-/*
- * File: HelperMethods.java
- * Description: Implements necessary methods that do not fit
- * 				well into any other class.
- */
-
 import java.util.ArrayList;
 import java.util.HashSet;
 
+/**
+ * Implements miscellaneous methods used throughout the program
+ */
 public class HelperMethods {
 
-	// Gathers a complete list of all Special Instruments supported by any room
+	/**
+	 * Gathers a complete list of all special instruments supported by any Room
+	 * 
+	 * @param rooms All of the Rooms available for scheduling
+	 * @return ArrayList containing every special instrument supported by the Rooms
+	 */
 	public static ArrayList<String> getAllPossibleSpecialInstruments(
 			ArrayList<Room> rooms) {
 		HashSet<String> specialInstruments = new HashSet<String>();
@@ -28,7 +30,12 @@ public class HelperMethods {
 		return returnedList;
 	}
 
-	// Creates a complete list of all specific room/day/time combinations
+	/**
+	 * Creates a complete list of all specific room-day-time combinations
+	 * 
+	 * @param rooms All of the Rooms available for scheduling
+	 * @return ArrayList of every possible combination of Rooms with their available times
+	 */
 	public static ArrayList<RoomDayTime> getRoomDayTimes(ArrayList<Room> rooms) {
 
 		ArrayList<RoomDayTime> roomDayTimes = new ArrayList<RoomDayTime>();
@@ -44,7 +51,12 @@ public class HelperMethods {
 		return roomDayTimes;
 	}
 
-	// Returns the string representation of a time in int format
+	/**
+	 * Converts the integer representation of a time to a string representation
+	 * 
+	 * @param i Integer representing a time as the number of minutes since 12:00 AM on Monday
+	 * @return String representation of time i
+	 */
 	public static String intTimeToString(int i) {
 		boolean isPM = false;
 
@@ -82,6 +94,12 @@ public class HelperMethods {
 		return result;
 	}
 
+	/**
+	 * Calculates the day of the week associated with an integer time
+	 * 
+	 * @param i Time represented as the number of minutes since 12:00 AM on Monday
+	 * @return Day of the week represented as an integer
+	 */
 	public static int getDayOfLesson(int i) {
 		i = (int) Math.ceil(i / 1440);
 		return i;

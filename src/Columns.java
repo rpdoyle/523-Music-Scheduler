@@ -1,9 +1,6 @@
-/*
- * File: Columns.java
- * Description: Provides constants for which column indices
- * 				contain which data in the input excel sheets.
+/**
+ * This class provides constant values with column indices for each piece of input data.
  */
-
 public class Columns {
 	public static final int ROOM_NAME = 1;
 	public static final int ROOM_INSTRUMENTS = 2;
