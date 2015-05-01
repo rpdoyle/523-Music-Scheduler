@@ -207,6 +207,7 @@ public class ExcelWriter {
 						int day = HelperMethods.getDayOfLesson(trimmedPairTime.get(m).getRoomDayTime().getTime());
 						excelData[rowIndex][day + 1] = newTeacher + ", " + newStudent + ", " + newInstrument;
 						trimmedPairTime.remove(m);
+						m--;
 					}
 				}
 
@@ -229,6 +230,7 @@ public class ExcelWriter {
 						int day = HelperMethods.getDayOfLesson(trimmedPairTime.get(m).getRoomDayTime().getTime());
 						excelData[rowIndex][day + 1] = newTeacher + ", " + newStudent + ", " + newInstrument;
 						trimmedPairTime.remove(m);
+						m--;
 					}
 				}
 				
@@ -250,8 +252,8 @@ public class ExcelWriter {
 						String newInstrument = trimmedPairTime.get(m).getPair().getInstrument();
 						int day = HelperMethods.getDayOfLesson(trimmedPairTime.get(m).getRoomDayTime().getTime());
 						excelData[rowIndex][day + 1] = newTeacher + ", " + newStudent + ", " + newInstrument;
-						System.out.println("About to remove " + trimmedPairTime.get(m).getPair().getStudent().getName());							
 						trimmedPairTime.remove(m);
+						m--;
 					}
 				}
 				
@@ -274,6 +276,7 @@ public class ExcelWriter {
 						int day = HelperMethods.getDayOfLesson(trimmedPairTime.get(m).getRoomDayTime().getTime());
 						excelData[rowIndex][day + 1] = newTeacher + ", " + newStudent + ", " + newInstrument;
 						trimmedPairTime.remove(m);
+						m--;
 					}
 				}
 				
