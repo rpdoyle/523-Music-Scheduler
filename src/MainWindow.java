@@ -212,8 +212,7 @@ public class MainWindow {
 		helpContentPane.setLayout(helpLayout);
 
 		String message = UserManual.MESSAGE_1 + '\n' + '\n'
-				+ UserManual.MESSAGE_2 + '\n' + '\n' + UserManual.MESSAGE_3
-				+ '\n' + '\n' + UserManual.MESSAGE_4;
+				+ UserManual.MESSAGE_2;
 
 		// Create a JTextArea for the User Manual
 		JTextArea helpText = new JTextArea(message);
@@ -395,21 +394,18 @@ class ScheduleButtonActionListener implements ActionListener {
 	@Override
 	@SuppressWarnings(value = { "unused" })
 	public void actionPerformed(ActionEvent e) {
-		System.out.println("Room Data File Path:    "
-				+ roomDataTextField.getText());
-		System.out.println("Student Data File Path: "
-				+ studentDataTextField.getText());
-		System.out.println("Teacher Data File Path: "
-				+ teacherDataTextField.getText());
-
 		if (roomDataTextField.getText().length() == 0) {
 			showErrorDialog("Please specify a spreadsheet with room data.");
+			return;
 		} else if (studentDataTextField.getText().length() == 0) {
 			showErrorDialog("Please specify a spreadsheet with student data.");
+			return;
 		} else if (teacherDataTextField.getText().length() == 0) {
 			showErrorDialog("Please specify a spreadsheet with teacher data.");
+			return;
 		} else if (outputDataTextField.getText().length() == 0) {
 			showErrorDialog("Please specify an output path for the spreadsheet.");
+			return;
 		}
 
 		ArrayList<Room> rooms = null;
