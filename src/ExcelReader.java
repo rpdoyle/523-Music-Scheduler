@@ -577,29 +577,21 @@ public class ExcelReader {
 		System.arraycopy(mondayIntTimes, 0, availableTimes, startIndex,
 				mondayIntTimes.length);
 
-		if (mondayIntTimes.length > 0) {
-			startIndex += mondayIntTimes.length;
-			System.arraycopy(tuesdayIntTimes, 0, availableTimes, startIndex,
-					tuesdayIntTimes.length);
-		}
+		startIndex += mondayIntTimes.length;
+		System.arraycopy(tuesdayIntTimes, 0, availableTimes, startIndex,
+				tuesdayIntTimes.length);
 
-		if (tuesdayIntTimes.length > 0) {
-			startIndex += tuesdayIntTimes.length;
-			System.arraycopy(wednesdayIntTimes, 0, availableTimes, startIndex,
-					wednesdayIntTimes.length);
-		}
+		startIndex += tuesdayIntTimes.length;
+		System.arraycopy(wednesdayIntTimes, 0, availableTimes, startIndex,
+				wednesdayIntTimes.length);
 
-		if (wednesdayIntTimes.length > 0) {
-			startIndex += wednesdayIntTimes.length;
-			System.arraycopy(thursdayIntTimes, 0, availableTimes, startIndex,
-					thursdayIntTimes.length);
-		}
+		startIndex += wednesdayIntTimes.length;
+		System.arraycopy(thursdayIntTimes, 0, availableTimes, startIndex,
+				thursdayIntTimes.length);
 
-		if (thursdayIntTimes.length > 0) {
-			startIndex += thursdayIntTimes.length;
-			System.arraycopy(fridayIntTimes, 0, availableTimes, startIndex,
-					fridayIntTimes.length);
-		}
+		startIndex += thursdayIntTimes.length;
+		System.arraycopy(fridayIntTimes, 0, availableTimes, startIndex,
+				fridayIntTimes.length);
 
 		return availableTimes;
 	}
