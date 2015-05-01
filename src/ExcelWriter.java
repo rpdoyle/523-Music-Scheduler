@@ -1,9 +1,3 @@
-/*
- * File: ExcelWriter.java
- * Description: Implements the methods used for writing
- * 				schedules to an Excel file.
- */
-
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,8 +11,17 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.IndexedColors;
 
+/**
+ * Implements the methods used for writing schedules to an Excel file.
+ */
 public class ExcelWriter {
 
+	/**
+	 * Writes schedule data out to an excel file.
+	 * 
+	 * @param fileName Name of the file that will be written to
+	 * @param data String[][] that contains the data to be written
+	 */
 	public static void writeDataToExcelFile(String fileName, String[][] data) {
 
 		// Create the workbook and sheet that the file that will be written to
@@ -100,6 +103,13 @@ public class ExcelWriter {
 		}
 	}
 
+	/**
+	 * Sorts through all of the pair times and puts them in the correct excel cells
+	 * 
+	 * @param hungarianResult HungarianResult object that contains the roomDayTimes of lessons and the student and teacher pairs that were scheduled
+	 * @param roomDayTimeInts HashSet<Integer> that contains unique time integers based on the roomDayTimes of room availability
+	 * @return String[][] that contains excel data to write to a schedule
+	 */
 	public static String[][] prepareDataToWriteToExcel(
 			HungarianResult hungarianResult, HashSet<Integer> roomDayTimeInts) {
 
@@ -173,7 +183,7 @@ public class ExcelWriter {
 			Pair pair = trimmedPairTime.get(0).getPair();
 			RoomDayTime roomDayTime = trimmedPairTime.get(0).getRoomDayTime();
 			// Create a time, room, and day from the roomDayTime
-			String time = HelperMethods.intTimeToString(trimmedPairTime.get(0).getRoomDayTime().getTime());
+			int intTime = trimmedPairTime.get(0).getRoomDayTime().getTime() % 1440;
 			String room = roomDayTime.getRoom().getName();
 			// Create a student, teacher, and instrument from the pair
 			String student = pair.getStudent().getName();
@@ -187,16 +197,21 @@ public class ExcelWriter {
 				// Write the names of the teacher and student in the correct column
 				excelData[rowIndex][1] = teacher + ", " + student + ", " + instrument;
 				
-				for (int m = 0; m < trimmedPairTime.size(); m++) {
+				for (int m = 1; m < trimmedPairTime.size(); m++) {
 					// Room name and time are same (different day)
 					if(trimmedPairTime.get(m).getRoomDayTime().getRoom().getName().equals(room) && 
-						(HelperMethods.intTimeToString(trimmedPairTime.get(m).getRoomDayTime().getTime()).equals(time))) {
+						trimmedPairTime.get(m).getRoomDayTime().getTime() % 1440 == intTime) {						
 						String newTeacher = trimmedPairTime.get(m).getPair().getTeacher().getName();
 						String newStudent = trimmedPairTime.get(m).getPair().getStudent().getName();
 						String newInstrument = trimmedPairTime.get(m).getPair().getInstrument();
 						int day = HelperMethods.getDayOfLesson(trimmedPairTime.get(m).getRoomDayTime().getTime());
 						excelData[rowIndex][day + 1] = newTeacher + ", " + newStudent + ", " + newInstrument;
+						trimmedPairTime.remove(m);
 					}
+				}
+
+				if (trimmedPairTime.isEmpty()) {
+					break;
 				}
 
 			// Tuesday
@@ -204,50 +219,66 @@ public class ExcelWriter {
 				// Write the names of the teacher and student in the correct column
 				excelData[rowIndex][2] = teacher + ", " + student + ", " + instrument;
 				
-				for (int m = 0; m < trimmedPairTime.size(); m++) {
+				for (int m = 1; m < trimmedPairTime.size(); m++) {
 					// Room name and time are same (different day)
 					if(trimmedPairTime.get(m).getRoomDayTime().getRoom().getName().equals(room) && 
-						(HelperMethods.intTimeToString(trimmedPairTime.get(m).getRoomDayTime().getTime()).equals(time))) {
+						trimmedPairTime.get(m).getRoomDayTime().getTime() % 1440 == intTime) {
 						String newTeacher = trimmedPairTime.get(m).getPair().getTeacher().getName();
 						String newStudent = trimmedPairTime.get(m).getPair().getStudent().getName();
 						String newInstrument = trimmedPairTime.get(m).getPair().getInstrument();
 						int day = HelperMethods.getDayOfLesson(trimmedPairTime.get(m).getRoomDayTime().getTime());
 						excelData[rowIndex][day + 1] = newTeacher + ", " + newStudent + ", " + newInstrument;
+						trimmedPairTime.remove(m);
 					}
 				}
 				
+				if (trimmedPairTime.isEmpty()) {
+					break;
+				}
+
 			// Wednesday
 			} else if (HelperMethods.getDayOfLesson(trimmedPairTime.get(0).getRoomDayTime().getTime()) == 2) {
 				// Write the names of the teacher and student in the correct column
 				excelData[rowIndex][3] = teacher + ", " + student + ", " + instrument;
 				
-				for (int m = 0; m < trimmedPairTime.size(); m++) {
+				for (int m = 1; m < trimmedPairTime.size(); m++) {
 					// Room name and time are same (different day)
 					if(trimmedPairTime.get(m).getRoomDayTime().getRoom().getName().equals(room) && 
-						(HelperMethods.intTimeToString(trimmedPairTime.get(m).getRoomDayTime().getTime()).equals(time))) {
+							trimmedPairTime.get(m).getRoomDayTime().getTime() % 1440 == intTime) {
 						String newTeacher = trimmedPairTime.get(m).getPair().getTeacher().getName();
 						String newStudent = trimmedPairTime.get(m).getPair().getStudent().getName();
 						String newInstrument = trimmedPairTime.get(m).getPair().getInstrument();
 						int day = HelperMethods.getDayOfLesson(trimmedPairTime.get(m).getRoomDayTime().getTime());
 						excelData[rowIndex][day + 1] = newTeacher + ", " + newStudent + ", " + newInstrument;
+						System.out.println("About to remove " + trimmedPairTime.get(m).getPair().getStudent().getName());							
+						trimmedPairTime.remove(m);
 					}
 				}
-
+				
+				if (trimmedPairTime.isEmpty()) {
+					break;
+				}
+				
 			// Thursday
 			} else if (HelperMethods.getDayOfLesson(trimmedPairTime.get(0).getRoomDayTime().getTime()) == 3) {
 				// Write the names of the teacher and student in the correct column
 				excelData[rowIndex][4] = teacher + ", " + student + ", " + instrument;
 				
-				for (int m = 0; m < trimmedPairTime.size(); m++) {
+				for (int m = 1; m < trimmedPairTime.size(); m++) {
 					// Room name and time are same (different day)
 					if(trimmedPairTime.get(m).getRoomDayTime().getRoom().getName().equals(room) && 
-						(HelperMethods.intTimeToString(trimmedPairTime.get(m).getRoomDayTime().getTime()).equals(time))) {
+							trimmedPairTime.get(m).getRoomDayTime().getTime() % 1440 == intTime) {
 						String newTeacher = trimmedPairTime.get(m).getPair().getTeacher().getName();
 						String newStudent = trimmedPairTime.get(m).getPair().getStudent().getName();
 						String newInstrument = trimmedPairTime.get(m).getPair().getInstrument();
 						int day = HelperMethods.getDayOfLesson(trimmedPairTime.get(m).getRoomDayTime().getTime());
 						excelData[rowIndex][day + 1] = newTeacher + ", " + newStudent + ", " + newInstrument;
+						trimmedPairTime.remove(m);
 					}
+				}
+				
+				if (trimmedPairTime.isEmpty()) {
+					break;
 				}
 				
 			// Friday
